@@ -53,9 +53,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Game\Game.cs" />
-    <Compile Include="Game\GameObjects\GameObject.cs" />
-    <Compile Include="Game\UI\GameScreen.cs" />
+    <Compile Include="GameUI\Beardgame.cs" />
+    <Compile Include="GameUI\GameScreen.cs" />
     <Compile Include="Input\Actions\DigitalAction.cs" />
     <Compile Include="Input\Actions\DummyAction.cs" />
     <Compile Include="Input\Actions\GamePadAction.cs" />
@@ -141,6 +140,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Particles\Presets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameLogic\GameLogic.fsproj">
+      <Project>{44b1f2eb-d59f-4863-98e8-7ac670ffa842}</Project>
+      <Name>GameLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

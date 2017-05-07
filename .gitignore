@@ -1,4 +1,5 @@
-photones/bin/
-photones/obj/
+*/bin/
+*/obj/
+packages/
 *.suo
 *.swp

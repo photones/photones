@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Threading;
 using amulware.Graphics;
-using Bearded.Photones.Game.UI;
+using Bearded.Photones.GameUI;
 using Bearded.Photones.Input;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Screens;

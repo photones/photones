@@ -1,7 +1,6 @@
 ﻿using System;
 using amulware.Graphics;
 using amulware.Graphics.ShaderManagement;
-using Bearded.Photones.Game.GameObjects;
 using Bearded.Photones.Particles;
 using Bearded.Photones.Utilities;
 

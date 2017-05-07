@@ -12,12 +12,12 @@ using Bearded.Utilities.SpaceTime;
 using OpenTK;
 using OpenTK.Input;
 
-namespace Bearded.Photones.Game.UI
+namespace Bearded.Photones.GameUI
 {
     class GameScreen : ScreenLayer
     {
         private readonly Camera2D camera;
-        private readonly Game game;
+        private readonly Beardgame game;
         private readonly GeometryManager geometries;
 
         public override Matrix4 ProjectionMatrix => camera.Projection;
@@ -26,7 +26,7 @@ namespace Bearded.Photones.Game.UI
         public GameScreen(ScreenManager screenManager, GeometryManager geometryManger)
                 : base(screenManager) {
             camera = new Camera2D();
-            game = new Game();
+            game = new Beardgame();
             geometries = geometryManger;
         }
 

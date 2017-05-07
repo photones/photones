@@ -2,18 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using amulware.Graphics;
-using Bearded.Photones.Game.GameObjects;
 using Bearded.Photones.Rendering;
+using GameLogic;
 using OpenTK;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
-namespace Bearded.Photones.Game
+namespace Bearded.Photones.GameUI
 {
-    class Game
+    class Beardgame
     {
-        public Game() { }
+        private GameState _gameState;
 
-        public void Update(TimeSpan elapsedTime) { }
+        public Beardgame() {
+            _gameState = new GameState(new Planet[0]);
+        }
+
+        public void Update(TimeSpan elapsedTime) {
+            _gameState.Update(elapsedTime);
+        }
 
         public void Draw(GeometryManager geometries) {
             var txtGeo = geometries.FreshmanFont;
