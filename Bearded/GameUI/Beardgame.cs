@@ -1,5 +1,4 @@
 ﻿using System;
-using amulware.Graphics;
 using Bearded.Photones.Rendering;
 using GameLogic;
 using OpenTK;
@@ -10,28 +9,28 @@ namespace Bearded.Photones.GameUI
     class Beardgame
     {
         const float PLANET_SIZE = 0.25f;
+        const float PHOTON_SIZE = 0.1f;
 
         private GameState _gameState;
 
         public Beardgame() {
-            _gameState = GameStateFactory.BuildDummyGameState();
+            _gameState = GameStateFactory.BuildInitialGameState();
         }
 
         public void Update(TimeSpan elapsedTime) {
-            _gameState.Update(elapsedTime);
+            _gameState = _gameState.Update(elapsedTime);
         }
 
         public void Draw(GeometryManager geometries) {
-            var txtGeo = geometries.FreshmanFont;
-
-            txtGeo.Color = Color.White;
-            txtGeo.SizeCoefficient = Vector2.One;
-            txtGeo.Height = 48;
-            txtGeo.DrawString(0.5f * new Vector2(PhotonesProgram.WIDTH, PhotonesProgram.HEIGHT), "Hello world!", 0.5f, 0.5f);
-
+            var particleGeo = geometries.ParticleGeometry;
             foreach (var planet in _gameState.Planets) {
-                geometries.ParticleGeometry.Size = new Vector2(PLANET_SIZE);
-                geometries.ParticleGeometry.DrawSprite(planet.Position.NumericValue);
+                particleGeo.Size = new Vector2(PLANET_SIZE);
+                particleGeo.DrawSprite(planet.Position.NumericValue);
+            }
+
+            foreach (var photon in _gameState.Photons) {
+                particleGeo.Size = new Vector2(PHOTON_SIZE);
+                particleGeo.DrawSprite(photon.Position.NumericValue);
             }
         }
     }

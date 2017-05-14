@@ -53,12 +53,16 @@
     <Compile Include="AssemblyInfo.fs" />
     <Content Include="packages.config" />
     <Compile Include="GameObject.fs" />
+    <Compile Include="Photon.fs" />
     <Compile Include="Planet.fs" />
     <Compile Include="GameState.fs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="amulware.Graphics">
+      <HintPath>..\Bearded\libs\amulware.Graphics.dll</HintPath>
+    </Reference>
     <Reference Include="Bearded.Utilities">
-      <HintPath>..\photones\libs\Bearded.Utilities.dll</HintPath>
+      <HintPath>..\Bearded\libs\Bearded.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core">
@@ -67,7 +71,7 @@
       <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\FSharp\.NETFramework\v4.0\$(TargetFSharpCoreVersion)\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
-      <HintPath>..\photones\libs\OpenTK.dll</HintPath>
+      <HintPath>..\Bearded\libs\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

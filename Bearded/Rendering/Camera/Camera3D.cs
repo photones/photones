@@ -13,7 +13,7 @@ namespace Bearded.Photones.Rendering.Camera
         public Vector3 Up { get; private set; }
 
         public Camera3D()
-            : this(-Vector3.UnitZ, Vector3.Zero, Vector3.UnitY) { } // xy as 2D, z towards the screen
+            : this(Vector3.UnitZ, Vector3.Zero, Vector3.UnitY) { } // xy as 2D, z from the screen
 
         public Camera3D(Vector3 camEye, Vector3 camFocus, Vector3 camUp) {
             Eye = camEye;
@@ -75,7 +75,7 @@ namespace Bearded.Photones.Rendering.Camera
         }
 
         public void SetDistance(float distance) {
-            distance = distance.Clamped(.5f, 500f);
+            distance = distance.Clamped(1.01f, 500f);
             Vector3 focus2eye = Eye - Focus;
             focus2eye.NormalizeFast();
             Eye = Focus + focus2eye * distance;

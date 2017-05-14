@@ -45,7 +45,7 @@ namespace Bearded.Photones.GameUI
         }
 
         public override bool HandleInput(UpdateEventArgs args, InputState inputState) {
-            _camera.ChangeDistance(-inputState.InputManager.DeltaScroll * 10f);
+            _camera.ChangeDistance(-inputState.InputManager.DeltaScroll * .1f);
             return true;
         }
     }

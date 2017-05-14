@@ -1,7 +1,6 @@
 ﻿namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
-open OpenTK
 
 type Planet(initialPos: Position2) =
     inherit GameObject(initialPos)

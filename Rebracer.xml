@@ -46,7 +46,7 @@
         <PropertyValue name="Indent_CaseContents">1</PropertyValue>
         <PropertyValue name="Indent_CaseLabels">0</PropertyValue>
         <PropertyValue name="Indent_FlushLabelsLeft">0</PropertyValue>
-        <PropertyValue name="Indent_UnindentLabels">1</PropertyValue>
+        <PropertyValue name="Indent_UnindentLabels">2</PropertyValue>
         <PropertyValue name="NewLines_AnonymousTypeInitializer_EachMember">0</PropertyValue>
         <PropertyValue name="NewLines_Braces_Accessor">0</PropertyValue>
         <PropertyValue name="NewLines_Braces_AnonymousMethod">0</PropertyValue>
@@ -338,7 +338,7 @@
         <PropertyValue name="Style_UseImplicitTypeForIntrinsicTypes">&lt;CodeStyleOption SerializationVersion="1" Type="Boolean" Value="false" DiagnosticSeverity="Hidden" /&gt;</PropertyValue>
         <PropertyValue name="Style_UseImplicitTypeWhereApparent">&lt;CodeStyleOption SerializationVersion="1" Type="Boolean" Value="false" DiagnosticSeverity="Hidden" /&gt;</PropertyValue>
         <PropertyValue name="Style_UseImplicitTypeWherePossible">&lt;CodeStyleOption SerializationVersion="1" Type="Boolean" Value="false" DiagnosticSeverity="Hidden" /&gt;</PropertyValue>
-        <PropertyValue name="Style_UseVarWhenDeclaringLocals">1</PropertyValue>
+        <PropertyValue name="Style_UseVarWhenDeclaringLocals">0</PropertyValue>
         <PropertyValue name="WarnOnBuildErrors">0</PropertyValue>
         <PropertyValue name="WarnWhenMembersCauseCompilerGeneratedReferences">1</PropertyValue>
         <PropertyValue name="Wrapping_IgnoreSpacesAroundBinaryOperators">0</PropertyValue>
