@@ -10,8 +10,8 @@ namespace Bearded.Photones.Particles
 {
     class Particle
     {
-        public const float WIDTH = 24;
-        public const float HEIGHT = 24;
+        public const float WIDTH = 1;
+        public const float HEIGHT = 1;
 
         public Position2 Position { get; set; }
         public Velocity2 Velocity { get; set; }

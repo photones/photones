@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System;
+using OpenTK;
 using Bearded.Utilities.Math;
 
 namespace Bearded.Photones.Rendering.Camera
@@ -12,12 +13,12 @@ namespace Bearded.Photones.Rendering.Camera
         public Vector3 Up { get; private set; }
 
         public Camera3D()
-            : this(2f * Vector3.UnitZ, Vector3.UnitZ, Vector3.UnitY) { }
+            : this(-Vector3.UnitZ, Vector3.Zero, Vector3.UnitY) { } // xy as 2D, z towards the screen
 
         public Camera3D(Vector3 camEye, Vector3 camFocus, Vector3 camUp) {
-            Up = camUp;
             Eye = camEye;
             Focus = camFocus;
+            Up = camUp;
             updateProjection();
             updateView();
         }
@@ -30,7 +31,7 @@ namespace Bearded.Photones.Rendering.Camera
         }
 
         void updateProjection() {
-            Projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, PhotonesProgram.WIDTH / PhotonesProgram.HEIGHT, 1f, 90f);
+            Projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, PhotonesProgram.WIDTH / PhotonesProgram.HEIGHT, 1f, 100f);
         }
 
         public void Move(Vector3 direction) {
@@ -66,13 +67,15 @@ namespace Bearded.Photones.Rendering.Camera
         }
 
         public void ChangeDistance(float distanceChange) {
-            Vector3 focus2eye = Eye - Focus;
-            float distance = focus2eye.LengthFast;
-            SetDistance(distance + distanceChange);
+            if (distanceChange != 0) {
+                Vector3 focus2eye = Eye - Focus;
+                float distance = focus2eye.LengthFast;
+                SetDistance(distance + distanceChange);
+            }
         }
 
         public void SetDistance(float distance) {
-            distance = distance.Clamped(5f, 500f);
+            distance = distance.Clamped(.5f, 500f);
             Vector3 focus2eye = Eye - Focus;
             focus2eye.NormalizeFast();
             Eye = Focus + focus2eye * distance;

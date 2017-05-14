@@ -16,35 +16,36 @@ namespace Bearded.Photones.GameUI
 {
     class GameScreen : ScreenLayer
     {
-        private readonly Camera2D camera;
-        private readonly Beardgame game;
-        private readonly GeometryManager geometries;
+        private readonly Camera3D _camera;
+        private readonly Beardgame _game;
+        private readonly GeometryManager _geometries;
 
-        public override Matrix4 ProjectionMatrix => camera.Projection;
-        public override Matrix4 ViewMatrix => camera.View;
+        public override Matrix4 ProjectionMatrix => _camera.Projection;
+        public override Matrix4 ViewMatrix => _camera.View;
 
         public GameScreen(ScreenManager screenManager, GeometryManager geometryManger)
                 : base(screenManager) {
-            camera = new Camera2D();
-            game = new Beardgame();
-            geometries = geometryManger;
+            _camera = new Camera3D();
+            _game = new Beardgame();
+            _geometries = geometryManger;
         }
 
         public override void Update(UpdateEventArgs args) {
             var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.ElapsedTimeInS);
 
-            game.Update(elapsedTime);
+            _game.Update(elapsedTime);
 
             ParticleSystem.Get.Update(elapsedTime);
         }
 
         public override void Draw() {
-            game.Draw(geometries);
+            _game.Draw(_geometries);
 
-            ParticleSystem.Get.Draw(geometries);
+            ParticleSystem.Get.Draw(_geometries);
         }
 
         public override bool HandleInput(UpdateEventArgs args, InputState inputState) {
+            _camera.ChangeDistance(-inputState.InputManager.DeltaScroll * 10f);
             return true;
         }
     }

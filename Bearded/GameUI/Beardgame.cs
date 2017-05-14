@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using amulware.Graphics;
 using Bearded.Photones.Rendering;
 using GameLogic;
@@ -11,10 +9,12 @@ namespace Bearded.Photones.GameUI
 {
     class Beardgame
     {
+        const float PLANET_SIZE = 0.25f;
+
         private GameState _gameState;
 
         public Beardgame() {
-            _gameState = new GameState(new Planet[0]);
+            _gameState = GameStateFactory.BuildDummyGameState();
         }
 
         public void Update(TimeSpan elapsedTime) {
@@ -28,6 +28,11 @@ namespace Bearded.Photones.GameUI
             txtGeo.SizeCoefficient = Vector2.One;
             txtGeo.Height = 48;
             txtGeo.DrawString(0.5f * new Vector2(PhotonesProgram.WIDTH, PhotonesProgram.HEIGHT), "Hello world!", 0.5f, 0.5f);
+
+            foreach (var planet in _gameState.Planets) {
+                geometries.ParticleGeometry.Size = new Vector2(PLANET_SIZE);
+                geometries.ParticleGeometry.DrawSprite(planet.Position.NumericValue);
+            }
         }
     }
 }

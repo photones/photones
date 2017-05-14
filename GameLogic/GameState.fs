@@ -5,5 +5,6 @@ open Bearded.Utilities.SpaceTime
 type GameState(planets: Planet[]) = 
     member this.Planets: Planet[] = planets
 
-    member this.Update(elapsedTime: TimeSpan) =
-        this // TODO: map update on planets
+    member this.Update(elapsedTime: TimeSpan): GameState =
+        let planets = Array.map (fun (p: Planet) -> p.UpdatePlanet(elapsedTime)) this.Planets
+        new GameState(planets)

@@ -3,7 +3,9 @@
 open Bearded.Utilities.SpaceTime
 open OpenTK
 
-type Planet(initialPos: Vector2) =
-    inherit GameObject()
+type Planet(initialPos: Position2) =
+    inherit GameObject(initialPos)
 
-    override this.Update(elapsedTime: TimeSpan): GameObject = upcast this
+    member this.UpdatePlanet (elapsedTime: TimeSpan): Planet = this
+
+    override this.Update(elapsedTime: TimeSpan): GameObject = upcast this.UpdatePlanet elapsedTime

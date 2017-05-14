@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="GameUI\Beardgame.cs" />
     <Compile Include="GameUI\GameScreen.cs" />
+    <Compile Include="GameUI\GameStateFactory.cs" />
     <Compile Include="Input\Actions\DigitalAction.cs" />
     <Compile Include="Input\Actions\DummyAction.cs" />
     <Compile Include="Input\Actions\GamePadAction.cs" />

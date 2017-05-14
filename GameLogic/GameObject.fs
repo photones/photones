@@ -4,7 +4,7 @@ open Bearded.Utilities.SpaceTime
 open OpenTK
 
 [<AbstractClass>]
-type GameObject() =
-    member this.Position: Position2 = new Position2()
+type GameObject(pos: Position2) =
+    member this.Position: Position2 = pos
 
     abstract member Update : TimeSpan -> GameObject
