@@ -9,7 +9,7 @@ namespace Bearded.Photones.GameUI
     class Beardgame
     {
         const float PLANET_SIZE = 0.25f;
-        const float PHOTON_SIZE = 0.1f;
+        const float PHOTON_SIZE = 0.01f;
 
         private GameState _gameState;
 
