@@ -46,9 +46,13 @@ namespace Bearded.Photones
         private RenderContext renderContext;
         private ScreenManager screenManager;
 
-        public PhotonesProgram(Logger logger)
-            : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
-                GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR, GraphicsContextFlags.Default) {
+        public PhotonesProgram (Logger logger)
+            : base ((int) WIDTH, (int) HEIGHT, GraphicsMode.Default, "photones",
+                GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR, GraphicsContextFlags.Default)
+        {
+            Console.WriteLine (DisplayDevice.Default.ToString ());
+            Console.WriteLine (OpenTK.Graphics.OpenGL.GL.GetString (OpenTK.Graphics.OpenGL.StringName.Renderer));
+            Console.WriteLine (OpenTK.Graphics.OpenGL.GL.GetString (OpenTK.Graphics.OpenGL.StringName.Version));
             this.logger = logger;
         }
 

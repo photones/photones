@@ -3,8 +3,9 @@
 open Bearded.Utilities.SpaceTime
 
 type Planet(initialPos: Position2) =
-    inherit GameObject(initialPos)
-
+    member this.Position: Position2 = initialPos
     member this.UpdatePlanet (elapsedTime: TimeSpan): Planet = this
 
-    override this.Update(elapsedTime: TimeSpan): GameObject = upcast this.UpdatePlanet elapsedTime
+    interface IGameObject with
+        member this.Update(elapsedTime: TimeSpan): IGameObject = upcast this.UpdatePlanet elapsedTime
+        member this.Position: Position2 = this.Position
