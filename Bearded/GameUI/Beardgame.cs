@@ -14,7 +14,7 @@ namespace Bearded.Photones.GameUI
         private GameState _gameState;
 
         public Beardgame() {
-            _gameState = GameStateFactory.BuildInitialGameState();
+            _gameState = GameLogic.GameStateFactory.BuildInitialGameState();
         }
 
         public void Update(TimeSpan elapsedTime) {

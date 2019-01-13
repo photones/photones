@@ -56,6 +56,7 @@
     <Compile Include="Photon.fs" />
     <Compile Include="Planet.fs" />
     <Compile Include="GameState.fs" />
+    <Compile Include="GameStateFactory.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="amulware.Graphics">
