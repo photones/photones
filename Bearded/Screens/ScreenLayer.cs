@@ -1,7 +1,7 @@
 ﻿using amulware.Graphics;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
-using Bearded.Utilities.Math;
+using Bearded.Utilities;
 using OpenTK;
 
 namespace Bearded.Photones.Screens

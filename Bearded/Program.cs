@@ -3,10 +3,10 @@ using System.Globalization;
 using System.Threading;
 using amulware.Graphics;
 using Bearded.Photones.GameUI;
-using Bearded.Photones.Input;
+using Bearded.Utilities.Input;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Screens;
-using Bearded.Utilities;
+using Bearded.Utilities.IO;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
@@ -59,7 +59,7 @@ namespace Bearded.Photones
         protected override void OnLoad(EventArgs e) {
             renderContext = new RenderContext();
 
-            inputManager = new InputManager(Mouse);
+            inputManager = new InputManager(this);
 
             screenManager = new ScreenManager(inputManager);
             screenManager.AddScreenLayerOnTop(new GameScreen(screenManager, renderContext.Geometries));
@@ -80,7 +80,7 @@ namespace Bearded.Photones
         protected override void OnUpdate(UpdateEventArgs e) {
             inputManager.Update(Focused);
 
-            if (inputManager.AllKeysPressed(Key.AltLeft, Key.F4) || inputManager.AllKeysPressed(Key.ShiftLeft, Key.Escape)) {
+            if (inputManager.IsKeyPressed(Key.AltLeft) && inputManager.IsKeyPressed(Key.F4)) {
                 Close();
             }
 

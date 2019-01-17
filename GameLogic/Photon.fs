@@ -11,7 +11,7 @@ open amulware.Graphics;
 open Bearded.Utilities.SpaceTime
 open OpenTK
 open Utils
-open Bearded.Utilities.Math
+open Bearded.Utilities
 
 type public Photon(initialPos: Position2, initialSpeed: Velocity2, initialPointOfAttractionIndex: int) =
     let smallRandomVelocity () =

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using amulware.Graphics;
 using Bearded.Photones.UI;
-using Bearded.Photones.Input;
+using Bearded.Utilities.Input;
 
 namespace Bearded.Photones.Screens
 {

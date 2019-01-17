@@ -9,10 +9,11 @@
     <OutputType>Library</OutputType>
     <RootNamespace>game</RootNamespace>
     <AssemblyName>game</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFSharpCoreVersion>4.4.3.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Name>GameLogic</Name>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,29 +58,35 @@
     <Compile Include="Photon.fs" />
     <Compile Include="GameState.fs" />
     <Compile Include="GameStateFactory.fs" />
+    <Content Include="OpenTK.dll.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="amulware.Graphics">
-      <HintPath>..\Bearded\libs\amulware.Graphics.dll</HintPath>
-    </Reference>
-    <Reference Include="Bearded.Utilities">
-      <HintPath>..\Bearded\libs\Bearded.Utilities.dll</HintPath>
+    <Reference Include="FSharp.Core">
+      <HintPath>..\packages\FSharp.Core.4.5.4\lib\net45\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core">
-      <Name>FSharp.Core</Name>
-      <AssemblyName>FSharp.Core.dll</AssemblyName>
-      <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\FSharp\.NETFramework\v4.0\$(TargetFSharpCoreVersion)\FSharp.Core.dll</HintPath>
-    </Reference>
     <Reference Include="OpenTK">
-      <HintPath>..\Bearded\libs\OpenTK.dll</HintPath>
+      <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.ValueTuple">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\lib\awgraphics\src\amulware.Graphics\amulware.Graphics.csproj">
+      <Name>amulware.Graphics</Name>
+      <Project>{59beda5c-d68a-4011-89ba-c09421d22974}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\utilities\src\Bearded.Utilities.csproj">
+      <Name>Bearded.Utilities</Name>
+      <Project>{2f580b9d-6255-4427-8395-5ef236c9401c}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

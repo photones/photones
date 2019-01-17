@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Bearded.Photones.Input;
+using Bearded.Utilities.Input;
 
 namespace Bearded.Photones.UI
 {

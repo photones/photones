@@ -9,7 +9,7 @@ namespace GameLogic
 module GameStateFactory =
     open Bearded.Utilities.SpaceTime
     open System
-    open Bearded.Utilities.Math
+    open Bearded.Utilities
     open OpenTK
     open Utils
 

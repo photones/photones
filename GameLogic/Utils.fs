@@ -1,6 +1,6 @@
 ﻿module Utils
 open OpenTK
-open Bearded.Utilities.Math
+open Bearded.Utilities
 
 type OpenTK.Vector2 with
     member this.FromPolar(angle, radius) = Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius
