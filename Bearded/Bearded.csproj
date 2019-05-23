@@ -68,10 +68,12 @@
     <Compile Include="Rendering\Camera\Camera2D.cs" />
     <Compile Include="Rendering\Camera\Camera3D.cs" />
     <Compile Include="Rendering\Camera\ICamera.cs" />
+    <Compile Include="Rendering\FastParticle2DGeometry.cs" />
     <Compile Include="Rendering\FrameCompositor.cs" />
     <Compile Include="Rendering\GeometryManager.cs" />
     <Compile Include="Rendering\RenderContext.cs" />
     <Compile Include="Rendering\SurfaceManager.cs" />
+    <Compile Include="Rendering\FastParticleVertexData.cs" />
     <Compile Include="Rendering\ViewportSize.cs" />
     <Compile Include="Screens\IScreenLayer.cs" />
     <Compile Include="Screens\ScreenLayer.cs" />

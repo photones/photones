@@ -14,6 +14,7 @@ namespace Bearded.Photones.Rendering
         public Matrix4Uniform ProjectionMatrix { get; } = new Matrix4Uniform("projection");
 
         public IndexedSurface<UVColorVertexData> ParticleSurface { get; private set; }
+        public ExpandingVertexSurface<FastParticleVertexData> FastParticleSurface { get; private set; }
 
         public IndexedSurface<UVColorVertexData> FreshmanFontSurface { get; private set; }
         public IndexedSurface<UVColorVertexData> ConsolasFontSurface { get; private set; }
@@ -39,6 +40,7 @@ namespace Bearded.Photones.Rendering
         }
 
         private void createSprites() {
+            FastParticleSurface = createFastParticleSurface();
             ParticleSurface = createSpriteSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
         }
 
@@ -48,6 +50,18 @@ namespace Bearded.Photones.Rendering
 
             ConsolasFont = Font.FromJsonFile(font("inconsolata.json"));
             ConsolasFontSurface = createFontSurface("inconsolata.png");
+        }
+
+        private ExpandingVertexSurface<FastParticleVertexData> createFastParticleSurface() {
+            var t = new Texture(sprite("particles/particle.png"));
+
+            return new ExpandingVertexSurface<FastParticleVertexData>()
+                .WithShader(shaders["geometry"])
+                .AndSettings(
+                    ViewMatrix, ProjectionMatrix,
+                    new TextureUniform("diffuseTexture", t),
+                    SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
+                );
         }
 
         private IndexedSurface<UVColorVertexData> createSpriteSurface(string spritePath, float w, float h) {

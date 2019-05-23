@@ -26,6 +26,10 @@ namespace Bearded.Photones.GameUI
                 particleGeo.Size = new Vector2(PHOTON_SIZE);
                 particleGeo.DrawSprite(photon.Position.NumericValue);
             }
+            var fastParticleGeo = geometries.FastParticleGeometry;
+            foreach (var photon in _gameState.Photons) {
+                fastParticleGeo.DrawSprite(photon.Position.NumericValue);
+            }
         }
     }
 }
