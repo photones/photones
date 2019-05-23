@@ -40,10 +40,10 @@
     <None Include="assets\fonts\Inconsolata.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\geometry.fs">
+    <None Include="assets\shaders\fastparticle.gs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\geometry.vs">
+    <None Include="assets\shaders\fastparticle.vs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="assets\shaders\uvcolor.fs">
@@ -104,6 +104,9 @@
     <Content Include="assets\gfx\sprites\particles\particle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="assets\shaders\fastparticle.fs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

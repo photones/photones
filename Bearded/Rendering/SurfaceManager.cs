@@ -35,7 +35,7 @@ namespace Bearded.Photones.Rendering
             );
             new[]
             {
-                "geometry", "uvcolor"
+                "fastparticle", "uvcolor"
             }.ForEach(name => shaders.MakeShaderProgram(name));
         }
 
@@ -56,7 +56,7 @@ namespace Bearded.Photones.Rendering
             var t = new Texture(sprite("particles/particle.png"));
 
             return new ExpandingVertexSurface<FastParticleVertexData>()
-                .WithShader(shaders["geometry"])
+                .WithShader(shaders["fastparticle"])
                 .AndSettings(
                     ViewMatrix, ProjectionMatrix,
                     new TextureUniform("diffuseTexture", t),

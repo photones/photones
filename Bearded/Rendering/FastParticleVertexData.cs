@@ -43,7 +43,7 @@ namespace Bearded.Photones.Rendering
         static private void setVertexAttributes()
         {
             vertexAttributes = new VertexAttribute[]{
-                new VertexAttribute("v_position", 3, VertexAttribPointerType.Float, 24, 0),
+                new VertexAttribute("i_position", 3, VertexAttribPointerType.Float, 24, 0),
                 new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, 24, 20, true)
             };
         }
