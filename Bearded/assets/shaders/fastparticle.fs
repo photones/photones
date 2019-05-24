@@ -1,11 +1,14 @@
 ﻿#version 150
 
-in vec4 p_color;
+in Fragment
+{
+    vec3 position;
+    vec4 color;
+} vertex_in;
 
 out vec4 fragColor;
 
 void main()
 {
-	vec4 c = p_color;
-    fragColor = c;
+    fragColor = vertex_in.color;
 }

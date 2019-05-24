@@ -1,15 +1,16 @@
 ﻿#version 150
 
-uniform mat4 projection;
-uniform mat4 view;
-
 in vec3 v_position;
 in vec4 v_color;
 
-out vec4 p_color;
+out Vertex
+{
+    vec3 position;
+    vec4 color;
+} vertex_out;
 
 void main()
 {
-	gl_Position = projection * view * vec4(v_position, 1.0);
-	p_color = v_color;
+    vertex_out.position = v_position;
+    vertex_out.color = v_color;
 }
