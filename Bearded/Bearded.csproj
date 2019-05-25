@@ -46,6 +46,9 @@
     <None Include="assets\shaders\fastparticle.vs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="assets\shaders\foo.vs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="assets\shaders\uvcolor.fs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -104,6 +107,9 @@
     <Content Include="assets\gfx\sprites\particles\particle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="assets\shaders\foo.fs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="assets\shaders\fastparticle.fs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

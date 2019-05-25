@@ -33,6 +33,7 @@ namespace Bearded.Photones.Rendering
             surfaces.FreshmanFontSurface.Render();
             surfaces.ConsolasFontSurface.Render();
             surfaces.SpriteSurface.Render();
+            surfaces.FooSurface.Render();
             surfaces.FastParticleSurface.Render();
         }
 

@@ -21,14 +21,10 @@ namespace Bearded.Photones.GameUI
         }
 
         public void Draw(GeometryManager geometries) {
-            var particleGeo = geometries.SpriteGeometry;
+            var fooGeo = geometries.FooGeometry;
             foreach (var photon in _gameState.Photons) {
-                particleGeo.Size = new Vector2(PHOTON_SIZE);
-                particleGeo.DrawSprite(photon.Position.NumericValue);
-            }
-            var fastParticleGeo = geometries.FastParticleGeometry;
-            foreach (var photon in _gameState.Photons) {
-                fastParticleGeo.DrawParticle(photon.Position.NumericValue);
+                fooGeo.Size = new Vector2(PHOTON_SIZE);
+                fooGeo.DrawSprite(photon.Position.NumericValue);
             }
         }
     }

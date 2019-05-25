@@ -14,6 +14,7 @@ namespace Bearded.Photones.Rendering
         public Matrix4Uniform ProjectionMatrix { get; } = new Matrix4Uniform("projection");
 
         public IndexedSurface<UVColorVertexData> SpriteSurface { get; private set; }
+        public IndexedSurface<UVColorVertexData> FooSurface { get; private set; }
         public ExpandingVertexSurface<FastParticleVertexData> FastParticleSurface { get; private set; }
 
         public IndexedSurface<UVColorVertexData> FreshmanFontSurface { get; private set; }
@@ -35,13 +36,14 @@ namespace Bearded.Photones.Rendering
             );
             new[]
             {
-                "fastparticle", "uvcolor"
+                "fastparticle", "uvcolor", "foo"
             }.ForEach(name => shaders.MakeShaderProgram(name));
         }
 
         private void createSprites() {
             FastParticleSurface = createFastParticleSurface();
             SpriteSurface = createSpriteSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
+            FooSurface = createFooSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
         }
 
         private void createFonts() {
@@ -57,6 +59,20 @@ namespace Bearded.Photones.Rendering
 
             return new ExpandingVertexSurface<FastParticleVertexData>()
                 .WithShader(shaders["fastparticle"])
+                .AndSettings(
+                    ViewMatrix, ProjectionMatrix,
+                    new TextureUniform("diffuseTexture", t),
+                    SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
+                );
+        }
+
+        private IndexedSurface<UVColorVertexData> createFooSurface(string spritePath, float w, float h) {
+            var t = new Texture(sprite(spritePath));
+            if (t.Width != w || t.Height != h)
+                throw new ArgumentException($"Sprite size is incorrect ({spritePath}).");
+
+            return new IndexedSurface<UVColorVertexData>()
+                .WithShader(shaders["foo"])
                 .AndSettings(
                     ViewMatrix, ProjectionMatrix,
                     new TextureUniform("diffuseTexture", t),
