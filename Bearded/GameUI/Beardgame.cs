@@ -23,8 +23,7 @@ namespace Bearded.Photones.GameUI
         public void Draw(GeometryManager geometries) {
             var fooGeo = geometries.FooGeometry;
             foreach (var photon in _gameState.Photons) {
-                fooGeo.Size = new Vector2(PHOTON_SIZE);
-                fooGeo.DrawSprite(photon.Position.NumericValue);
+                fooGeo.DrawParticle(photon.Position.NumericValue);
             }
         }
     }

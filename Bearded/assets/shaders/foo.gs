@@ -1,6 +1,6 @@
 ﻿#version 150
 
-layout (triangles) in;
+layout (points) in;
 layout (triangle_strip, max_vertices = 5) out;
 
 void build_house(vec4 position)
