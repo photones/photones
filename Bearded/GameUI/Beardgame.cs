@@ -21,7 +21,7 @@ namespace Bearded.Photones.GameUI
         }
 
         public void Draw(GeometryManager geometries) {
-            var fooGeo = geometries.FooGeometry;
+            var fooGeo = geometries.PhotonGeometry;
             foreach (var photon in _gameState.Photons) {
                 fooGeo.DrawParticle(photon.Position.NumericValue);
             }

@@ -40,13 +40,10 @@
     <None Include="assets\fonts\Inconsolata.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\fastparticle.gs">
+    <None Include="assets\shaders\photon.gs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\fastparticle.vs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\shaders\foo.vs">
+    <None Include="assets\shaders\photon.vs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="assets\shaders\uvcolor.fs">
@@ -71,12 +68,12 @@
     <Compile Include="Rendering\Camera\Camera2D.cs" />
     <Compile Include="Rendering\Camera\Camera3D.cs" />
     <Compile Include="Rendering\Camera\ICamera.cs" />
-    <Compile Include="Rendering\FastParticle2DGeometry.cs" />
+    <Compile Include="Rendering\Photon2DGeometry.cs" />
     <Compile Include="Rendering\FrameCompositor.cs" />
     <Compile Include="Rendering\GeometryManager.cs" />
     <Compile Include="Rendering\RenderContext.cs" />
     <Compile Include="Rendering\SurfaceManager.cs" />
-    <Compile Include="Rendering\FastParticleVertexData.cs" />
+    <Compile Include="Rendering\PhotonVertexData.cs" />
     <Compile Include="Rendering\ViewportSize.cs" />
     <Compile Include="Screens\IScreenLayer.cs" />
     <Compile Include="Screens\ScreenLayer.cs" />
@@ -107,15 +104,9 @@
     <Content Include="assets\gfx\sprites\particles\particle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="assets\shaders\foo.gs">
+    <Content Include="assets\shaders\photon.fs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\shaders\foo.fs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\shaders\fastparticle.fs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">

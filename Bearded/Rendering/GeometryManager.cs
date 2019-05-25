@@ -9,8 +9,7 @@ namespace Bearded.Photones.Rendering
         private readonly SurfaceManager surfaces;
 
         public Sprite2DGeometry SpriteGeometry { get; private set; }
-        public FastParticle2DGeometry FooGeometry { get; private set; }
-        public FastParticle2DGeometry FastParticleGeometry { get; private set; }
+        public Photon2DGeometry PhotonGeometry { get; private set; }
 
         public FontGeometry FreshmanFont { get; private set; }
         public FontGeometry ConsolasFont { get; private set; }
@@ -24,8 +23,7 @@ namespace Bearded.Photones.Rendering
 
         private void createSprites() {
             SpriteGeometry = createSpriteGeometry(surfaces.SpriteSurface, Particle.WIDTH, Particle.HEIGHT);
-            FooGeometry = createParticleGeometry(surfaces.FooSurface);
-            FastParticleGeometry = createParticleGeometry(surfaces.FastParticleSurface);
+            PhotonGeometry = createParticleGeometry(surfaces.PhotonSurface);
         }
 
         private void createFonts() {
@@ -40,8 +38,8 @@ namespace Bearded.Photones.Rendering
             return geo;
         }
 
-        private FastParticle2DGeometry createParticleGeometry(ExpandingVertexSurface<FastParticleVertexData> surface) {
-            return new FastParticle2DGeometry(surface);
+        private Photon2DGeometry createParticleGeometry(ExpandingVertexSurface<PhotonVertexData> surface) {
+            return new Photon2DGeometry(surface);
         }
     }
 }

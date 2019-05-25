@@ -6,20 +6,20 @@ namespace Bearded.Photones.Rendering
     /// <summary>
     /// Geometry that draws particles using sprites in two dimensional space
     /// </summary>
-    public class FastParticle2DGeometry
+    public class Photon2DGeometry
     {
         /// <summary>
         /// The color to draw with
         /// </summary>
         public Color Color = Color.Pink;
 
-        public ExpandingVertexSurface<FastParticleVertexData> Surface { get; private set; }
+        public ExpandingVertexSurface<PhotonVertexData> Surface { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Sprite2DGeometry"/> class.
         /// </summary>
         /// <param name="surface">The surface used for drawing</param>
-        public FastParticle2DGeometry(ExpandingVertexSurface<FastParticleVertexData> surface)
+        public Photon2DGeometry(ExpandingVertexSurface<PhotonVertexData> surface)
         {
             Surface = surface;
         }
@@ -29,7 +29,7 @@ namespace Bearded.Photones.Rendering
         /// </summary>
         public void DrawParticle(Vector3 position)
         {
-            Surface.AddVertex(new FastParticleVertexData(position, Color));
+            Surface.AddVertex(new PhotonVertexData(position, Color));
         }
 
         /// <summary>

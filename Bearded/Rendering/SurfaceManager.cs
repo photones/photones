@@ -14,8 +14,7 @@ namespace Bearded.Photones.Rendering
         public Matrix4Uniform ProjectionMatrix { get; } = new Matrix4Uniform("projection");
 
         public IndexedSurface<UVColorVertexData> SpriteSurface { get; private set; }
-        public ExpandingVertexSurface<FastParticleVertexData> FooSurface { get; private set; }
-        public ExpandingVertexSurface<FastParticleVertexData> FastParticleSurface { get; private set; }
+        public ExpandingVertexSurface<PhotonVertexData> PhotonSurface { get; private set; }
 
         public IndexedSurface<UVColorVertexData> FreshmanFontSurface { get; private set; }
         public IndexedSurface<UVColorVertexData> ConsolasFontSurface { get; private set; }
@@ -36,14 +35,13 @@ namespace Bearded.Photones.Rendering
             );
             new[]
             {
-                "fastparticle", "uvcolor", "foo"
+                "uvcolor", "photon"
             }.ForEach(name => shaders.MakeShaderProgram(name));
         }
 
         private void createSprites() {
-            FastParticleSurface = createFastParticleSurface();
             SpriteSurface = createSpriteSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
-            FooSurface = createFooSurface();
+            PhotonSurface = createPhotonSurface();
         }
 
         private void createFonts() {
@@ -54,21 +52,9 @@ namespace Bearded.Photones.Rendering
             ConsolasFontSurface = createFontSurface("inconsolata.png");
         }
 
-        private ExpandingVertexSurface<FastParticleVertexData> createFastParticleSurface() {
-            var t = new Texture(sprite("particles/particle.png"));
-
-            return new ExpandingVertexSurface<FastParticleVertexData>(OpenTK.Graphics.OpenGL.PrimitiveType.Points)
-                .WithShader(shaders["fastparticle"])
-                .AndSettings(
-                    ViewMatrix, ProjectionMatrix,
-                    new TextureUniform("diffuseTexture", t),
-                    SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
-                );
-        }
-
-        private ExpandingVertexSurface<FastParticleVertexData> createFooSurface() {
-            return new ExpandingVertexSurface<FastParticleVertexData>(OpenTK.Graphics.OpenGL.PrimitiveType.Points)
-                .WithShader(shaders["foo"])
+        private ExpandingVertexSurface<PhotonVertexData> createPhotonSurface() {
+            return new ExpandingVertexSurface<PhotonVertexData>(OpenTK.Graphics.OpenGL.PrimitiveType.Points)
+                .WithShader(shaders["photon"])
                 .AndSettings(
                     ViewMatrix, ProjectionMatrix,
                     SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask

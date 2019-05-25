@@ -5,9 +5,9 @@ using amulware.Graphics;
 namespace Bearded.Photones.Rendering
 {
     /// <summary>
-    /// Light vertex data used for rendering textured vertices, like sprites.
+    /// Light vertex data used for rendering photons
     /// </summary>
-    public struct FastParticleVertexData : IVertexData
+    public struct PhotonVertexData : IVertexData
     {
         // add attributes and constructors here
         /// <summary>
@@ -34,7 +34,7 @@ namespace Bearded.Photones.Rendering
 
         /// <param name="position">The position.</param>
         /// <param name="color">The color.</param>
-        public FastParticleVertexData(Vector3 position, Color color)
+        public PhotonVertexData(Vector3 position, Color color)
         {
             this.Position = position;
             this.Color = color;
