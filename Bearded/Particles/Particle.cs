@@ -10,8 +10,8 @@ namespace Bearded.Photones.Particles
 {
     class Particle
     {
-        public const float WIDTH = 1;
-        public const float HEIGHT = 1;
+        public const float WIDTH = 24;
+        public const float HEIGHT = 24;
 
         public Position2 Position { get; set; }
         public Velocity2 Velocity { get; set; }
@@ -45,9 +45,9 @@ namespace Bearded.Photones.Particles
         public void Draw(GeometryManager geometries) {
             float lifetime = 1 - (float)(Lifetime / InitialLifetime);
 
-            geometries.ParticleGeometry.Size = SizeBehavior.Calculate(this, lifetime);
-            geometries.ParticleGeometry.Color = new Color(ColorBehavior.Calculate(this, lifetime), (byte)(255 * AlphaBehavior.Calculate(this, lifetime)));
-            geometries.ParticleGeometry.DrawSprite(Position.NumericValue);
+            geometries.SpriteGeometry.Size = SizeBehavior.Calculate(this, lifetime);
+            geometries.SpriteGeometry.Color = new Color(ColorBehavior.Calculate(this, lifetime), (byte)(255 * AlphaBehavior.Calculate(this, lifetime)));
+            geometries.SpriteGeometry.DrawSprite(Position.NumericValue);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Bearded.Photones.Rendering
         public Matrix4Uniform ViewMatrix { get; } = new Matrix4Uniform("view");
         public Matrix4Uniform ProjectionMatrix { get; } = new Matrix4Uniform("projection");
 
-        public IndexedSurface<UVColorVertexData> ParticleSurface { get; private set; }
+        public IndexedSurface<UVColorVertexData> SpriteSurface { get; private set; }
         public ExpandingVertexSurface<FastParticleVertexData> FastParticleSurface { get; private set; }
 
         public IndexedSurface<UVColorVertexData> FreshmanFontSurface { get; private set; }
@@ -41,7 +41,7 @@ namespace Bearded.Photones.Rendering
 
         private void createSprites() {
             FastParticleSurface = createFastParticleSurface();
-            ParticleSurface = createSpriteSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
+            SpriteSurface = createSpriteSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
         }
 
         private void createFonts() {
@@ -66,6 +66,8 @@ namespace Bearded.Photones.Rendering
 
         private IndexedSurface<UVColorVertexData> createSpriteSurface(string spritePath, float w, float h) {
             var t = new Texture(sprite(spritePath));
+            if (t.Width != w || t.Height != h)
+                throw new ArgumentException($"Sprite size is incorrect ({spritePath}).");
 
             return new IndexedSurface<UVColorVertexData>()
                 .WithShader(shaders["uvcolor"])

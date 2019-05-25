@@ -8,7 +8,7 @@ namespace Bearded.Photones.Rendering
     {
         private readonly SurfaceManager surfaces;
 
-        public Sprite2DGeometry ParticleGeometry { get; private set; }
+        public Sprite2DGeometry SpriteGeometry { get; private set; }
         public FastParticle2DGeometry FastParticleGeometry { get; private set; }
 
         public FontGeometry FreshmanFont { get; private set; }
@@ -22,7 +22,7 @@ namespace Bearded.Photones.Rendering
         }
 
         private void createSprites() {
-            ParticleGeometry = createSpriteGeometry(surfaces.ParticleSurface, Particle.WIDTH, Particle.HEIGHT);
+            SpriteGeometry = createSpriteGeometry(surfaces.SpriteSurface, Particle.WIDTH, Particle.HEIGHT);
             FastParticleGeometry = createParticleGeometry(surfaces.FastParticleSurface);
         }
 

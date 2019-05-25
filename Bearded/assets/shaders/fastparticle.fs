@@ -10,5 +10,6 @@ out vec4 fragColor;
 
 void main()
 {
-    fragColor = vertex_in.color;
+    //fragColor = vertex_in.color;
+    fragColor = vec4(1.0, 0.5, 0.5, 0.5);
 }

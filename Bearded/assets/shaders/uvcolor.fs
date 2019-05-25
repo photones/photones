@@ -9,6 +9,6 @@ out vec4 fragColor;
 
 void main()
 {
-	vec4 c = p_color * texture(diffuse, p_texcoord);
+    vec4 c = p_color * texture(diffuse, p_texcoord);
     fragColor = c;
 }

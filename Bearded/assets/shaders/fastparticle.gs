@@ -30,8 +30,6 @@ void main()
     vec3 top = vertex_in[0].position - uY;
     vec3 bottom = vertex_in[0].position + uY;
 
-    vec3 corner1 = vertex_in[0].position;
-
 
     // topleft
     vec3 p = top - uX;
