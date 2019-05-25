@@ -107,6 +107,9 @@
     <Content Include="assets\gfx\sprites\particles\particle.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="assets\shaders\foo.gs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="assets\shaders\foo.fs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
