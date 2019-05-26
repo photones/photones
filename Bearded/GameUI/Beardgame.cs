@@ -19,10 +19,15 @@ namespace Bearded.Photones.GameUI
         }
 
         public void Draw(GeometryManager geometries) {
-            var fooGeo = geometries.PhotonGeometry;
-            foreach (var photon in _gameState.Photons) {
-                fooGeo.DrawParticle(photon.Position.NumericValue);
+            foreach (var photon in _gameState.Photons)
+            {
+                geometries.PhotonGeometry.DrawParticle(photon.Position.NumericValue);
             }
+            //foreach (var photon in _gameState.Photons)
+            //{
+            //    geometries.SpriteGeometry.Size = new Vector2(0.01f, 0.01f);
+            //    geometries.SpriteGeometry.DrawSprite(photon.Position.NumericValue);
+            //}
         }
     }
 }

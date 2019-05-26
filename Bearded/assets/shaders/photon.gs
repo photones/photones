@@ -14,7 +14,7 @@ out Fragment {
 
 
 void main() {
-    float size = 0.004;
+    float size = 0.003;
 
     gl_Position = v[0].position + vec4(-size, -size, 0.0, 0.0);    // 1:bottom-left
     f.color = v[0].color;

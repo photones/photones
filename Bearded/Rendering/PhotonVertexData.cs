@@ -40,11 +40,11 @@ namespace Bearded.Photones.Rendering
             this.Color = color;
         }
 
-        static private void setVertexAttributes()
+        private void setVertexAttributes()
         {
             vertexAttributes = new VertexAttribute[]{
-                new VertexAttribute("v_position", 3, VertexAttribPointerType.Float, 24, 0),
-                new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, 24, 12, true)
+                new VertexAttribute("v_position", 3, VertexAttribPointerType.Float, Size(), 0),
+                new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, Size(), 12, true)
             };
         }
 
