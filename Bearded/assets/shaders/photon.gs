@@ -3,19 +3,31 @@
 layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
 
-void build_rect(vec4 position)
-{
-    gl_Position = position + vec4(-0.002, -0.002, 0.0, 0.0);    // 1:bottom-left
-    EmitVertex();
-    gl_Position = position + vec4( 0.002, -0.002, 0.0, 0.0);    // 2:bottom-right
-    EmitVertex();
-    gl_Position = position + vec4(-0.002,  0.002, 0.0, 0.0);    // 3:top-left
-    EmitVertex();
-    gl_Position = position + vec4( 0.002,  0.002, 0.0, 0.0);    // 4:top-right
-    EmitVertex();
-    EndPrimitive();
-}
+in Vertex {
+    vec4 position;
+    vec4 color;
+} v[];
+
+out Fragment {
+    vec4 color;
+} f;
+
 
 void main() {
-    build_rect(gl_in[0].gl_Position);
+    float size = 0.004;
+
+    gl_Position = v[0].position + vec4(-size, -size, 0.0, 0.0);    // 1:bottom-left
+    f.color = v[0].color;
+    EmitVertex();
+    gl_Position = v[0].position + vec4( size, -size, 0.0, 0.0);    // 2:bottom-right
+    f.color = v[0].color;
+    EmitVertex();
+    gl_Position = v[0].position + vec4(-size,  size, 0.0, 0.0);    // 3:top-left
+    f.color = v[0].color;
+    EmitVertex();
+    gl_Position = v[0].position + vec4( size,  size, 0.0, 0.0);    // 4:top-right
+    f.color = v[0].color;
+    EmitVertex();
+
+    EndPrimitive();
 }

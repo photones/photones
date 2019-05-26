@@ -8,8 +8,6 @@ namespace Bearded.Photones.GameUI
 {
     class Beardgame
     {
-        const float PHOTON_SIZE = 0.01f;
-
         private GameState _gameState;
 
         public Beardgame() {
