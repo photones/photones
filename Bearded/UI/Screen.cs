@@ -1,9 +1,7 @@
 ﻿using Bearded.Photones.Rendering;
 
-namespace Bearded.Photones.UI
-{
-    class Screen : Bounds
-    {
+namespace Bearded.Photones.UI {
+    class Screen : Bounds {
         private readonly ScreenDimension screenX;
         private readonly ScreenDimension screenY;
 
@@ -19,8 +17,7 @@ namespace Bearded.Photones.UI
             screenY.OnResize(viewportSize);
         }
 
-        private abstract class ScreenDimension : IDimension
-        {
+        private abstract class ScreenDimension : IDimension {
             public float Min => 0;
             public float Max { get; private set; }
 
@@ -31,13 +28,11 @@ namespace Bearded.Photones.UI
             protected abstract float GetDimension(ViewportSize size);
         }
 
-        private class ScreenWidth : ScreenDimension
-        {
+        private class ScreenWidth : ScreenDimension {
             protected override float GetDimension(ViewportSize size) => size.Width;
         }
 
-        private class ScreenHeight : ScreenDimension
-        {
+        private class ScreenHeight : ScreenDimension {
             protected override float GetDimension(ViewportSize size) => size.Height;
         }
     }

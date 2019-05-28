@@ -6,10 +6,8 @@ using Bearded.Utilities.SpaceTime;
 using OpenTK;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
-namespace Bearded.Photones.Particles
-{
-    class Particle
-    {
+namespace Bearded.Photones.Particles {
+    class Particle {
         public const float WIDTH = 24;
         public const float HEIGHT = 24;
 

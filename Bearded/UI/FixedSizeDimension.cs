@@ -1,7 +1,5 @@
-﻿namespace Bearded.Photones.UI
-{
-    class FixedSizeDimension : IDimension
-    {
+﻿namespace Bearded.Photones.UI {
+    class FixedSizeDimension : IDimension {
         private readonly IDimension parent;
         private readonly float size;
         private readonly float anchor;

@@ -2,16 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Bearded.Photones.Utilities
-{
-    static class EnumerableProxy
-    {
+namespace Bearded.Photones.Utilities {
+    static class EnumerableProxy {
         public static EnumerableProxy<T> AsReadOnlyEnumerable<T>(this IEnumerable<T> enumerable)
             => new EnumerableProxy<T>(enumerable);
     }
 
-    struct EnumerableProxy<T> : IEnumerable<T>
-    {
+    struct EnumerableProxy<T> : IEnumerable<T> {
         private readonly IEnumerable<T> list;
 
         public EnumerableProxy(IEnumerable<T> list) {

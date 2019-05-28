@@ -4,10 +4,8 @@ using OpenTK;
 using System;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
-namespace Bearded.Photones.GameUI
-{
-    class Beardgame
-    {
+namespace Bearded.Photones.GameUI {
+    class Beardgame {
         private GameState _gameState;
         private double _fpsSmoothAvg = 60;
         private double _fpsSmoothDev = 10;

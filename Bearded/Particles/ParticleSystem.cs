@@ -2,10 +2,8 @@
 using Bearded.Photones.Rendering;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
-namespace Bearded.Photones.Particles
-{
-    class ParticleSystem
-    {
+namespace Bearded.Photones.Particles {
+    class ParticleSystem {
         private static ParticleSystem particleSystem;
         public static ParticleSystem Get => particleSystem ?? (particleSystem = new ParticleSystem());
 
