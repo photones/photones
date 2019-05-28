@@ -40,10 +40,10 @@
     <None Include="assets\fonts\Inconsolata.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\geometry.fs">
+    <None Include="assets\shaders\photon.gs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="assets\shaders\geometry.vs">
+    <None Include="assets\shaders\photon.vs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="assets\shaders\uvcolor.fs">
@@ -68,10 +68,12 @@
     <Compile Include="Rendering\Camera\Camera2D.cs" />
     <Compile Include="Rendering\Camera\Camera3D.cs" />
     <Compile Include="Rendering\Camera\ICamera.cs" />
+    <Compile Include="Rendering\Photon2DGeometry.cs" />
     <Compile Include="Rendering\FrameCompositor.cs" />
     <Compile Include="Rendering\GeometryManager.cs" />
     <Compile Include="Rendering\RenderContext.cs" />
     <Compile Include="Rendering\SurfaceManager.cs" />
+    <Compile Include="Rendering\PhotonVertexData.cs" />
     <Compile Include="Rendering\ViewportSize.cs" />
     <Compile Include="Screens\IScreenLayer.cs" />
     <Compile Include="Screens\ScreenLayer.cs" />
@@ -100,6 +102,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\gfx\sprites\particles\particle.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\shaders\photon.fs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

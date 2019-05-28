@@ -13,6 +13,6 @@ type GameState(photons : Photon.T list) =
         List.filter (areNeighbors photon) this.Photons
 
     member this.Update(elapsedTime: TimeSpan): GameState =
-        let neighborhoods = List.map this.findNeighbors this.Photons
+        let neighborhoods = List.map (fun x -> []) this.Photons
         let photons = List.map (Photon.update elapsedTime) (List.zip this.Photons neighborhoods)
         GameState(photons)

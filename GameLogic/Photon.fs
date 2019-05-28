@@ -55,6 +55,7 @@ module Photon =
             this.Speed
             + capAccToGoal vToGoal
             + capAccNeighborReaction vNeighborReaction
+            + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * elapsedTime
         let pointOfAttractionIndex = if hasReachedPointOfAttraction this then (this.PoaIndex + 1) % pointsOfAttraction.Length else this.PoaIndex

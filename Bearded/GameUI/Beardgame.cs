@@ -6,8 +6,6 @@ using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
 namespace Bearded.Photones.GameUI {
     class Beardgame {
-        const float PHOTON_SIZE = 0.01f;
-
         private GameState _gameState;
 
         public Beardgame() {
@@ -19,10 +17,8 @@ namespace Bearded.Photones.GameUI {
         }
 
         public void Draw(GeometryManager geometries) {
-            var particleGeo = geometries.ParticleGeometry;
             foreach (var photon in _gameState.Photons) {
-                particleGeo.Size = new Vector2(PHOTON_SIZE);
-                particleGeo.DrawSprite(photon.Position.NumericValue);
+                geometries.PhotonGeometry.DrawParticle(photon.Position.NumericValue);
             }
         }
     }
