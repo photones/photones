@@ -60,8 +60,9 @@ namespace Bearded.Photones.Rendering {
 
         private IndexedSurface<UVColorVertexData> createSpriteSurface(string spritePath, float w, float h) {
             var t = new Texture(sprite(spritePath));
-            if (t.Width != w || t.Height != h)
+            if (t.Width != w || t.Height != h) {
                 throw new ArgumentException($"Sprite size is incorrect ({spritePath}).");
+            }
 
             return new IndexedSurface<UVColorVertexData>()
                 .WithShader(shaders["uvcolor"])

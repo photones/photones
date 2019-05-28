@@ -2,13 +2,11 @@
 using OpenTK.Graphics.OpenGL;
 using amulware.Graphics;
 
-namespace Bearded.Photones.Rendering
-{
+namespace Bearded.Photones.Rendering {
     /// <summary>
     /// Light vertex data used for rendering photons
     /// </summary>
-    public struct PhotonVertexData : IVertexData
-    {
+    public struct PhotonVertexData : IVertexData {
         // add attributes and constructors here
         /// <summary>
         /// The position
@@ -25,8 +23,7 @@ namespace Bearded.Photones.Rendering
         /// <returns>
         /// Struct's size in bytes
         /// </returns>
-        public int Size()
-        {
+        public int Size() {
             return 16;
         }
 
@@ -34,14 +31,12 @@ namespace Bearded.Photones.Rendering
 
         /// <param name="position">The position.</param>
         /// <param name="color">The color.</param>
-        public PhotonVertexData(Vector3 position, Color color)
-        {
+        public PhotonVertexData(Vector3 position, Color color) {
             this.Position = position;
             this.Color = color;
         }
 
-        private void setVertexAttributes()
-        {
+        private void setVertexAttributes() {
             vertexAttributes = new VertexAttribute[]{
                 new VertexAttribute("v_position", 3, VertexAttribPointerType.Float, Size(), 0),
                 new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, Size(), 12, true)
@@ -54,8 +49,7 @@ namespace Bearded.Photones.Rendering
         /// <returns>
         /// Array of <see cref="VertexAttribute" />
         /// </returns>
-        public VertexAttribute[] VertexAttributes()
-        {
+        public VertexAttribute[] VertexAttributes() {
             if (vertexAttributes == null)
                 setVertexAttributes();
             return vertexAttributes;
