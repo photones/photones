@@ -10,13 +10,11 @@ namespace Bearded.Photones.GameUI {
         private double _fpsSmoothAvg = 60;
         private double _fpsSmoothDev = 10;
 
-        public Beardgame()
-        {
+        public Beardgame() {
             _gameState = GameStateFactory.BuildInitialGameState();
         }
 
-        public void Update(TimeSpan elapsedTime)
-        {
+        public void Update(TimeSpan elapsedTime) {
             if (elapsedTime > new TimeSpan(0.0001)) // This is basically to skip the first frame
             {
                 var fps = TimeSpan.One / elapsedTime;
@@ -29,20 +27,13 @@ namespace Bearded.Photones.GameUI {
             _gameState = _gameState.Update(elapsedTime);
         }
 
-        public void Draw(GeometryManager geometries)
-        {
+        public void Draw(GeometryManager geometries) {
             geometries.ConsolasFont.Height = 0.1f;
             geometries.ConsolasFont.SizeCoefficient = new Vector2(1, -1);
             geometries.ConsolasFont.DrawString(new Vector2(-1, 1), $"{(int)_fpsSmoothAvg} +/- {(int)_fpsSmoothDev}");
-            foreach (var photon in _gameState.Photons)
-            {
+            foreach (var photon in _gameState.Photons) {
                 geometries.PhotonGeometry.DrawParticle(photon.Position.NumericValue);
             }
-            //foreach (var photon in _gameState.Photons)
-            //{
-            //    geometries.SpriteGeometry.Size = new Vector2(0.01f, 0.01f);
-            //    geometries.SpriteGeometry.DrawSprite(photon.Position.NumericValue);
-            //}
         }
     }
 }
