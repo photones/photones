@@ -5,10 +5,8 @@ using Bearded.Photones.UI;
 using Bearded.Photones.UI.Components;
 using OpenTK;
 
-namespace Bearded.Photones.Screens
-{
-    abstract class UIScreenLayer : ScreenLayer
-    {
+namespace Bearded.Photones.Screens {
+    abstract class UIScreenLayer : ScreenLayer {
         private readonly float originX;
         private readonly float originY;
         private readonly bool flipY;

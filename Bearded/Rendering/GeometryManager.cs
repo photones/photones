@@ -2,10 +2,8 @@
 using Bearded.Photones.Particles;
 using OpenTK;
 
-namespace Bearded.Photones.Rendering
-{
-    class GeometryManager
-    {
+namespace Bearded.Photones.Rendering {
+    class GeometryManager {
         private readonly SurfaceManager surfaces;
 
         public Sprite2DGeometry SpriteGeometry { get; private set; }

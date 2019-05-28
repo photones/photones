@@ -1,7 +1,5 @@
-﻿namespace Bearded.Photones.UI
-{
-    class FixedOffsetDimension : IDimension
-    {
+﻿namespace Bearded.Photones.UI {
+    class FixedOffsetDimension : IDimension {
         private readonly IDimension parent;
         private readonly float offsetStart;
         private readonly float offsetEnd;
