@@ -1,9 +1,7 @@
 ﻿using OpenTK;
 
-namespace Bearded.Photones.Particles.Behaviors.LerpLifetime
-{
-    class LerpVector2Behavior : IParticleBehavior<Vector2>
-    {
+namespace Bearded.Photones.Particles.Behaviors.LerpLifetime {
+    class LerpVector2Behavior : IParticleBehavior<Vector2> {
         Vector2 start, end;
 
         public LerpVector2Behavior(float start, float end) : this(new Vector2(start), new Vector2(end)) { }

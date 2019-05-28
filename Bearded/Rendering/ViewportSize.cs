@@ -1,7 +1,5 @@
-﻿namespace Bearded.Photones.Rendering
-{
-    public struct ViewportSize
-    {
+﻿namespace Bearded.Photones.Rendering {
+    public struct ViewportSize {
         public int Width { get; }
         public int Height { get; }
         public float AspectRatio { get; }

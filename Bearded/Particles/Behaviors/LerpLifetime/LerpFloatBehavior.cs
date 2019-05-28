@@ -1,7 +1,5 @@
-﻿namespace Bearded.Photones.Particles.Behaviors.LerpLifetime
-{
-    class LerpFloatBehavior : IParticleBehavior<float>
-    {
+﻿namespace Bearded.Photones.Particles.Behaviors.LerpLifetime {
+    class LerpFloatBehavior : IParticleBehavior<float> {
         float start, end;
 
         public LerpFloatBehavior(float start, float end) {

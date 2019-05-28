@@ -2,10 +2,8 @@
 using Bearded.Photones.Screens;
 using OpenTK.Graphics.OpenGL;
 
-namespace Bearded.Photones.Rendering
-{
-    class FrameCompositor
-    {
+namespace Bearded.Photones.Rendering {
+    class FrameCompositor {
         private readonly SurfaceManager surfaces;
 
         public FrameCompositor(SurfaceManager surfaces) {

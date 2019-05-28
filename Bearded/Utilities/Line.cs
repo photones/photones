@@ -1,9 +1,7 @@
 ﻿using OpenTK;
 
-namespace Bearded.Photones.Utilities
-{
-    struct Line
-    {
+namespace Bearded.Photones.Utilities {
+    struct Line {
         public Vector2 Start { get; }
         public Vector2 Direction { get; }
 

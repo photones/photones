@@ -4,10 +4,8 @@ using amulware.Graphics;
 using Bearded.Photones.UI;
 using Bearded.Utilities.Input;
 
-namespace Bearded.Photones.Screens
-{
-    class ScreenManager : ScreenLayerCollection
-    {
+namespace Bearded.Photones.Screens {
+    class ScreenManager : ScreenLayerCollection {
         private readonly InputManager inputManager;
         private readonly List<char> pressedCharacterList = new List<char>();
         private readonly ConcurrentQueue<char> pressedCharacterQueue = new ConcurrentQueue<char>();

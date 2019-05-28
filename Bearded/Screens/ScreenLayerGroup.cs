@@ -1,10 +1,8 @@
 ﻿using amulware.Graphics;
 using Bearded.Photones.UI;
 
-namespace Bearded.Photones.Screens
-{
-    abstract class ScreenLayerGroup : ScreenLayerCollection, IScreenLayer
-    {
+namespace Bearded.Photones.Screens {
+    abstract class ScreenLayerGroup : ScreenLayerCollection, IScreenLayer {
         private readonly ScreenLayerCollection parent;
 
         protected ScreenLayerGroup(ScreenLayerCollection parent) {

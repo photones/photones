@@ -1,9 +1,7 @@
 ﻿using OpenTK;
 
-namespace Bearded.Photones.Rendering.Camera
-{
-    public class Camera2D : ICamera
-    {
+namespace Bearded.Photones.Rendering.Camera {
+    public class Camera2D : ICamera {
         public Matrix4 View { get; private set; }
         public Matrix4 Projection { get; private set; }
 
