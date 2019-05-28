@@ -4,10 +4,8 @@ using GameLogic;
 using OpenTK;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
-namespace Bearded.Photones.GameUI
-{
-    class Beardgame
-    {
+namespace Bearded.Photones.GameUI {
+    class Beardgame {
         const float PHOTON_SIZE = 0.01f;
 
         private GameState _gameState;

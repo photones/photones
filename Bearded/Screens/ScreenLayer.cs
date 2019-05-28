@@ -4,10 +4,8 @@ using Bearded.Photones.UI;
 using Bearded.Utilities;
 using OpenTK;
 
-namespace Bearded.Photones.Screens
-{
-    abstract class ScreenLayer : IScreenLayer
-    {
+namespace Bearded.Photones.Screens {
+    abstract class ScreenLayer : IScreenLayer {
         private const float fovy = Mathf.PiOver2;
         private const float zNear = .1f;
         private const float zFar = 1024f;

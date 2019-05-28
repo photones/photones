@@ -12,10 +12,8 @@ using Bearded.Utilities.SpaceTime;
 using OpenTK;
 using OpenTK.Input;
 
-namespace Bearded.Photones.GameUI
-{
-    class GameScreen : ScreenLayer
-    {
+namespace Bearded.Photones.GameUI {
+    class GameScreen : ScreenLayer {
         private readonly Camera3D _camera;
         private readonly Beardgame _game;
         private readonly GeometryManager _geometries;

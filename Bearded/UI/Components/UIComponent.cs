@@ -1,10 +1,8 @@
 ﻿using amulware.Graphics;
 using Bearded.Photones.Rendering;
 
-namespace Bearded.Photones.UI.Components
-{
-    abstract class UIComponent
-    {
+namespace Bearded.Photones.UI.Components {
+    abstract class UIComponent {
         protected Bounds Bounds { get; }
 
         protected UIComponent(Bounds bounds) {

@@ -2,10 +2,8 @@
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
 
-namespace Bearded.Photones.Screens
-{
-    interface IScreenLayer
-    {
+namespace Bearded.Photones.Screens {
+    interface IScreenLayer {
         void Update(UpdateEventArgs args);
         // Should return false if the input should not be propagated.
         bool HandleInput(UpdateEventArgs args, InputState inputState);

@@ -3,10 +3,8 @@ using amulware.Graphics;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
 
-namespace Bearded.Photones.Screens
-{
-    class ScreenLayerCollection
-    {
+namespace Bearded.Photones.Screens {
+    class ScreenLayerCollection {
         private readonly List<IScreenLayer> screenLayers = new List<IScreenLayer>();
         private readonly HashSet<IScreenLayer> screenLayersToRemove = new HashSet<IScreenLayer>();
         private ViewportSize viewportSize;

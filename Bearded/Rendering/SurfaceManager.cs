@@ -4,10 +4,8 @@ using amulware.Graphics.ShaderManagement;
 using Bearded.Photones.Particles;
 using Bearded.Photones.Utilities;
 
-namespace Bearded.Photones.Rendering
-{
-    class SurfaceManager
-    {
+namespace Bearded.Photones.Rendering {
+    class SurfaceManager {
         private readonly ShaderManager shaders = new ShaderManager();
 
         public Matrix4Uniform ViewMatrix { get; } = new Matrix4Uniform("view");
@@ -32,8 +30,7 @@ namespace Bearded.Photones.Rendering
             shaders.Add(
                 ShaderFileLoader.CreateDefault(asset("shaders/")).Load(".")
             );
-            new[]
-            {
+            new[] {
                 "geometry", "uvcolor"
             }.ForEach(name => shaders.MakeShaderProgram(name));
         }
@@ -77,11 +74,9 @@ namespace Bearded.Photones.Rendering
         private static string sprite(string path) => asset("gfx/sprites/" + path);
     }
 
-    static class SurfaceExtensions
-    {
+    static class SurfaceExtensions {
         public struct SurfaceWrapper<T>
-            where T : Surface
-        {
+            where T : Surface {
             private readonly T surface;
 
             public SurfaceWrapper(T surface) {
