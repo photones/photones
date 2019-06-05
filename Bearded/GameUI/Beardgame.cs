@@ -35,7 +35,6 @@ namespace Bearded.Photones.GameUI {
         }
 
         public void Update(TimeSpan elapsedTime) {
-
             if (elapsedTime < new TimeSpan(0.0001)) {
                 // This is basically to skip the first frame, because its elapsed time is out of whack
                 return;
@@ -45,7 +44,18 @@ namespace Bearded.Photones.GameUI {
                 _frameNrMod60 = 0;
             }
 
-            #region FPS calculcations
+            CalculateFpsStats(elapsedTime);
+
+            var watch = Stopwatch.StartNew();
+            _gameState = _gameState.Update(elapsedTime);
+            watch.Stop();
+
+            CalculateFrametimeStats(watch);
+
+            _frameNrMod60++;
+        }
+
+        private void CalculateFpsStats(TimeSpan elapsedTime) {
             var fps = TimeSpan.One / elapsedTime;
             _fpsSmoothedAvg = FPS_SMOOTHING_FACTOR * fps + (1 - FPS_SMOOTHING_FACTOR) * _fpsSmoothedAvg;
             var fpsDev = Math.Abs(_fpsSmoothedAvg - fps);
@@ -60,15 +70,9 @@ namespace Bearded.Photones.GameUI {
                 _fpsCurrentMax = 0;
                 _fpsCurrentMin = double.MaxValue;
             }
-            #endregion
+        }
 
-
-            var watch = Stopwatch.StartNew();
-            _gameState = _gameState.Update(elapsedTime);
-            watch.Stop();
-
-
-            #region Frametime calculations
+        private void CalculateFrametimeStats(Stopwatch watch) {
             // frametime is in microseconds
             var frametime = watch.Elapsed.Ticks / (System.TimeSpan.TicksPerMillisecond / 1000);
             _frametimeSmoothedAvg = FRAMETIME_SMOOTHING_FACTOR * frametime + (1 - FRAMETIME_SMOOTHING_FACTOR) * _frametimeSmoothedAvg;
@@ -84,9 +88,6 @@ namespace Bearded.Photones.GameUI {
                 _frametimeCurrentMax = 0;
                 _frametimeCurrentMin = double.MaxValue;
             }
-            #endregion
-
-            _frameNrMod60++;
         }
 
         public void Draw(GeometryManager geometries) {

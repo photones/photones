@@ -3,7 +3,7 @@ using amulware.Graphics;
 
 namespace Bearded.Photones.Rendering {
     /// <summary>
-    /// Geometry that draws particles using photon in two dimensional space
+    /// Geometry that draws photons in two dimensional space
     /// </summary>
     public class Photon2DGeometry {
         /// <summary>
