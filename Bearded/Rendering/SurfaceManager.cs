@@ -22,9 +22,7 @@ namespace Bearded.Photones.Rendering {
 
         public SurfaceManager() {
             addShaders();
-
-            createSprites();
-            createFonts();
+            createSurfaces();
         }
 
         private void addShaders() {
@@ -36,15 +34,12 @@ namespace Bearded.Photones.Rendering {
             }.ForEach(name => shaders.MakeShaderProgram(name));
         }
 
-        private void createSprites() {
+        private void createSurfaces() {
             SpriteSurface = createSpriteSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
             PhotonSurface = createPhotonSurface();
-        }
 
-        private void createFonts() {
             FreshmanFont = Font.FromJsonFile(font("freshman_monospaced_numbers.json"));
             FreshmanFontSurface = createFontSurface("freshman.png");
-
             ConsolasFont = Font.FromJsonFile(font("inconsolata.json"));
             ConsolasFontSurface = createFontSurface("inconsolata.png");
         }
@@ -67,7 +62,8 @@ namespace Bearded.Photones.Rendering {
             return new IndexedSurface<UVColorVertexData>()
                 .WithShader(shaders["uvcolor"])
                 .AndSettings(
-                    ViewMatrix, ProjectionMatrix,
+                    ViewMatrix,
+                    ProjectionMatrix,
                     new TextureUniform("diffuseTexture", t),
                     SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
                 );
@@ -77,7 +73,8 @@ namespace Bearded.Photones.Rendering {
             return new IndexedSurface<UVColorVertexData>()
                 .WithShader(shaders["uvcolor"])
                 .AndSettings(
-                    ViewMatrix, ProjectionMatrix,
+                    ViewMatrix,
+                    ProjectionMatrix,
                     new TextureUniform("diffuse", new Texture(font(fontPath), preMultiplyAlpha: true)),
                     SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
                 );
