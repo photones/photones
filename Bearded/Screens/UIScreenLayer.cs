@@ -20,7 +20,7 @@ namespace Bearded.Photones.Screens {
             Screen = Screen.GetCanvas();
         }
 
-        public override void Update(UpdateEventArgs args) {
+        public override void Update(UpdateEventArgsWithPerformanceStats args) {
             _components.ForEach(c => c.Update(args));
         }
 

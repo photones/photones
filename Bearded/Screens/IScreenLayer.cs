@@ -4,7 +4,7 @@ using Bearded.Photones.UI;
 
 namespace Bearded.Photones.Screens {
     interface IScreenLayer {
-        void Update(UpdateEventArgs args);
+        void Update(UpdateEventArgsWithPerformanceStats args);
         // Should return false if the input should not be propagated.
         bool HandleInput(UpdateEventArgs args, InputState inputState);
         void OnResize(ViewportSize newSize);

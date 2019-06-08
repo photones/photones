@@ -44,6 +44,7 @@ namespace Bearded.Photones {
         private InputManager inputManager;
         private RenderContext renderContext;
         private ScreenManager screenManager;
+        private PerformanceMonitor _performanceMonitor;
 
         public PhotonesProgram(Logger logger)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
@@ -52,6 +53,7 @@ namespace Bearded.Photones {
             Console.WriteLine(GL.GetString(StringName.Renderer));
             Console.WriteLine(GL.GetString(StringName.Version));
             this.logger = logger;
+            _performanceMonitor = new PerformanceMonitor();
         }
 
         protected override void OnLoad(EventArgs e) {
@@ -76,14 +78,18 @@ namespace Bearded.Photones {
             inputManager.ProcessEventsAsync();
         }
 
-        protected override void OnUpdate(UpdateEventArgs e) {
-            inputManager.Update(Focused);
+        protected override void OnUpdate(UpdateEventArgs uea) {
+            var e = new UpdateEventArgsWithPerformanceStats(uea, _performanceMonitor.GetStats());
 
+            _performanceMonitor.StartFrame(e.ElapsedTimeInS);
+
+            inputManager.Update(Focused);
             if (inputManager.IsKeyPressed(Key.AltLeft) && inputManager.IsKeyPressed(Key.F4)) {
                 Close();
             }
-
             screenManager.Update(e);
+
+            _performanceMonitor.EndFrame();
         }
 
         protected override void OnRender(UpdateEventArgs e) {
