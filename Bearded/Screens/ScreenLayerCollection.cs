@@ -16,7 +16,7 @@ namespace Bearded.Photones.Screens {
             return true;
         }
 
-        protected void UpdateAll(UpdateEventArgs args) {
+        protected void UpdateAll(UpdateEventArgsWithPerformanceStats args) {
             screenLayers.ForEach((layer) => layer.Update(args));
             removeScreenLayersQueuedForRemoval();
         }

@@ -57,8 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameUI\Beardgame.cs" />
-    <Compile Include="GameUI\FpsMeasurer.cs" />
+    <Compile Include="PerformanceMonitor.cs" />
     <Compile Include="GameUI\GameScreen.cs" />
+    <Compile Include="PerformanceStats.cs" />
+    <Compile Include="UpdateEventArgsWithPerformanceStats.cs" />
     <Compile Include="Particles\Behaviors\ConstantParticleBehavior.cs" />
     <Compile Include="Particles\Behaviors\IParticleBehavior.cs" />
     <Compile Include="Particles\Behaviors\LerpLifetime\LerpFloatBehavior.cs" />

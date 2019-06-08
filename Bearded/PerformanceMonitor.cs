@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Bearded.Photones.GameUI {
-    class FpsMeasurer {
+namespace Bearded.Photones {
+
+    class PerformanceMonitor {
 
         private int _frameNrMod60 = 0;
 
@@ -26,6 +27,19 @@ namespace Bearded.Photones.GameUI {
 
         private Stopwatch _watch;
 
+        public PerformanceStats GetStats() {
+            return new PerformanceStats(
+                    _fpsSmoothedAvg,
+                    _fpsSmoothedDev,
+                    _fpsPreviousMax,
+                    _fpsPreviousMin,
+                    _frametimeSmoothedAvg,
+                    _frametimeSmoothedDev,
+                    _frametimePreviousMax,
+                    _frametimePreviousMin
+                );
+        }
+
         public void StartFrame(double elapsedTimeInS) {
             if (elapsedTimeInS < 0.0001) {
                 // This is basically to skip the first frame, because its elapsed time is out of whack
@@ -39,7 +53,6 @@ namespace Bearded.Photones.GameUI {
             CalculateFpsStats(elapsedTimeInS);
 
             _watch = Stopwatch.StartNew();
-
         }
 
         public void EndFrame() {
@@ -88,8 +101,5 @@ namespace Bearded.Photones.GameUI {
                 _frametimeCurrentMin = double.MaxValue;
             }
         }
-
-        public string FpsString => $"{(int)_fpsSmoothedAvg}+/-{(int)_fpsSmoothedDev} [{(int)_fpsPreviousMin},{(int)_fpsPreviousMax}]";
-        public string FrameTimeString => $"{(int)_frametimeSmoothedAvg}+/-{(int)_frametimeSmoothedDev} [{(int)_frametimePreviousMin},{(int)_frametimePreviousMax}]";
     }
 }
