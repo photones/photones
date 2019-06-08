@@ -7,8 +7,10 @@ using OpenTK;
 
 namespace Bearded.Photones.Screens {
     abstract class UIScreenLayer : ScreenLayer {
-        public override Matrix4 ViewMatrix { get; private set; }
-        public override Matrix4 ProjectionMatrix { get; private set; }
+        private Matrix4 _viewMatrix;
+        private Matrix4 _projectionMatrix;
+        public override Matrix4 ViewMatrix => _viewMatrix;
+        public override Matrix4 ProjectionMatrix => _projectionMatrix;
 
         protected GeometryManager Geometries { get; }
         protected Screen Screen { get; }
@@ -40,10 +42,10 @@ namespace Bearded.Photones.Screens {
         protected override void OnViewportSizeChanged() {
             // This 2D matrix creates a pixel perfect projection with a scale from 1:1 from the z=0 plane to the screen.
             var (w, h) = ViewportSize;
-            ViewMatrix = Matrix4.CreateTranslation(-w / 2f, -h / 2f, 0)
+            _viewMatrix = Matrix4.CreateTranslation(-w / 2f, -h / 2f, 0)
                 * new Matrix4(Vector4.UnitX, -Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW)
                 * Matrix4.LookAt(-2f * Vector3.UnitZ, Vector3.UnitZ, -Vector3.UnitY);
-            ProjectionMatrix = Matrix4.CreatePerspectiveOffCenter(-w / 4f, w / 4f, h / 4f, -h / 4f, 1f, 64f);
+            _projectionMatrix = Matrix4.CreatePerspectiveOffCenter(-w / 4f, w / 4f, h / 4f, -h / 4f, 1f, 64f);
 
             Screen.OnResize(ViewportSize);
         }
