@@ -64,7 +64,7 @@
     <Compile Include="Particles\Behaviors\LerpLifetime\LerpVector2Behavior.cs" />
     <Compile Include="Particles\Particle.cs" />
     <Compile Include="Particles\ParticleSystem.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="PhotonesProgram.cs" />
     <Compile Include="Rendering\Camera\Camera2D.cs" />
     <Compile Include="Rendering\Camera\Camera3D.cs" />
     <Compile Include="Rendering\Camera\ICamera.cs" />
@@ -75,6 +75,7 @@
     <Compile Include="Rendering\SurfaceManager.cs" />
     <Compile Include="Rendering\PhotonVertexData.cs" />
     <Compile Include="Rendering\ViewportSize.cs" />
+    <Compile Include="GameUI\HudScreen.cs" />
     <Compile Include="Screens\IScreenLayer.cs" />
     <Compile Include="Screens\ScreenLayer.cs" />
     <Compile Include="Screens\ScreenLayerCollection.cs" />

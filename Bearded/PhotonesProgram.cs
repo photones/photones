@@ -60,6 +60,7 @@ namespace Bearded.Photones {
 
             screenManager = new ScreenManager(inputManager);
             screenManager.AddScreenLayerOnTop(new GameScreen(screenManager, renderContext.Geometries));
+            screenManager.AddScreenLayerOnTop(new HudScreen(screenManager, renderContext.Geometries));
 
             KeyPress += (sender, args) => screenManager.RegisterPressedCharacter(args.KeyChar);
 
