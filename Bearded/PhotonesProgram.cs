@@ -43,6 +43,7 @@ namespace Bearded.Photones {
         private InputManager inputManager;
         private RenderContext renderContext;
         private ScreenManager screenManager;
+        private FpsMeasurer _measurer;
 
         public PhotonesProgram(Logger logger)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
@@ -51,6 +52,7 @@ namespace Bearded.Photones {
             Console.WriteLine(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Renderer));
             Console.WriteLine(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Version));
             this.logger = logger;
+            _measurer = new FpsMeasurer();
         }
 
         protected override void OnLoad(EventArgs e) {
@@ -76,11 +78,13 @@ namespace Bearded.Photones {
         }
 
         protected override void OnUpdate(UpdateEventArgs e) {
+            _measurer.StartFrame(e.ElapsedTimeInS);
             inputManager.Update(Focused);
             if (inputManager.IsKeyPressed(Key.AltLeft) && inputManager.IsKeyPressed(Key.F4)) {
                 Close();
             }
             screenManager.Update(e);
+            _measurer.EndFrame();
         }
 
         protected override void OnRender(UpdateEventArgs e) {

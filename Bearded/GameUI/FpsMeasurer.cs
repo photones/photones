@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
 namespace Bearded.Photones.GameUI {
     class FpsMeasurer {
@@ -27,8 +26,8 @@ namespace Bearded.Photones.GameUI {
 
         private Stopwatch _watch;
 
-        public void StartFrame(TimeSpan elapsedTime) {
-            if (elapsedTime < new TimeSpan(0.0001)) {
+        public void StartFrame(double elapsedTimeInS) {
+            if (elapsedTimeInS < 0.0001) {
                 // This is basically to skip the first frame, because its elapsed time is out of whack
                 return;
             }
@@ -37,7 +36,7 @@ namespace Bearded.Photones.GameUI {
                 _frameNrMod60 = 0;
             }
 
-            CalculateFpsStats(elapsedTime);
+            CalculateFpsStats(elapsedTimeInS);
 
             _watch = Stopwatch.StartNew();
 
@@ -55,8 +54,8 @@ namespace Bearded.Photones.GameUI {
             return;
         }
 
-        private void CalculateFpsStats(TimeSpan elapsedTime) {
-            var fps = TimeSpan.One / elapsedTime;
+        private void CalculateFpsStats(double elapsedTimeInS) {
+            var fps = 1 / elapsedTimeInS;
             _fpsSmoothedAvg = FPS_SMOOTHING_FACTOR * fps + (1 - FPS_SMOOTHING_FACTOR) * _fpsSmoothedAvg;
             var fpsDev = Math.Abs(_fpsSmoothedAvg - fps);
             _fpsSmoothedDev = FPS_SMOOTHING_FACTOR * fpsDev + (1 - FPS_SMOOTHING_FACTOR) * _fpsSmoothedDev;
@@ -74,7 +73,7 @@ namespace Bearded.Photones.GameUI {
 
         private void CalculateFrametimeStats(Stopwatch watch) {
             // frametime is in microseconds
-            var frametime = watch.Elapsed.Ticks / (System.TimeSpan.TicksPerMillisecond / 1000);
+            var frametime = watch.Elapsed.Ticks / (TimeSpan.TicksPerMillisecond / 1000);
             _frametimeSmoothedAvg = FRAMETIME_SMOOTHING_FACTOR * frametime + (1 - FRAMETIME_SMOOTHING_FACTOR) * _frametimeSmoothedAvg;
             var frametimeDev = Math.Abs(_frametimeSmoothedAvg - frametime);
             _frametimeSmoothedDev = FRAMETIME_SMOOTHING_FACTOR * frametimeDev + (1 - FRAMETIME_SMOOTHING_FACTOR) * _frametimeSmoothedDev;
