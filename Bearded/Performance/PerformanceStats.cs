@@ -1,5 +1,5 @@
-﻿namespace Bearded.Photones {
-    public struct PerformanceStats {
+﻿namespace Bearded.Photones.Performance {
+    public readonly struct PerformanceStats {
         public readonly double FpsAvg;
         public readonly double FpsDev;
         public readonly double FpsMax;

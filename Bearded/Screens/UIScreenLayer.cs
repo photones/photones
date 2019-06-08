@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using amulware.Graphics;
+using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
 using Bearded.Photones.UI.Components;
@@ -22,7 +23,7 @@ namespace Bearded.Photones.Screens {
             Screen = Screen.GetCanvas();
         }
 
-        public override void Update(UpdateEventArgsWithPerformanceStats args) {
+        public override void Update(BeardedUpdateEventArgs args) {
             _components.ForEach(c => c.Update(args));
         }
 
@@ -40,7 +41,7 @@ namespace Bearded.Photones.Screens {
         }
 
         protected override void OnViewportSizeChanged() {
-            // This 2D matrix creates a pixel perfect projection with a scale from 1:1 from the z=0 plane to the screen.
+            // These 2D matrices create a pixel perfect projection with a scale from 1:1 from the z=0 plane to the screen.
             var (w, h) = ViewportSize;
             _viewMatrix = Matrix4.CreateTranslation(-w / 2f, -h / 2f, 0)
                 * new Matrix4(Vector4.UnitX, -Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW)

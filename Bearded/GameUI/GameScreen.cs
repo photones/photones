@@ -1,5 +1,6 @@
 ﻿using amulware.Graphics;
 using Bearded.Photones.Particles;
+using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Rendering.Camera;
 using Bearded.Photones.Screens;
@@ -22,7 +23,7 @@ namespace Bearded.Photones.GameUI {
             _geometries = geometryManger;
         }
 
-        public override void Update(UpdateEventArgsWithPerformanceStats args) {
+        public override void Update(BeardedUpdateEventArgs args) {
             var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.ElapsedTimeInS);
 
             _game.Update(elapsedTime);

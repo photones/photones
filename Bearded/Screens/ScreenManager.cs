@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using amulware.Graphics;
+using Bearded.Photones.Performance;
 using Bearded.Photones.UI;
 using Bearded.Utilities.Input;
 
@@ -16,7 +17,7 @@ namespace Bearded.Photones.Screens {
             _pressedCharacterInterface = _pressedCharacterList.AsReadOnly();
         }
 
-        public void Update(UpdateEventArgsWithPerformanceStats args) {
+        public void Update(BeardedUpdateEventArgs args) {
             handleInput(args);
             UpdateAll(args);
         }

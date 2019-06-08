@@ -1,4 +1,5 @@
-﻿using Bearded.Photones.Rendering;
+﻿using Bearded.Photones.Performance;
+using Bearded.Photones.Rendering;
 using Bearded.Photones.Screens;
 using OpenTK;
 
@@ -17,8 +18,8 @@ namespace Bearded.Photones.GameUI {
             _geometries.ConsolasFont.DrawString(new Vector2(0, 0), _stats.FpsString + " " + _stats.FrameTimeString);
         }
 
-        public override void Update(UpdateEventArgsWithPerformanceStats args) {
-            _stats = args.Stats;
+        public override void Update(BeardedUpdateEventArgs args) {
+            _stats = args.PerformanceStats;
         }
     }
 }

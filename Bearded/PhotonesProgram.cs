@@ -11,6 +11,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using Bearded.Photones.Performance;
 
 namespace Bearded.Photones {
     class PhotonesProgram : Program {
@@ -79,7 +80,7 @@ namespace Bearded.Photones {
         }
 
         protected override void OnUpdate(UpdateEventArgs uea) {
-            var e = new UpdateEventArgsWithPerformanceStats(uea, _performanceMonitor.GetStats());
+            var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetStats());
 
             _performanceMonitor.StartFrame(e.ElapsedTimeInS);
 

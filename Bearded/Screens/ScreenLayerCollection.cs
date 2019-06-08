@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using amulware.Graphics;
+using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
 
@@ -18,7 +19,7 @@ namespace Bearded.Photones.Screens {
             return true;
         }
 
-        protected void UpdateAll(UpdateEventArgsWithPerformanceStats args) {
+        protected void UpdateAll(BeardedUpdateEventArgs args) {
             _screenLayers.ForEach((layer) => layer.Update(args));
             removeScreenLayersQueuedForRemoval();
         }

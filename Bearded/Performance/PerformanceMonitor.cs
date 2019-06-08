@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Bearded.Photones {
-
+namespace Bearded.Photones.Performance {
     class PerformanceMonitor {
 
         private int _frameNrMod60 = 0;
@@ -56,8 +55,9 @@ namespace Bearded.Photones {
         }
 
         public void EndFrame() {
-            if (_watch == null)
+            if (_watch == null) {
                 return;
+            }
 
             _watch.Stop();
 
