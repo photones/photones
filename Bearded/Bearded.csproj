@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameUI\Beardgame.cs" />
+    <Compile Include="GameUI\FpsMeasurer.cs" />
     <Compile Include="GameUI\GameScreen.cs" />
     <Compile Include="Particles\Behaviors\ConstantParticleBehavior.cs" />
     <Compile Include="Particles\Behaviors\IParticleBehavior.cs" />

@@ -77,11 +77,9 @@ namespace Bearded.Photones {
 
         protected override void OnUpdate(UpdateEventArgs e) {
             inputManager.Update(Focused);
-
             if (inputManager.IsKeyPressed(Key.AltLeft) && inputManager.IsKeyPressed(Key.F4)) {
                 Close();
             }
-
             screenManager.Update(e);
         }
 
