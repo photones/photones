@@ -36,7 +36,7 @@ namespace Bearded.Photones.Screens {
         }
 
         public virtual bool HandleInput(UpdateEventArgs args, InputState inputState) => true;
-        public abstract void Update(UpdateEventArgs args);
+        public abstract void Update(UpdateEventArgsWithPerformanceStats args);
         public abstract void Draw();
         protected virtual void OnViewportSizeChanged() { }
 

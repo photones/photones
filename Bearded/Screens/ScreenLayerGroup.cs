@@ -9,7 +9,7 @@ namespace Bearded.Photones.Screens {
             this.parent = parent;
         }
 
-        public void Update(UpdateEventArgs args) {
+        public void Update(UpdateEventArgsWithPerformanceStats args) {
             UpdateAll(args);
         }
 

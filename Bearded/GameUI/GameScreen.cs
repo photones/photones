@@ -28,7 +28,7 @@ namespace Bearded.Photones.GameUI {
             _geometries = geometryManger;
         }
 
-        public override void Update(UpdateEventArgs args) {
+        public override void Update(UpdateEventArgsWithPerformanceStats args) {
             var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.ElapsedTimeInS);
 
             _game.Update(elapsedTime);

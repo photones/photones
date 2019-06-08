@@ -29,7 +29,7 @@ namespace Bearded.Photones.Screens {
             this.flipY = flipY;
         }
 
-        public override void Update(UpdateEventArgs args) {
+        public override void Update(UpdateEventArgsWithPerformanceStats args) {
             components.ForEach(c => c.Update(args));
         }
 
