@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using amulware.Graphics;
+﻿using amulware.Graphics;
 using Bearded.Photones.Particles;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Rendering.Camera;
 using Bearded.Photones.Screens;
 using Bearded.Photones.UI;
-using Bearded.Utilities.SpaceTime;
 using OpenTK;
-using OpenTK.Input;
 
 namespace Bearded.Photones.GameUI {
     class GameScreen : ScreenLayer {
