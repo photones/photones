@@ -42,9 +42,9 @@ namespace Bearded.Photones {
 
         private readonly Logger logger;
 
-        private InputManager inputManager;
-        private RenderContext renderContext;
-        private ScreenManager screenManager;
+        private InputManager _inputManager;
+        private RenderContext _renderContext;
+        private ScreenManager _screenManager;
         private PerformanceMonitor _performanceMonitor;
 
         public PhotonesProgram(Logger logger)
@@ -58,25 +58,25 @@ namespace Bearded.Photones {
         }
 
         protected override void OnLoad(EventArgs e) {
-            renderContext = new RenderContext();
+            _renderContext = new RenderContext();
 
-            inputManager = new InputManager(this);
+            _inputManager = new InputManager(this);
 
-            screenManager = new ScreenManager(inputManager);
-            screenManager.AddScreenLayerOnTop(new GameScreen(screenManager, renderContext.Geometries));
-            screenManager.AddScreenLayerOnTop(new HudScreen(screenManager, renderContext.Geometries));
+            _screenManager = new ScreenManager(_inputManager);
+            _screenManager.AddScreenLayerOnTop(new GameScreen(_screenManager, _renderContext.Geometries));
+            _screenManager.AddScreenLayerOnTop(new HudScreen(_screenManager, _renderContext.Geometries));
 
-            KeyPress += (sender, args) => screenManager.RegisterPressedCharacter(args.KeyChar);
+            KeyPress += (sender, args) => _screenManager.RegisterPressedCharacter(args.KeyChar);
 
             OnResize(EventArgs.Empty);
         }
 
         protected override void OnResize(EventArgs e) {
-            screenManager.OnResize(new ViewportSize(Width, Height));
+            _screenManager.OnResize(new ViewportSize(Width, Height));
         }
 
         protected override void OnUpdateUIThread() {
-            inputManager.ProcessEventsAsync();
+            _inputManager.ProcessEventsAsync();
         }
 
         protected override void OnUpdate(UpdateEventArgs uea) {
@@ -84,19 +84,19 @@ namespace Bearded.Photones {
 
             _performanceMonitor.StartFrame(e.ElapsedTimeInS);
 
-            inputManager.Update(Focused);
-            if (inputManager.IsKeyPressed(Key.AltLeft) && inputManager.IsKeyPressed(Key.F4)) {
+            _inputManager.Update(Focused);
+            if (_inputManager.IsKeyPressed(Key.AltLeft) && _inputManager.IsKeyPressed(Key.F4)) {
                 Close();
             }
-            screenManager.Update(e);
+            _screenManager.Update(e);
 
             _performanceMonitor.EndFrame();
         }
 
         protected override void OnRender(UpdateEventArgs e) {
-            renderContext.Compositor.PrepareForFrame();
-            screenManager.Render(renderContext);
-            renderContext.Compositor.FinalizeFrame();
+            _renderContext.Compositor.PrepareForFrame();
+            _screenManager.Render(_renderContext);
+            _renderContext.Compositor.FinalizeFrame();
 
             SwapBuffers();
         }
