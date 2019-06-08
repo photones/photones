@@ -9,5 +9,7 @@
             Height = height;
             AspectRatio = (float)Width / Height;
         }
+
+        public void Deconstruct(out int w, out int h) => (w, h) = (Width, Height);
     }
 }

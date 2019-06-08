@@ -9,6 +9,7 @@ using Bearded.Photones.Screens;
 using Bearded.Utilities.IO;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
 namespace Bearded.Photones {
@@ -48,8 +49,8 @@ namespace Bearded.Photones {
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
                 GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR, GraphicsContextFlags.Default) {
             Console.WriteLine(DisplayDevice.Default.ToString());
-            Console.WriteLine(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Renderer));
-            Console.WriteLine(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Version));
+            Console.WriteLine(GL.GetString(StringName.Renderer));
+            Console.WriteLine(GL.GetString(StringName.Version));
             this.logger = logger;
         }
 
@@ -59,7 +60,7 @@ namespace Bearded.Photones {
             inputManager = new InputManager(this);
 
             screenManager = new ScreenManager(inputManager);
-            screenManager.AddScreenLayerOnTop(new GameScreen(screenManager, renderContext.Geometries));
+            // screenManager.AddScreenLayerOnTop(new GameScreen(screenManager, renderContext.Geometries));
             screenManager.AddScreenLayerOnTop(new HudScreen(screenManager, renderContext.Geometries));
 
             KeyPress += (sender, args) => screenManager.RegisterPressedCharacter(args.KeyChar);

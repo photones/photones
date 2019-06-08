@@ -7,51 +7,44 @@ using OpenTK;
 
 namespace Bearded.Photones.Screens {
     abstract class UIScreenLayer : ScreenLayer {
-        private readonly float originX;
-        private readonly float originY;
-        private readonly bool flipY;
-
-        private Matrix4 viewMatrix;
-        public override Matrix4 ViewMatrix => viewMatrix;
+        public override Matrix4 ViewMatrix { get; private set; }
+        public override Matrix4 ProjectionMatrix { get; private set; }
 
         protected GeometryManager Geometries { get; }
         protected Screen Screen { get; }
 
-        private readonly List<UIComponent> components = new List<UIComponent>();
+        private readonly List<UIComponent> _components = new List<UIComponent>();
 
-        protected UIScreenLayer(ScreenLayerCollection parent, GeometryManager geometries) : this(parent, geometries, .5f, 1, true) { }
-
-        protected UIScreenLayer(ScreenLayerCollection parent, GeometryManager geometries, float originX, float originY, bool flipY) : base(parent) {
+        protected UIScreenLayer(ScreenLayerCollection parent, GeometryManager geometries) : base(parent) {
             Geometries = geometries;
             Screen = Screen.GetCanvas();
-            this.originX = originX;
-            this.originY = originY;
-            this.flipY = flipY;
         }
 
         public override void Update(UpdateEventArgs args) {
-            components.ForEach(c => c.Update(args));
+            _components.ForEach(c => c.Update(args));
         }
 
         public override bool HandleInput(UpdateEventArgs args, InputState inputState) {
-            components.ForEach(c => c.HandleInput(inputState));
+            _components.ForEach(c => c.HandleInput(inputState));
             return true;
         }
 
         public override void Draw() {
-            components.ForEach(c => c.Draw(Geometries));
+            _components.ForEach(c => c.Draw(Geometries));
         }
 
         protected void AddComponent(UIComponent component) {
-            components.Add(component);
+            _components.Add(component);
         }
 
         protected override void OnViewportSizeChanged() {
-            var originCenter = new Vector3((.5f - originX) * ViewportSize.Width, (originY - .5f) * ViewportSize.Height, 0);
-            viewMatrix = Matrix4.LookAt(
-                new Vector3(0, 0, -.5f * ViewportSize.Height) + originCenter,
-                Vector3.Zero + originCenter,
-                Vector3.UnitY * (flipY ? -1 : 1));
+            // This 2D matrix creates a pixel perfect projection with a scale from 1:1 from the z=0 plane to the screen.
+            var (w, h) = ViewportSize;
+            ViewMatrix = Matrix4.CreateTranslation(-w / 2f, -h / 2f, 0)
+                * new Matrix4(Vector4.UnitX, -Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW)
+                * Matrix4.LookAt(-2f * Vector3.UnitZ, Vector3.UnitZ, -Vector3.UnitY);
+            ProjectionMatrix = Matrix4.CreatePerspectiveOffCenter(-w / 4f, w / 4f, h / 4f, -h / 4f, 1f, 64f);
+
             Screen.OnResize(ViewportSize);
         }
     }

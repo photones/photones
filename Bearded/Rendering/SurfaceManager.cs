@@ -6,7 +6,7 @@ using Bearded.Photones.Utilities;
 
 namespace Bearded.Photones.Rendering {
     class SurfaceManager {
-        private readonly ShaderManager shaders = new ShaderManager();
+        private readonly ShaderManager _shaders = new ShaderManager();
 
         public Matrix4Uniform ViewMatrix { get; } = new Matrix4Uniform("view");
         public Matrix4Uniform ProjectionMatrix { get; } = new Matrix4Uniform("projection");
@@ -26,12 +26,12 @@ namespace Bearded.Photones.Rendering {
         }
 
         private void addShaders() {
-            shaders.Add(
+            _shaders.Add(
                 ShaderFileLoader.CreateDefault(asset("shaders/")).Load(".")
             );
             new[] {
                 "uvcolor", "photon"
-            }.ForEach(name => shaders.MakeShaderProgram(name));
+            }.ForEach(name => _shaders.MakeShaderProgram(name));
         }
 
         private void createSurfaces() {
@@ -46,7 +46,7 @@ namespace Bearded.Photones.Rendering {
 
         private ExpandingVertexSurface<PhotonVertexData> createPhotonSurface() {
             return new ExpandingVertexSurface<PhotonVertexData>(OpenTK.Graphics.OpenGL.PrimitiveType.Points)
-                .WithShader(shaders["photon"])
+                .WithShader(_shaders["photon"])
                 .AndSettings(
                     ViewMatrix, ProjectionMatrix,
                     SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
@@ -60,7 +60,7 @@ namespace Bearded.Photones.Rendering {
             }
 
             return new IndexedSurface<UVColorVertexData>()
-                .WithShader(shaders["uvcolor"])
+                .WithShader(_shaders["uvcolor"])
                 .AndSettings(
                     ViewMatrix,
                     ProjectionMatrix,
@@ -71,7 +71,7 @@ namespace Bearded.Photones.Rendering {
 
         private IndexedSurface<UVColorVertexData> createFontSurface(string fontPath) {
             return new IndexedSurface<UVColorVertexData>()
-                .WithShader(shaders["uvcolor"])
+                .WithShader(_shaders["uvcolor"])
                 .AndSettings(
                     ViewMatrix,
                     ProjectionMatrix,
@@ -86,24 +86,23 @@ namespace Bearded.Photones.Rendering {
     }
 
     static class SurfaceExtensions {
-        public struct SurfaceWrapper<T>
-            where T : Surface {
-            private readonly T surface;
+        public struct SurfaceWrapper<T> where T : Surface {
+            private readonly T _surface;
 
             public SurfaceWrapper(T surface) {
-                this.surface = surface;
+                _surface = surface;
             }
 
             public T AndSettings(params SurfaceSetting[] settings) {
-                surface.AddSettings(settings);
-                return surface;
+                _surface.AddSettings(settings);
+                return _surface;
             }
         }
 
-        public static SurfaceWrapper<T> WithShader<T>(this T surface, ISurfaceShader shader)
-            where T : Surface {
-            if (shader == null)
+        public static SurfaceWrapper<T> WithShader<T>(this T surface, ISurfaceShader shader) where T : Surface {
+            if (shader == null) {
                 throw new Exception("Shader not found");
+            }
 
             shader.UseOnSurface(surface);
             return new SurfaceWrapper<T>(surface);

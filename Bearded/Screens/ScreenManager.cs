@@ -6,14 +6,14 @@ using Bearded.Utilities.Input;
 
 namespace Bearded.Photones.Screens {
     class ScreenManager : ScreenLayerCollection {
-        private readonly InputManager inputManager;
-        private readonly List<char> pressedCharacterList = new List<char>();
-        private readonly ConcurrentQueue<char> pressedCharacterQueue = new ConcurrentQueue<char>();
-        private readonly IReadOnlyList<char> pressedCharacterInterface;
+        private readonly InputManager _inputManager;
+        private readonly List<char> _pressedCharacterList = new List<char>();
+        private readonly ConcurrentQueue<char> _pressedCharacterQueue = new ConcurrentQueue<char>();
+        private readonly IReadOnlyList<char> _pressedCharacterInterface;
 
         public ScreenManager(InputManager inputManager) {
-            this.inputManager = inputManager;
-            pressedCharacterInterface = pressedCharacterList.AsReadOnly();
+            _inputManager = inputManager;
+            _pressedCharacterInterface = _pressedCharacterList.AsReadOnly();
         }
 
         public void Update(UpdateEventArgs args) {
@@ -22,19 +22,19 @@ namespace Bearded.Photones.Screens {
         }
 
         private void handleInput(UpdateEventArgs args) {
-            char c;
-            while (pressedCharacterQueue.TryDequeue(out c))
-                pressedCharacterList.Add(c);
+            while (_pressedCharacterQueue.TryDequeue(out char c)) {
+                _pressedCharacterList.Add(c);
+            }
 
-            var inputState = new InputState(pressedCharacterInterface, inputManager);
+            var inputState = new InputState(_pressedCharacterInterface, _inputManager);
 
             PropagateInput(args, inputState);
 
-            pressedCharacterList.Clear();
+            _pressedCharacterList.Clear();
         }
 
         public void RegisterPressedCharacter(char c) {
-            pressedCharacterQueue.Enqueue(c);
+            _pressedCharacterQueue.Enqueue(c);
         }
     }
 }

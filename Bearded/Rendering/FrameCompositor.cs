@@ -4,10 +4,10 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Bearded.Photones.Rendering {
     class FrameCompositor {
-        private readonly SurfaceManager surfaces;
+        private readonly SurfaceManager _surfaces;
 
         public FrameCompositor(SurfaceManager surfaces) {
-            this.surfaces = surfaces;
+            _surfaces = surfaces;
         }
 
         public void PrepareForFrame() {
@@ -25,13 +25,13 @@ namespace Bearded.Photones.Rendering {
         public void RenderLayer(ScreenLayer layer) {
             layer.Draw();
 
-            surfaces.ViewMatrix.Matrix = layer.ViewMatrix;
-            surfaces.ProjectionMatrix.Matrix = layer.ProjectionMatrix;
+            _surfaces.ViewMatrix.Matrix = layer.ViewMatrix;
+            _surfaces.ProjectionMatrix.Matrix = layer.ProjectionMatrix;
 
-            surfaces.FreshmanFontSurface.Render();
-            surfaces.ConsolasFontSurface.Render();
-            surfaces.SpriteSurface.Render();
-            surfaces.PhotonSurface.Render();
+            _surfaces.FreshmanFontSurface.Render();
+            _surfaces.ConsolasFontSurface.Render();
+            _surfaces.SpriteSurface.Render();
+            _surfaces.PhotonSurface.Render();
         }
 
         public void FinalizeFrame() { }
