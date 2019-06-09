@@ -9,7 +9,9 @@ using Bearded.Photones.Screens;
 using Bearded.Utilities.IO;
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using Bearded.Photones.Performance;
 
 namespace Bearded.Photones {
     class PhotonesProgram : Program {
@@ -40,54 +42,61 @@ namespace Bearded.Photones {
 
         private readonly Logger logger;
 
-        private InputManager inputManager;
-        private RenderContext renderContext;
-        private ScreenManager screenManager;
+        private InputManager _inputManager;
+        private RenderContext _renderContext;
+        private ScreenManager _screenManager;
+        private PerformanceMonitor _performanceMonitor;
 
         public PhotonesProgram(Logger logger)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
                 GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR, GraphicsContextFlags.Default) {
             Console.WriteLine(DisplayDevice.Default.ToString());
-            Console.WriteLine(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Renderer));
-            Console.WriteLine(OpenTK.Graphics.OpenGL.GL.GetString(OpenTK.Graphics.OpenGL.StringName.Version));
+            Console.WriteLine(GL.GetString(StringName.Renderer));
+            Console.WriteLine(GL.GetString(StringName.Version));
             this.logger = logger;
+            _performanceMonitor = new PerformanceMonitor();
         }
 
         protected override void OnLoad(EventArgs e) {
-            renderContext = new RenderContext();
+            _renderContext = new RenderContext();
 
-            inputManager = new InputManager(this);
+            _inputManager = new InputManager(this);
 
-            screenManager = new ScreenManager(inputManager);
-            screenManager.AddScreenLayerOnTop(new GameScreen(screenManager, renderContext.Geometries));
+            _screenManager = new ScreenManager(_inputManager);
+            _screenManager.AddScreenLayerOnTop(new GameScreen(_screenManager, _renderContext.Geometries));
+            _screenManager.AddScreenLayerOnTop(new HudScreen(_screenManager, _renderContext.Geometries));
 
-            KeyPress += (sender, args) => screenManager.RegisterPressedCharacter(args.KeyChar);
+            KeyPress += (sender, args) => _screenManager.RegisterPressedCharacter(args.KeyChar);
 
             OnResize(EventArgs.Empty);
         }
 
         protected override void OnResize(EventArgs e) {
-            screenManager.OnResize(new ViewportSize(Width, Height));
+            _screenManager.OnResize(new ViewportSize(Width, Height));
         }
 
         protected override void OnUpdateUIThread() {
-            inputManager.ProcessEventsAsync();
+            _inputManager.ProcessEventsAsync();
         }
 
-        protected override void OnUpdate(UpdateEventArgs e) {
-            inputManager.Update(Focused);
+        protected override void OnUpdate(UpdateEventArgs uea) {
+            var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetStats());
 
-            if (inputManager.IsKeyPressed(Key.AltLeft) && inputManager.IsKeyPressed(Key.F4)) {
+            _performanceMonitor.StartFrame(e.ElapsedTimeInS);
+
+            _inputManager.Update(Focused);
+            if (_inputManager.IsKeyPressed(Key.AltLeft) && _inputManager.IsKeyPressed(Key.F4)) {
                 Close();
             }
+            _screenManager.Update(e);
 
-            screenManager.Update(e);
+            _performanceMonitor.EndFrame();
         }
 
         protected override void OnRender(UpdateEventArgs e) {
-            renderContext.Compositor.PrepareForFrame();
-            screenManager.Render(renderContext);
-            renderContext.Compositor.FinalizeFrame();
+            _renderContext.Compositor.PrepareForFrame();
+            _screenManager.Render(_renderContext);
+            _renderContext.Compositor.FinalizeFrame();
 
             SwapBuffers();
         }
