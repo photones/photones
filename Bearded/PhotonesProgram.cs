@@ -82,7 +82,7 @@ namespace Bearded.Photones {
         protected override void OnUpdate(UpdateEventArgs uea) {
             var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetStats());
 
-            _performanceMonitor.StartFrame(e.ElapsedTimeInS);
+            _performanceMonitor.StartFrame(e.UpdateEventArgs.ElapsedTimeInS);
 
             _inputManager.Update(Focused);
             if (_inputManager.IsKeyPressed(Key.AltLeft) && _inputManager.IsKeyPressed(Key.F4)) {

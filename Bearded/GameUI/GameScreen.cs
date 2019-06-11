@@ -24,7 +24,7 @@ namespace Bearded.Photones.GameUI {
         }
 
         public override void Update(BeardedUpdateEventArgs args) {
-            var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.ElapsedTimeInS);
+            var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.UpdateEventArgs.ElapsedTimeInS);
 
             _game.Update(elapsedTime);
 
