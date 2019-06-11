@@ -18,7 +18,7 @@ namespace Bearded.Photones.Screens {
         }
 
         public void Update(BeardedUpdateEventArgs args) {
-            handleInput(args);
+            handleInput(args.UpdateEventArgs);
             UpdateAll(args);
         }
 

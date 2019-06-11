@@ -24,7 +24,7 @@ namespace Bearded.Photones.Screens {
         }
 
         public override void Update(BeardedUpdateEventArgs args) {
-            _components.ForEach(c => c.Update(args));
+            _components.ForEach(c => c.Update(args.UpdateEventArgs));
         }
 
         public override bool HandleInput(UpdateEventArgs args, InputState inputState) {

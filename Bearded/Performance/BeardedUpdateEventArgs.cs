@@ -1,12 +1,14 @@
 ﻿using amulware.Graphics;
 
 namespace Bearded.Photones.Performance {
-    class BeardedUpdateEventArgs : UpdateEventArgs {
+    class BeardedUpdateEventArgs {
 
         public readonly PerformanceStats PerformanceStats;
+        public readonly UpdateEventArgs UpdateEventArgs;
 
-        public BeardedUpdateEventArgs(UpdateEventArgs e, PerformanceStats stats) : base(e) {
+        public BeardedUpdateEventArgs(UpdateEventArgs e, PerformanceStats stats) {
             PerformanceStats = stats;
+            UpdateEventArgs = e;
         }
     }
 }
