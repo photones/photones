@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Threading;
+using System.Threading.Tasks;
 using amulware.Graphics;
 using Bearded.Photones.GameUI;
 using Bearded.Utilities.Input;
@@ -14,7 +15,7 @@ using OpenTK.Input;
 using Bearded.Photones.Performance;
 
 namespace Bearded.Photones {
-    class PhotonesProgram : Program {
+    public class PhotonesProgram : Program {
         static void Main(string[] args) {
             using (Toolkit.Init(new ToolkitOptions() { Backend = PlatformBackend.PreferNative })) {
                 Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
