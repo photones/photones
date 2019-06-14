@@ -15,7 +15,7 @@ namespace Bearded.Photones.GameUI {
         public override void Draw() {
             base.Draw();
             _geometries.ConsolasFont.Height = 20;
-            _geometries.ConsolasFont.DrawString(new Vector2(0, 0), _stats.FpsString + " " + _stats.FrameTimeString);
+            _geometries.ConsolasFont.DrawString(new Vector2(0, 0), _stats.FpsString + " " + _stats.FrameTimeString + " " + _stats.ElapsedString);
         }
 
         public override void Update(BeardedUpdateEventArgs args) {

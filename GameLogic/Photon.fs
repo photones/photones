@@ -31,7 +31,8 @@ module Photon =
 
     let private velocityToGoal (elapsedTime: TimeSpan) (this: T) =
         let diff = pointOfAttraction this - this.Position
-        let acceleration = Acceleration2.In(diff.Direction, Acceleration(3.0f))
+        //let acceleration = Acceleration2.In(diff.Direction, new Acceleration(3.0f))
+        let acceleration = new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
 
     let private velocityNeighborReaction (elapsedTime: TimeSpan) (this: T) (neighbors: T list) =
@@ -41,7 +42,8 @@ module Photon =
         avgAcceleration * elapsedTime
         
     let capVelocity maxSpeed (v: Velocity2) =
-        if v.Length.NumericValue > maxSpeed then Velocity2.In(v.Direction, Speed(maxSpeed)) else v
+        //if v.Length.NumericValue > maxSpeed then Velocity2.In(v.Direction, Speed(maxSpeed)) else v
+        if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
     let update (elapsedTime: TimeSpan) (this: T, neighbors: T list) : T =
         let capAccToGoal = capVelocity 0.2f
@@ -49,12 +51,12 @@ module Photon =
         let capTotal = capVelocity 0.8f
 
         let vToGoal = velocityToGoal elapsedTime this
-        let vNeighborReaction = velocityNeighborReaction elapsedTime this neighbors
+        //let vNeighborReaction = velocityNeighborReaction elapsedTime this neighbors
 
         let velocity =
             this.Speed
             + capAccToGoal vToGoal
-            + capAccNeighborReaction vNeighborReaction
+            //+ capAccNeighborReaction vNeighborReaction
             + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * elapsedTime

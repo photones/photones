@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Runtime;
 using System.Threading;
 using System.Threading.Tasks;
 using amulware.Graphics;
@@ -25,10 +26,10 @@ namespace Bearded.Photones {
 
                 logger.Info.Log("");
                 logger.Info.Log("Creating game");
-                var game = new PhotonesProgram(logger);
+                var game = new PhotonesProgram(logger, (_, e) => GC.Collect());
 
                 logger.Info.Log("Running game");
-                game.Run(60);
+                game.Run();
 
                 logger.Info.Log("Safely exited game");
             }
@@ -41,21 +42,23 @@ namespace Bearded.Photones {
         public const int MAJOR = 0;
         public const int MINOR = 0;
 
-        private readonly Logger logger;
+        private readonly Logger _logger;
 
         private InputManager _inputManager;
         private RenderContext _renderContext;
         private ScreenManager _screenManager;
-        private PerformanceMonitor _performanceMonitor;
+        private readonly PerformanceMonitor _performanceMonitor;
+        private readonly Action<PhotonesProgram, BeardedUpdateEventArgs> _afterFrame;
 
-        public PhotonesProgram(Logger logger)
+        public PhotonesProgram(Logger logger, Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
                 GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR, GraphicsContextFlags.Default) {
             Console.WriteLine(DisplayDevice.Default.ToString());
             Console.WriteLine(GL.GetString(StringName.Renderer));
             Console.WriteLine(GL.GetString(StringName.Version));
-            this.logger = logger;
+            this._logger = logger;
             _performanceMonitor = new PerformanceMonitor();
+            _afterFrame = afterFrame;
         }
 
         protected override void OnLoad(EventArgs e) {
@@ -89,9 +92,11 @@ namespace Bearded.Photones {
             if (_inputManager.IsKeyPressed(Key.AltLeft) && _inputManager.IsKeyPressed(Key.F4)) {
                 Close();
             }
+
             _screenManager.Update(e);
 
             _performanceMonitor.EndFrame();
+            _afterFrame?.Invoke(this, e);
         }
 
         protected override void OnRender(UpdateEventArgs e) {
