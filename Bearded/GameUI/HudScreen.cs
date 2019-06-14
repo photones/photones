@@ -1,4 +1,4 @@
-﻿using Bearded.Photones.Performance;
+using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Screens;
 using OpenTK;

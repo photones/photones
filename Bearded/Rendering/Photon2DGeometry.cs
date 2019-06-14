@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 using amulware.Graphics;
 
 namespace Bearded.Photones.Rendering {

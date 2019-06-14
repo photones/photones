@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 
 namespace Bearded.Photones.Utilities {
     struct Line {

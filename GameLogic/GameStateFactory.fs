@@ -1,4 +1,4 @@
-﻿#if INTERACTIVE
+#if INTERACTIVE
 #r @"amulware.Graphics.dll"
 #r @"Bearded.Utilities.dll"
 #endif

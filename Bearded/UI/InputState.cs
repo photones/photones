@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Bearded.Utilities.Input;
 
 namespace Bearded.Photones.UI {

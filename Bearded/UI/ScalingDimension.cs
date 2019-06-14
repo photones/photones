@@ -1,4 +1,4 @@
-﻿namespace Bearded.Photones.UI {
+namespace Bearded.Photones.UI {
     class ScalingDimension : IDimension {
         private readonly IDimension parent;
         private readonly float fraction;

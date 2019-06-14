@@ -1,4 +1,4 @@
-﻿namespace GameLogic
+namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
 open Bearded.Utilities

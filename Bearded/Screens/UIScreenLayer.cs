@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;

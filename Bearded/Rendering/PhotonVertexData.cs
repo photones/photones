@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using amulware.Graphics;
 

@@ -1,4 +1,4 @@
-﻿module Utils
+module Utils
 open OpenTK
 open Bearded.Utilities
 

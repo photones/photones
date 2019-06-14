@@ -1,4 +1,4 @@
-﻿using amulware.Graphics;
+using amulware.Graphics;
 
 namespace Bearded.Photones.Performance {
     public class BeardedUpdateEventArgs {

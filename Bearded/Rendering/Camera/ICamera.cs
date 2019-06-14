@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 
 namespace Bearded.Photones.Rendering.Camera {
     public interface ICamera {

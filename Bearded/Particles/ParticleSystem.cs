@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Bearded.Photones.Rendering;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
