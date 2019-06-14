@@ -1,4 +1,4 @@
-#if INTERACTIVE
+﻿#if INTERACTIVE
 #r @"amulware.Graphics.dll"
 #r @"Bearded.Utilities.dll"
 #r @"OpenTK.dll"
@@ -34,29 +34,20 @@ module Photon =
         //let acceleration = Acceleration2.In(diff.Direction, new Acceleration(3.0f))
         let acceleration = new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
-
-    let private velocityNeighborReaction (elapsedTime: TimeSpan) (this: T) (neighbors: T list) =
-        let diffs = List.map (fun n -> n.Position - this.Position) neighbors
-        let accelerations = List.map (fun (d: Difference2) -> Acceleration2.In(-d.Direction, Acceleration(1.0f/d.Length.NumericValue))) diffs
-        let avgAcceleration = List.sum accelerations
-        avgAcceleration * elapsedTime
         
     let capVelocity maxSpeed (v: Velocity2) =
         //if v.Length.NumericValue > maxSpeed then Velocity2.In(v.Direction, Speed(maxSpeed)) else v
         if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
-    let update (elapsedTime: TimeSpan) (this: T, neighbors: T list) : T =
+    let update (elapsedTime: TimeSpan) (this: T) : T =
         let capAccToGoal = capVelocity 0.2f
-        let capAccNeighborReaction = capVelocity 0.1f
         let capTotal = capVelocity 0.8f
 
         let vToGoal = velocityToGoal elapsedTime this
-        //let vNeighborReaction = velocityNeighborReaction elapsedTime this neighbors
 
         let velocity =
             this.Speed
             + capAccToGoal vToGoal
-            //+ capAccNeighborReaction vNeighborReaction
             + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * elapsedTime
