@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 
 namespace Bearded.Photones.Performance {
@@ -52,10 +52,6 @@ namespace Bearded.Photones.Performance {
         }
 
         public void StartFrame(double elapsedTimeInS) {
-            if (elapsedTimeInS < 0.0001) {
-                // This is basically to skip the first frame, because its elapsed time is out of whack
-                return;
-            }
 
             if (_frameNrMod60 >= 600) {
                 _frameNrMod60 = 0;

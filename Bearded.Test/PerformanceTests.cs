@@ -18,7 +18,7 @@ namespace Bearded.Test {
         }
 
         private void RunInstance(int fps, int frames, string title, bool collect) {
-            List<int> frametimes = new List<int>(10000);
+            List<int> frametimes = new List<int>(frames);
             var game = new PhotonesProgram(new Logger(),
                 (g, e) => {
                     frametimes.Add((int)e.PerformanceStats.Frametime);
@@ -34,16 +34,12 @@ namespace Bearded.Test {
         }
 
         [Theory]
-        [InlineData(0, false)]
-        [InlineData(0, true)]
         [InlineData(10, false)]
-        [InlineData(10, true)]
         [InlineData(60, false)]
-        [InlineData(60, true)]
+        [InlineData(0, false)]
         public void MeasureFrametimes(int fps, bool collect) {
-            var frames = 1000;
-            string title = $"{fps} FPS {(collect ? "with GC" : "")} on battery";
-            RunInstance(fps, frames, title, collect);
+            string title = $"{fps} FPS {(collect ? "with GC" : "")} ";
+            RunInstance(fps, 400, title, collect);
 
             // Things to try:
             //Thread.CurrentThread.Priority = ThreadPriority.Highest;

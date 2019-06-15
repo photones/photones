@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 using System.Runtime;
 using System.Threading;
@@ -26,7 +26,7 @@ namespace Bearded.Photones {
 
                 logger.Info.Log("");
                 logger.Info.Log("Creating game");
-                var game = new PhotonesProgram(logger, (_, e) => GC.Collect());
+                var game = new PhotonesProgram(logger);
 
                 logger.Info.Log("Running game");
                 game.Run();
@@ -56,7 +56,7 @@ namespace Bearded.Photones {
             Console.WriteLine(DisplayDevice.Default.ToString());
             Console.WriteLine(GL.GetString(StringName.Renderer));
             Console.WriteLine(GL.GetString(StringName.Version));
-            this._logger = logger;
+            _logger = logger;
             _performanceMonitor = new PerformanceMonitor();
             _afterFrame = afterFrame;
         }
@@ -84,6 +84,14 @@ namespace Bearded.Photones {
         }
 
         protected override void OnUpdate(UpdateEventArgs uea) {
+            if (uea.ElapsedTimeInS < 0.0001) {
+                // This is basically to skip the first frame, because its elapsed time is out of whack
+                // We do a GC though, to clean up initialization garbage, to prevent that from happening in game
+                // This saves one big stutter a few seconds into the game.
+                GC.Collect();
+                return;
+            }
+
             var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetStats());
 
             _performanceMonitor.StartFrame(e.UpdateEventArgs.ElapsedTimeInS);

@@ -13,8 +13,8 @@ module Photon =
     [<Struct>]
     type public T = {Position: Position2; Speed: Velocity2; PoaIndex: int}
 
+    let getNumber () = rndSingle () - 0.5f
     let smallRandomVelocity () =
-        let getNumber () = rndSingle () - 0.5f
         Velocity2(getNumber (), getNumber ()) * 0.1f
         
     let attractionRadius = 0.2f
@@ -26,8 +26,8 @@ module Photon =
         ]
 
 
-    let private pointOfAttraction this: Position2 = pointsOfAttraction.[this.PoaIndex]
-    let private hasReachedPointOfAttraction this =  Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
+    let private pointOfAttraction (this: T): Position2 = pointsOfAttraction.[this.PoaIndex]
+    let private hasReachedPointOfAttraction (this:T) =  Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
 
     let private velocityToGoal (elapsedTime: TimeSpan) (this: T) =
         let diff = pointOfAttraction this - this.Position
@@ -39,9 +39,10 @@ module Photon =
         //if v.Length.NumericValue > maxSpeed then Velocity2.In(v.Direction, Speed(maxSpeed)) else v
         if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
+    let capAccToGoal = capVelocity 0.2f
+    let capTotal = capVelocity 0.8f
+
     let update (elapsedTime: TimeSpan) (this: T) : T =
-        let capAccToGoal = capVelocity 0.2f
-        let capTotal = capVelocity 0.8f
 
         let vToGoal = velocityToGoal elapsedTime this
 
