@@ -10,7 +10,7 @@ using Xunit;
 namespace Bearded.Test {
     public class PerformanceTests {
 
-        private void DumpFrametimesCsv(string filename, string runname, List<int> frametimes) {
+        private void DumpFrametimesCsv(string filename, string runname, List<double> frametimes) {
             // Open file and add line
             using (StreamWriter w = File.AppendText(filename)) {
                 w.WriteLine(runname + ", " + string.Join(", ", frametimes));
@@ -18,10 +18,10 @@ namespace Bearded.Test {
         }
 
         private void RunInstance(int fps, int frames, string title, bool collect) {
-            List<int> frametimes = new List<int>(frames);
+            var frametimes = new List<double>(frames);
             var game = new PhotonesProgram(new Logger(),
                 (g, e) => {
-                    frametimes.Add((int)e.PerformanceStats.Frametime);
+                    frametimes.Add(e.PerformanceStats.FrameTime);
                     if (collect)
                         GC.Collect();
                     if (e.UpdateEventArgs.Frame > frames)

@@ -92,7 +92,7 @@ namespace Bearded.Photones {
                 return;
             }
 
-            var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetStats());
+            var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetPerformanceSummary());
 
             _performanceMonitor.StartFrame(e.UpdateEventArgs.ElapsedTimeInS);
 
