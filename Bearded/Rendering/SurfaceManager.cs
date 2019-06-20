@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using amulware.Graphics;
 using amulware.Graphics.ShaderManagement;
 using Bearded.Photones.Particles;
@@ -49,7 +49,8 @@ namespace Bearded.Photones.Rendering {
                 .WithShader(_shaders["photon"])
                 .AndSettings(
                     ViewMatrix, ProjectionMatrix,
-                    SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
+                    SurfaceBlendSetting.Add,
+                    SurfaceDepthMaskSetting.DontMask
                 );
         }
 
