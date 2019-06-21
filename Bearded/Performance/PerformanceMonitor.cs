@@ -36,13 +36,13 @@ namespace Bearded.Photones.Performance {
 
             if (_elapsedSinceUpdate >= UPDATE_INTERVAL) {
                 _elapsedSinceUpdate = 0;
-                FrameTime.UpdateStats();
-                ElapsedTime.UpdateStats();
+                FrameTime.Refresh();
+                ElapsedTime.Refresh();
             }
         }
 
         public PerformanceSummary GetPerformanceSummary() {
-            return new PerformanceSummary(FrameTime.Stats, ElapsedTime.Stats, FrameTime.Current);
+            return new PerformanceSummary(FrameTime.Stats, ElapsedTime.Stats, FrameTime.CurrentValue);
         }
     }
 }
