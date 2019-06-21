@@ -31,12 +31,10 @@ module Photon =
 
     let private velocityToGoal (elapsedTime: TimeSpan) (this: T) =
         let diff = pointOfAttraction this - this.Position
-        //let acceleration = Acceleration2.In(diff.Direction, new Acceleration(3.0f))
         let acceleration = new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
         
     let capVelocity maxSpeed (v: Velocity2) =
-        //if v.Length.NumericValue > maxSpeed then Velocity2.In(v.Direction, Speed(maxSpeed)) else v
         if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
     let capAccToGoal = capVelocity 0.2f
