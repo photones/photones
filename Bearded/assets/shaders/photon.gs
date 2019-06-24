@@ -9,6 +9,9 @@ in Vertex {
 } v[];
 
 out Fragment {
+    vec4 photon_position;
+    float photon_radius;
+    vec4 frag_position;
     vec4 color;
 } f;
 
@@ -21,6 +24,9 @@ void rect(vec4 center, float size, vec4 color) {
 
     for (int i=0; i<4; i++) {
         gl_Position = center + vec4(corners[i], 0.0, 0.0);
+        f.photon_position = center;
+        f.photon_radius = size;
+        f.frag_position = gl_Position;
         f.color = color;
         EmitVertex();
     }
@@ -30,5 +36,5 @@ void rect(vec4 center, float size, vec4 color) {
 
 
 void main() {
-    rect(v[0].position, 0.003, v[0].color);
+    rect(v[0].position, 0.008, v[0].color);
 }

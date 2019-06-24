@@ -1,4 +1,4 @@
-using OpenTK;
+﻿using OpenTK;
 using amulware.Graphics;
 
 namespace Bearded.Photones.Rendering {
@@ -9,7 +9,7 @@ namespace Bearded.Photones.Rendering {
         /// <summary>
         /// The color to draw with
         /// </summary>
-        public Color Color = Color.Pink;
+        public Color Color = Color.White;
 
         public ExpandingVertexSurface<PhotonVertexData> Surface { get; private set; }
 
