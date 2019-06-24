@@ -1,4 +1,4 @@
-using Bearded.Photones.Rendering;
+﻿using Bearded.Photones.Rendering;
 using GameLogic;
 using OpenTK;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
@@ -27,8 +27,9 @@ namespace Bearded.Photones.GameUI {
             geometries.PhotonGeometry.DrawParticle(new Vector2(-1, -1), coordcolor);
 
             // Photons
+            var photoncolor = Color.DarkGoldenrod;
             foreach (var photon in _gameState.Photons) {
-                geometries.PhotonGeometry.DrawParticle(photon.Position.NumericValue);
+                geometries.PhotonGeometry.DrawParticle(photon.Position.NumericValue, photoncolor);
             }
         }
     }

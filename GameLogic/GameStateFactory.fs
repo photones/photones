@@ -25,6 +25,6 @@ module GameStateFactory =
         {Position = pos; Speed = speed * 1.0f * (1.0f/radius); PoaIndex = rndInt Photon.pointsOfAttraction.Length}
 
     let BuildInitialGameState() =
-        let photons = [0..5000] |> List.map buildRandomPhoton
+        let photons = [0..10000] |> List.map buildRandomPhoton
         GameState(new List<Photon.T>(photons))
 
