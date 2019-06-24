@@ -11,7 +11,7 @@ namespace Bearded.Photones.Performance {
         private readonly double _total;
         private readonly double _devTotal;
 
-        private VariableStats(int nrMeasurements, double total, double devTotal, double min, double max) : this() {
+        private VariableStats(int nrMeasurements, double total, double devTotal, double min, double max) {
             _nrMeasurements = nrMeasurements;
             _total = total;
             _devTotal = devTotal;
