@@ -22,10 +22,12 @@ namespace Bearded.Test {
             var game = new PhotonesProgram(new Logger(),
                 (g, e) => {
                     frametimes.Add(e.PerformanceStats.FrameTime);
-                    if (collect)
+                    if (collect) {
                         GC.Collect();
-                    if (e.UpdateEventArgs.Frame > frames)
+                    }
+                    if (e.UpdateEventArgs.Frame > frames) {
                         g.Close();
+                    }
                 });
 
             game.Run(fps);
@@ -40,10 +42,6 @@ namespace Bearded.Test {
         public void MeasureFrametimes(int fps, bool collect) {
             string title = $"{fps} FPS {(collect ? "with GC" : "")} ";
             RunInstance(fps, 400, title, collect);
-
-            // Things to try:
-            //Thread.CurrentThread.Priority = ThreadPriority.Highest;
-            //GCSettings.LatencyMode = GCLatencyMode.LowLatency;
         }
     }
 }

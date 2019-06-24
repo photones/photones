@@ -36,5 +36,5 @@ void rect(vec4 center, float size, vec4 color) {
 
 
 void main() {
-    rect(v[0].position, 0.01, v[0].color);
+    rect(v[0].position, 0.003, v[0].color);
 }
