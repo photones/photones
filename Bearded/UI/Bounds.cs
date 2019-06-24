@@ -1,4 +1,4 @@
-﻿namespace Bearded.Photones.UI {
+namespace Bearded.Photones.UI {
     partial class Bounds {
         public IDimension X { get; }
         public IDimension Y { get; }

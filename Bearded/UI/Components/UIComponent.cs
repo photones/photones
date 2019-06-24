@@ -1,4 +1,4 @@
-﻿using amulware.Graphics;
+using amulware.Graphics;
 using Bearded.Photones.Rendering;
 
 namespace Bearded.Photones.UI.Components {

@@ -2,17 +2,15 @@
 
 open Bearded.Utilities.SpaceTime
 open Bearded.Utilities
+open System.Collections.Generic
 
 [<Struct>]
-type GameState(photons : Photon.T list) = 
+type GameState(photons : Photon.T List) = 
 
-    member this.Photons: Photon.T list = photons
-
-    member this.findNeighbors photon =
-        let areNeighbors (p1: Photon.T) (p2: Photon.T) = (p1.Position - p2.Position).Length.NumericValue < 0.02f && Position2.op_Inequality(p1.Position, p2.Position)
-        List.filter (areNeighbors photon) this.Photons
+    member this.Photons: Photon.T List = photons
 
     member this.Update(elapsedTime: TimeSpan): GameState =
-        let neighborhoods = List.map (fun x -> []) this.Photons
-        let photons = List.map (Photon.update elapsedTime) (List.zip this.Photons neighborhoods)
+        for i = 0 to photons.Count - 1 do
+            photons.Item(i) <- (Photon.update elapsedTime (photons.Item(i)))
         GameState(photons)
+

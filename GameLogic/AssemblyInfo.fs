@@ -1,4 +1,4 @@
-﻿namespace game.AssemblyInfo
+namespace game.AssemblyInfo
 
 open System.Reflection
 open System.Runtime.CompilerServices

@@ -11,6 +11,7 @@ module GameStateFactory =
     open Bearded.Utilities
     open OpenTK
     open Utils
+    open System.Collections.Generic
 
     let rndPerturbation amplitude = (rndSingle () * 2.0f * amplitude - amplitude);
 
@@ -24,6 +25,6 @@ module GameStateFactory =
         {Position = pos; Speed = speed * 1.0f * (1.0f/radius); PoaIndex = rndInt Photon.pointsOfAttraction.Length}
 
     let BuildInitialGameState() =
-        let photons = [0..10000] |> List.map buildRandomPhoton
-        GameState(photons)
+        let photons = [0..50000] |> List.map buildRandomPhoton
+        GameState(new List<Photon.T>(photons))
 

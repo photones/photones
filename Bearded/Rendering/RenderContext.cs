@@ -1,4 +1,4 @@
-﻿namespace Bearded.Photones.Rendering {
+namespace Bearded.Photones.Rendering {
     class RenderContext {
         public SurfaceManager Surfaces { get; }
         public GeometryManager Geometries { get; }

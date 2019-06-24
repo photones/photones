@@ -1,4 +1,4 @@
-﻿using Bearded.Photones.Rendering;
+using Bearded.Photones.Rendering;
 
 namespace Bearded.Photones.UI {
     class Screen : Bounds {

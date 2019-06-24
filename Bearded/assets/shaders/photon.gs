@@ -1,4 +1,4 @@
-﻿#version 150
+#version 150
 
 layout (points) in;
 layout (triangle_strip, max_vertices = 4) out;
@@ -30,5 +30,5 @@ void rect(vec4 center, float size, vec4 color) {
 
 
 void main() {
-    rect(v[0].position, 0.005, v[0].color);
+    rect(v[0].position, 0.003, v[0].color);
 }

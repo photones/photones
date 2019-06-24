@@ -13,8 +13,8 @@ module Photon =
     [<Struct>]
     type public T = {Position: Position2; Speed: Velocity2; PoaIndex: int}
 
+    let getNumber () = rndSingle () - 0.5f
     let smallRandomVelocity () =
-        let getNumber () = rndSingle () - 0.5f
         Velocity2(getNumber (), getNumber ()) * 0.1f
         
     let attractionRadius = 0.2f
@@ -26,35 +26,27 @@ module Photon =
         ]
 
 
-    let private pointOfAttraction this: Position2 = pointsOfAttraction.[this.PoaIndex]
-    let private hasReachedPointOfAttraction this =  Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
+    let private pointOfAttraction (this: T): Position2 = pointsOfAttraction.[this.PoaIndex]
+    let private hasReachedPointOfAttraction (this:T) =  Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
 
     let private velocityToGoal (elapsedTime: TimeSpan) (this: T) =
         let diff = pointOfAttraction this - this.Position
-        let acceleration = Acceleration2.In(diff.Direction, Acceleration(3.0f))
+        let acceleration = new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
-
-    let private velocityNeighborReaction (elapsedTime: TimeSpan) (this: T) (neighbors: T list) =
-        let diffs = List.map (fun n -> n.Position - this.Position) neighbors
-        let accelerations = List.map (fun (d: Difference2) -> Acceleration2.In(-d.Direction, Acceleration(1.0f/d.Length.NumericValue))) diffs
-        let avgAcceleration = List.sum accelerations
-        avgAcceleration * elapsedTime
         
     let capVelocity maxSpeed (v: Velocity2) =
-        if v.Length.NumericValue > maxSpeed then Velocity2.In(v.Direction, Speed(maxSpeed)) else v
+        if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
-    let update (elapsedTime: TimeSpan) (this: T, neighbors: T list) : T =
-        let capAccToGoal = capVelocity 0.2f
-        let capAccNeighborReaction = capVelocity 0.1f
-        let capTotal = capVelocity 0.8f
+    let capAccToGoal = capVelocity 0.2f
+    let capTotal = capVelocity 0.8f
+
+    let update (elapsedTime: TimeSpan) (this: T) : T =
 
         let vToGoal = velocityToGoal elapsedTime this
-        let vNeighborReaction = velocityNeighborReaction elapsedTime this neighbors
 
         let velocity =
             this.Speed
             + capAccToGoal vToGoal
-            + capAccNeighborReaction vNeighborReaction
             + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * elapsedTime

@@ -1,4 +1,4 @@
-﻿using OpenTK;
+using OpenTK;
 
 namespace Bearded.Photones.Particles.Behaviors.LerpLifetime {
     class LerpVector2Behavior : IParticleBehavior<Vector2> {

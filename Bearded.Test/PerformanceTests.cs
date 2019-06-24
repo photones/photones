@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Bearded.Photones;
+using Bearded.Utilities.IO;
+using Xunit;
+
+namespace Bearded.Test {
+    public class PerformanceTests {
+
+        private void DumpFrametimesCsv(string filename, string runname, List<double> frametimes) {
+            // Open file and add line
+            using (StreamWriter w = File.AppendText(filename)) {
+                w.WriteLine(runname + ", " + string.Join(", ", frametimes));
+            }
+        }
+
+        private void RunInstance(int fps, int frames, string title, bool collect) {
+            var frametimes = new List<double>(frames);
+            var game = new PhotonesProgram(new Logger(),
+                (g, e) => {
+                    frametimes.Add(e.PerformanceStats.FrameTime);
+                    if (collect) {
+                        GC.Collect();
+                    }
+                    if (e.UpdateEventArgs.Frame > frames) {
+                        g.Close();
+                    }
+                });
+
+            game.Run(fps);
+
+            DumpFrametimesCsv("frametimes.csv", title, frametimes);
+        }
+
+        [Theory]
+        [InlineData(10, false)]
+        [InlineData(60, false)]
+        [InlineData(0, false)]
+        public void MeasureFrametimes(int fps, bool collect) {
+            string title = $"{fps} FPS {(collect ? "with GC" : "")} ";
+            RunInstance(fps, 400, title, collect);
+        }
+    }
+}

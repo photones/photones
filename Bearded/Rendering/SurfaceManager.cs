@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using amulware.Graphics;
 using amulware.Graphics.ShaderManagement;
 using Bearded.Photones.Particles;
