@@ -81,9 +81,9 @@
       <Project>{59beda5c-d68a-4011-89ba-c09421d22974}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\lib\utilities\src\Bearded.Utilities.csproj">
+    <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj">
       <Name>Bearded.Utilities</Name>
-      <Project>{2f580b9d-6255-4427-8395-5ef236c9401c}</Project>
+      <Project>{3f06fcfb-7ae5-44df-bf91-619e6d415883}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
