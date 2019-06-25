@@ -9,47 +9,58 @@ namespace GameLogic
 open Bearded.Utilities.SpaceTime
 open Utils
 
-module Photon =
-    [<Struct>]
-    type public T = {Position: Position2; Speed: Velocity2; PoaIndex: int}
+[<Struct>]
+type public PhotonAttributes = {Position: Position2; Speed: Velocity2; PoaIndex: int}
+
+type Photon(initialAttr: PhotonAttributes) =
 
     let getNumber () = rndSingle () - 0.5f
     let smallRandomVelocity () =
         Velocity2(getNumber (), getNumber ()) * 0.1f
+
+    let capVelocity maxSpeed (v: Velocity2) =
+        if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
+
+    let capAccToGoal = capVelocity 0.2f
+    let capTotal = capVelocity 0.8f
         
     let attractionRadius = 0.2f
-    let pointsOfAttraction = [
+
+    let mutable futureAttributes : PhotonAttributes = initialAttr
+    let mutable attributes : PhotonAttributes = initialAttr
+
+    member public this.Position = attributes.Position
+    member public this.PoaIndex = attributes.PoaIndex
+    member public this.Speed = attributes.Speed
+
+    static member pointsOfAttraction = [
         Position2(-0.1f,0.3f);
         Position2(0.6f,0.1f);
         Position2(0.0f,-0.6f);
         Position2(-0.3f,0.6f);
         ]
 
+    member private this.pointOfAttraction : Position2 = Photon.pointsOfAttraction.[this.PoaIndex]
+    member private this.hasReachedPointOfAttraction = Unit.op_LessThan((this.Position - this.pointOfAttraction).Length, Unit(attractionRadius))
 
-    let private pointOfAttraction (this: T): Position2 = pointsOfAttraction.[this.PoaIndex]
-    let private hasReachedPointOfAttraction (this:T) =  Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
-
-    let private velocityToGoal (elapsedTime: TimeSpan) (this: T) =
-        let diff = pointOfAttraction this - this.Position
+    member private this.velocityToGoal (elapsedTime: TimeSpan) =
+        let diff = this.pointOfAttraction - this.Position
         let acceleration = if diff.Length = Unit.Zero then new Acceleration2(0.0f, 0.0f) else new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
         
-    let capVelocity maxSpeed (v: Velocity2) =
-        if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
-    let capAccToGoal = capVelocity 0.2f
-    let capTotal = capVelocity 0.8f
-
-    let update (elapsedTime: TimeSpan) (this: T) : T =
-
-        let vToGoal = velocityToGoal elapsedTime this
-
+    member public this.Update (elapsedTime: TimeSpan) =
+        let vToGoal = this.velocityToGoal elapsedTime
         let velocity =
             this.Speed
             + capAccToGoal vToGoal
             + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * elapsedTime
-        let pointOfAttractionIndex = if hasReachedPointOfAttraction this then (this.PoaIndex + 1) % pointsOfAttraction.Length else this.PoaIndex
-        {Position = position; Speed = velocity; PoaIndex = pointOfAttractionIndex}
+        let pointOfAttractionIndex = if this.hasReachedPointOfAttraction then (this.PoaIndex + 1) % Photon.pointsOfAttraction.Length else this.PoaIndex
+        futureAttributes <- {Position = position; Speed = velocity; PoaIndex = pointOfAttractionIndex}
+        ()
+
+    member public this.Refresh () =
+        attributes <- futureAttributes
 
