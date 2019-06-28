@@ -28,29 +28,29 @@ module public Photon =
         
     let private attractionRadius = 0.2f
 
-    let PointsOfAttraction = [
+    let pointsOfAttraction = [
         Position2(-0.1f,0.3f);
         Position2(0.6f,0.1f);
         Position2(0.0f,-0.6f);
         Position2(-0.3f,0.6f);
         ]
 
-    let private PointOfAttraction (this : T) : Position2 = PointsOfAttraction.[this.PoaIndex]
-    let private HasReachedPointOfAttraction (this : T) = Unit.op_LessThan((this.Position - PointOfAttraction this).Length, Unit(attractionRadius))
+    let private pointOfAttraction (this : T) : Position2 = pointsOfAttraction.[this.PoaIndex]
+    let private hasReachedPointOfAttraction (this : T) = Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
 
-    let private VelocityToGoal (this : T) (elapsedTime: TimeSpan) =
-        let diff = PointOfAttraction this - this.Position
+    let private velocityToGoal (this : T) (elapsedTime: TimeSpan) =
+        let diff = pointOfAttraction this - this.Position
         let acceleration = if diff.Length = Unit.Zero then new Acceleration2(0.0f, 0.0f) else new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
 
     let Update (this : T) (elapsed : TimeSpan) = 
-        let vToGoal = VelocityToGoal this elapsed
+        let vToGoal = velocityToGoal this elapsed
         let velocity =
             this.Speed
             + capAccToGoal vToGoal
             + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * elapsed
-        let pointOfAttractionIndex = if HasReachedPointOfAttraction this then (this.PoaIndex + 1) % PointsOfAttraction.Length else this.PoaIndex
+        let pointOfAttractionIndex = if hasReachedPointOfAttraction this then (this.PoaIndex + 1) % pointsOfAttraction.Length else this.PoaIndex
         {Position = position; Speed = velocity; PoaIndex = pointOfAttractionIndex}
 
