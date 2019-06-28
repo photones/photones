@@ -9,16 +9,14 @@ namespace GameLogic
 open Bearded.Utilities.SpaceTime
 open Utils
 
-
 module public Photon =
     [<Struct>]
     type public T =
         {Position: Position2; Speed: Velocity2; PoaIndex: int}
 
-
-    let private getNumber () = rndSingle () - 0.5f
+    let private getRndSpeed () = rndSingle () - 0.5f
     let private smallRandomVelocity () =
-        Velocity2(getNumber (), getNumber ()) * 0.1f
+        Velocity2(getRndSpeed (), getRndSpeed ()) * 0.1f
 
     let private capVelocity maxSpeed (v: Velocity2) =
         if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
@@ -43,7 +41,7 @@ module public Photon =
         let acceleration = if diff.Length = Unit.Zero then new Acceleration2(0.0f, 0.0f) else new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
 
-    let Update (this : T) (elapsed : TimeSpan) = 
+    let update (this : T) (elapsed : TimeSpan) = 
         let vToGoal = velocityToGoal this elapsed
         let velocity =
             this.Speed

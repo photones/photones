@@ -15,6 +15,6 @@ module public Planet =
     type public T =
         {Position: Position2; Size: single}
 
-    let Update (this : T) (elapsed : TimeSpan) : T = 
+    let update (this : T) (elapsed : TimeSpan) : T = 
         {Position = Position2.Zero; Size = 0.0f}
 
