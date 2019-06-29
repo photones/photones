@@ -4,21 +4,19 @@ open System.Collections.Generic
 open System
 open Bearded.Utilities.SpaceTime
 
-
-
 type GameObject =
-    | Photon of UpdatableState<Photon.T>
-    | Planet of UpdatableState<Planet.T>
+    | Photon of UpdatableState<Photon.T, IGameState>
+    | Planet of UpdatableState<Planet.T, IGameState>
 
     member this.Position =
         match this with
         | Photon s -> s.State.Position
         | Planet s -> s.State.Position
 
-    member this.Update (elapsed : TimeSpan) =
+    member this.Update (gameState : IGameState) (elapsed : TimeSpan) =
         match this with
-        | Photon s -> s.Update elapsed
-        | Planet s -> s.Update elapsed
+        | Photon s -> s.Update gameState elapsed
+        | Planet s -> s.Update gameState elapsed
 
     member this.Refresh =
         match this with
@@ -30,5 +28,4 @@ type GameObject =
         match this with
         | Photon s -> visitPhoton.Invoke(s.State)
         | Planet s -> visitPlanet.Invoke(s.State)
-
 

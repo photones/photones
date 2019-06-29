@@ -1,16 +1,26 @@
 ﻿namespace GameLogic
 
 open System.Collections.Generic
-open System
 open Bearded.Utilities.SpaceTime
 
-type GameState(gameObjects : GameObject List) = 
+type GameState(gameObjects : List<GameObject>) = 
 
-    member this.GameObjects: GameObject List = gameObjects
+    let tileMap = new TileMap(new Unit(-1.0f), new Unit(-1.0f), new Unit(2.0f), new Unit(2.0f), 100, 100)
+
+    member this.GameObjects = gameObjects
 
     member this.Update(elapsedTime: TimeSpan): unit =
-        for o in this.GameObjects do
-            o.Update elapsedTime
-        for o in this.GameObjects do
+        for o in gameObjects do
+            o.Update this elapsedTime
+        for o in gameObjects do
             o.Refresh()
+
+        tileMap.Update(gameObjects)
+
+    interface IGameState with
+
+        member this.GameObjects = gameObjects |> Seq.cast<IGameObject>
+
+        member this.Update(elapsedTime: TimeSpan): unit =
+            this.Update(elapsedTime)
 

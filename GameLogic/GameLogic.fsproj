@@ -55,6 +55,7 @@
     <Content Include="packages.config" />
     <Compile Include="Utils.fs" />
     <Compile Include="UpdatableState.fs" />
+    <Compile Include="IGameState.fs" />
     <Compile Include="Photon.fs" />
     <Compile Include="Planet.fs" />
     <Compile Include="GameObject.fs" />

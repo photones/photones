@@ -2,15 +2,14 @@
 
 open Bearded.Utilities.SpaceTime
 
-type public UpdatableState<'State> (initialState: 'State, update: 'State -> TimeSpan -> 'State) =
+type public UpdatableState<'State, 'World> (initialState: 'State, update: 'State -> 'World -> TimeSpan -> 'State) =
     let mutable futureState : 'State = initialState
     let mutable currentState : 'State = initialState
 
     member this.State = currentState
 
-    member this.Update (elapsed : TimeSpan) =
-        futureState <- update currentState elapsed
+    member this.Update (world : 'World) (elapsed : TimeSpan) =
+        futureState <- update currentState world elapsed
 
     member this.Refresh () =
         currentState <- futureState
-

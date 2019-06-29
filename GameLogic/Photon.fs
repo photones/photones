@@ -41,7 +41,7 @@ module public Photon =
         let acceleration = if diff.Length = Unit.Zero then new Acceleration2(0.0f, 0.0f) else new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
         acceleration * elapsedTime
 
-    let update (this : T) (elapsed : TimeSpan) = 
+    let update (this : T) (gameState : IGameState) (elapsed : TimeSpan) = 
         let vToGoal = velocityToGoal this elapsed
         let velocity =
             this.Speed
