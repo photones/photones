@@ -57,6 +57,8 @@
     <Compile Include="UpdatableState.fs" />
     <Compile Include="Photon.fs" />
     <Compile Include="Planet.fs" />
+    <Compile Include="GameObject.fs" />
+    <Compile Include="TileMap.fs" />
     <Compile Include="GameState.fs" />
     <Compile Include="GameStateFactory.fs" />
     <Content Include="OpenTK.dll.config" />
