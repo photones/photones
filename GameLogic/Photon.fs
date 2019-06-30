@@ -16,13 +16,13 @@ module public Photon =
 
     let private getRndSpeed () = rndSingle () - 0.5f
     let private smallRandomVelocity () =
-        Velocity2(getRndSpeed (), getRndSpeed ()) * 0.1f
+        Velocity2(getRndSpeed (), getRndSpeed ()) * 0.05f
 
     let private capVelocity maxSpeed (v: Velocity2) =
         if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
-    let private capAccToGoal = capVelocity 0.2f
-    let private capTotal = capVelocity 0.8f
+    let private capAccToGoal = capVelocity 0.1f
+    let private capTotal = capVelocity 0.4f
         
     let private attractionRadius = 0.2f
 
@@ -38,10 +38,28 @@ module public Photon =
 
     let private velocityToGoal (this : T) (elapsedTime: TimeSpan) =
         let diff = pointOfAttraction this - this.Position
-        let acceleration = if diff.Length = Unit.Zero then new Acceleration2(0.0f, 0.0f) else new Acceleration2(diff.NumericValue.Normalized() * 3.0f)
+        let acceleration = if diff.Length = Unit.Zero then new Acceleration2(0.0f, 0.0f) else new Acceleration2(diff.NumericValue.Normalized() * 1.0f)
         acceleration * elapsedTime
 
     let update (this : T) (gameState : IGameState) (elapsed : TimeSpan) = 
+
+        let radius = new Unit(0.05f)
+        let neighbors = gameState.TileMap.GetNeighbors this.Position radius |> Seq.length
+        match neighbors with
+        | 0 ->
+            // Die
+            ()
+        | 1 ->
+            // Spawn
+            ()
+        | 2 ->
+            // Nothing
+            ()
+        | _ ->
+            // Die
+            ()
+            
+
         let vToGoal = velocityToGoal this elapsed
         let velocity =
             this.Speed

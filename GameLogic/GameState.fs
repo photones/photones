@@ -5,8 +5,9 @@ open Bearded.Utilities.SpaceTime
 
 type GameState(gameObjects : List<GameObject>) = 
 
-    let tileMap = new TileMap(new Unit(-1.0f), new Unit(-1.0f), new Unit(2.0f), new Unit(2.0f), 100, 100)
+    let tileMap = new TileMap(new Unit(-1.0f), new Unit(-1.0f), new Unit(2.0f), new Unit(2.0f), 200, 200)
 
+    member this.TileMap = tileMap
     member this.GameObjects = gameObjects
 
     member this.Update(elapsedTime: TimeSpan): unit =
@@ -20,6 +21,7 @@ type GameState(gameObjects : List<GameObject>) =
     interface IGameState with
 
         member this.GameObjects = gameObjects |> Seq.cast<IGameObject>
+        member this.TileMap = upcast this.TileMap
 
         member this.Update(elapsedTime: TimeSpan): unit =
             this.Update(elapsedTime)
