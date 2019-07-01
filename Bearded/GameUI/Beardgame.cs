@@ -44,12 +44,12 @@ namespace Bearded.Photones.GameUI {
             value.Visit(RenderPhoton, RenderPlanet);
         }
 
-        public void RenderPhoton(PhotonState value) {
+        public void RenderPhoton(PhotonData value) {
             var photoncolor = Color.DarkGoldenrod;
             geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, photoncolor);
         }
 
-        public void RenderPlanet(PlanetState value) {
+        public void RenderPlanet(PlanetData value) {
         }
     }
 }

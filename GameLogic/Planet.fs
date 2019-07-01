@@ -11,6 +11,6 @@ open Utils
 
 module public Planet =
 
-    let update (this : PlanetState) (elapsed : TimeSpan) : PlanetState = 
+    let update (this : PlanetData) (elapsed : TimeSpan) : PlanetData = 
         {Position = Position2.Zero; Size = 0.0f}
 

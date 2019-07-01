@@ -9,7 +9,7 @@ namespace GameLogic
 open Bearded.Utilities.SpaceTime
 open Utils
 
-module public PhotonCode =
+module public Photon =
 
     let private getRndSpeed () = rndSingle () - 0.5f
     let private smallRandomVelocity () =
@@ -30,17 +30,17 @@ module public PhotonCode =
         Position2(-0.3f,0.6f);
         ]
 
-    let private pointOfAttraction (this : PhotonState) : Position2 = pointsOfAttraction.[this.PoaIndex]
-    let private hasReachedPointOfAttraction (this : PhotonState) = Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
+    let private pointOfAttraction (this : PhotonData) : Position2 = pointsOfAttraction.[this.PoaIndex]
+    let private hasReachedPointOfAttraction (this : PhotonData) = Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
 
-    let private velocityToGoal (this : PhotonState) (elapsedTime: TimeSpan) =
+    let private velocityToGoal (this : PhotonData) (elapsedTime: TimeSpan) =
         let diff = pointOfAttraction this - this.Position
         let acceleration = if diff.Length = Unit.Zero then Acceleration2(0.0f, 0.0f) else Acceleration2(diff.NumericValue.Normalized() * 1.0f)
         acceleration * elapsedTime
 
     let interactionRadius = Unit(0.05f)
 
-    let rec update (this : PhotonState) (gameState : GameState) (elapsed : TimeSpan) (totalTime : TimeSpan) = 
+    let rec update (this : PhotonData) (gameState : GameState) (elapsed : TimeSpan) (totalTime : TimeSpan) = 
 
         let mutable alive = true
 
