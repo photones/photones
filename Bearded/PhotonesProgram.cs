@@ -48,7 +48,9 @@ namespace Bearded.Photones {
         private RenderContext _renderContext;
         private ScreenManager _screenManager;
         private readonly PerformanceMonitor _performanceMonitor;
+        private readonly GameStatistics _gameStatistics;
         private readonly Action<PhotonesProgram, BeardedUpdateEventArgs> _afterFrame;
+        private readonly Utils.Tracer _tracer;
 
         public PhotonesProgram(Logger logger, Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
@@ -58,7 +60,11 @@ namespace Bearded.Photones {
             Console.WriteLine(GL.GetString(StringName.Version));
             _logger = logger;
             _performanceMonitor = new PerformanceMonitor();
+            _gameStatistics = new GameStatistics();
             _afterFrame = afterFrame;
+            _tracer = new Utils.Tracer(_logger.Debug.Log, (nrGameObjects) => {
+                _gameStatistics.NrGameObjects = nrGameObjects;
+            });
         }
 
         protected override void OnLoad(EventArgs e) {
@@ -92,7 +98,9 @@ namespace Bearded.Photones {
                 return;
             }
 
-            var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetPerformanceSummary());
+
+            var performanceSummary = new PerformanceSummary(_performanceMonitor.FrameTime.Stats, _performanceMonitor.ElapsedTime.Stats, _performanceMonitor.FrameTime.CurrentValue, _gameStatistics.NrGameObjects);
+            var e = new BeardedUpdateEventArgs(uea, performanceSummary);
 
             _performanceMonitor.StartFrame(e.UpdateEventArgs.ElapsedTimeInS);
 
@@ -101,8 +109,7 @@ namespace Bearded.Photones {
                 Close();
             }
 
-            var tracer = new Utils.Tracer(_logger.Debug.Log);
-            _screenManager.Update(tracer, e);
+            _screenManager.Update(_tracer, e);
 
             _performanceMonitor.EndFrame();
             _afterFrame?.Invoke(this, e);

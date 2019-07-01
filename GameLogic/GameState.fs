@@ -16,15 +16,15 @@ type GameState(gameObjects : List<GameObject<GameState>>) =
 
     member this.Update(tracer: Tracer, uea: UpdateEventArgs): unit =
         // filter alive objects
-        _gameObjects <- List(_gameObjects |> List.ofSeq |> List.filter (fun o -> o.Alive))
-        // Collection can be modified during update
-        let tmpGameObjects = List(_gameObjects)
-        for o in tmpGameObjects do
+        _gameObjects <- List(_gameObjects |> Seq.filter (fun o -> o.Alive))
+        // Collection can be modified during update, so create a list for iteration
+        for o in List(_gameObjects) do
             o.Update tracer this uea
         for o in _gameObjects do
             o.Refresh()
 
         tileMap.Update(_gameObjects)
+        tracer.CountGameObjects (_gameObjects.Count)
 
     member this.Spawn (obj : GameObject<GameState>) =
         _gameObjects.Add(obj)

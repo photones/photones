@@ -11,5 +11,6 @@ let private rnd = System.Random()
 let public rndSingle () = (single)(rnd.NextDouble())
 let public rndInt maxValue = rnd.Next(maxValue)
 
-type Tracer(logger: Action<string>) =
+type Tracer(logger: Action<string>, setNrGameObjects: Action<int>) =
     member public this.Log msg = logger.Invoke(msg)
+    member public this.CountGameObjects nr = setNrGameObjects.Invoke(nr)
