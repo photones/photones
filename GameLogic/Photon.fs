@@ -10,16 +10,13 @@ open Bearded.Utilities.SpaceTime
 open Utils
 
 module public Photon =
-    [<Struct>]
-    type public T =
-        {Position: Position2; Speed: Velocity2; PoaIndex: int}
 
     let private getRndSpeed () = rndSingle () - 0.5f
     let private smallRandomVelocity () =
-        Velocity2(getRndSpeed (), getRndSpeed ()) * 0.05f
+        Velocity2(getRndSpeed (), getRndSpeed ()) * 0.02f
 
     let private capVelocity maxSpeed (v: Velocity2) =
-        if v.Length.NumericValue > maxSpeed then new Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
+        if v.Length.NumericValue > maxSpeed then Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
 
     let private capAccToGoal = capVelocity 0.1f
     let private capTotal = capVelocity 0.4f
@@ -33,32 +30,29 @@ module public Photon =
         Position2(-0.3f,0.6f);
         ]
 
-    let private pointOfAttraction (this : T) : Position2 = pointsOfAttraction.[this.PoaIndex]
-    let private hasReachedPointOfAttraction (this : T) = Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
+    let private pointOfAttraction (this : PhotonState) : Position2 = pointsOfAttraction.[this.PoaIndex]
+    let private hasReachedPointOfAttraction (this : PhotonState) = Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
 
-    let private velocityToGoal (this : T) (elapsedTime: TimeSpan) =
+    let private velocityToGoal (this : PhotonState) (elapsedTime: TimeSpan) =
         let diff = pointOfAttraction this - this.Position
-        let acceleration = if diff.Length = Unit.Zero then new Acceleration2(0.0f, 0.0f) else new Acceleration2(diff.NumericValue.Normalized() * 1.0f)
+        let acceleration = if diff.Length = Unit.Zero then Acceleration2(0.0f, 0.0f) else Acceleration2(diff.NumericValue.Normalized() * 1.0f)
         acceleration * elapsedTime
 
-    let update (this : T) (gameState : IGameState) (elapsed : TimeSpan) = 
+    let interactionRadius = Unit(0.05f)
 
-        let radius = new Unit(0.05f)
-        let neighbors = gameState.TileMap.GetNeighbors this.Position radius |> Seq.length
-        match neighbors with
-        | 0 ->
-            // Die
-            ()
-        | 1 ->
-            // Spawn
-            ()
-        | 2 ->
-            // Nothing
-            ()
-        | _ ->
-            // Die
-            ()
-            
+    let update (this : PhotonState) (gameState : IGameState) (elapsed : TimeSpan) (totalTime : TimeSpan) = 
+
+        let mutable alive = true
+
+        // apply game of life rules once per second
+        if (totalTime.NumericValue - (totalTime.NumericValue |> int |> float)) < elapsed.NumericValue then
+            let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
+            match Seq.length neighbors with
+            | t when t < 2 -> alive <- false
+            | t when t < 20 -> gameState.SpawnPhoton this
+            | t when t < 200 -> ()
+            | _ -> alive <- false
+        else ()
 
         let vToGoal = velocityToGoal this elapsed
         let velocity =
@@ -68,5 +62,5 @@ module public Photon =
             |> capTotal
         let position = this.Position + velocity * elapsed
         let pointOfAttractionIndex = if hasReachedPointOfAttraction this then (this.PoaIndex + 1) % pointsOfAttraction.Length else this.PoaIndex
-        {Position = position; Speed = velocity; PoaIndex = pointOfAttractionIndex}
+        {Position = position; Speed = velocity; PoaIndex = pointOfAttractionIndex; Alive = alive}
 

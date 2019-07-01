@@ -9,12 +9,8 @@ namespace GameLogic
 open Bearded.Utilities.SpaceTime
 open Utils
 
-
 module public Planet =
-    [<Struct>]
-    type public T =
-        {Position: Position2; Size: single}
 
-    let update (this : T) (elapsed : TimeSpan) : T = 
+    let update (this : PlanetState) (elapsed : TimeSpan) : PlanetState = 
         {Position = Position2.Zero; Size = 0.0f}
 

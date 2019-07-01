@@ -13,8 +13,8 @@ namespace Bearded.Photones.GameUI {
             _gameState = GameStateFactory.BuildInitialGameState();
         }
 
-        public void Update(TimeSpan elapsedTime) {
-            _gameState.Update(elapsedTime);
+        public void Update(TimeSpan elapsedTime, TimeSpan totalTime) {
+            _gameState.Update(elapsedTime, totalTime);
         }
 
         public void Draw(GeometryManager geometries) {
@@ -44,12 +44,12 @@ namespace Bearded.Photones.GameUI {
             value.Visit(RenderPhoton, RenderPlanet);
         }
 
-        public void RenderPhoton(Photon.T value) {
+        public void RenderPhoton(PhotonState value) {
             var photoncolor = Color.DarkGoldenrod;
             geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, photoncolor);
         }
 
-        public void RenderPlanet(Planet.T value) {
+        public void RenderPlanet(PlanetState value) {
         }
     }
 }

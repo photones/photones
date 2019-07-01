@@ -4,7 +4,7 @@ open Bearded.Utilities.SpaceTime
 open System.Collections.Generic
 
 type public Tile() =
-    let mutable content : List<GameObject> = new List<GameObject>()
+    let mutable content : List<GameObject> = List<GameObject>()
 
     member this.Clear() =
         content.Clear()
@@ -17,7 +17,7 @@ type public Tile() =
 
 
 type public TileMap(originX : Unit, originY : Unit, width : Unit, height : Unit, rows : int, columns : int) =
-    let tiles : array<array<Tile>> = [| for _ in 1..rows -> [| for _ in 1..columns -> new Tile() |] |]
+    let tiles : array<array<Tile>> = [| for _ in 1..rows -> [| for _ in 1..columns -> Tile() |] |]
     let tileWidth = width / (single columns)
     let tileHeight = height / (single rows)
     let y2Row (y:Unit) = (y - originY) / height * (single rows) |> int
