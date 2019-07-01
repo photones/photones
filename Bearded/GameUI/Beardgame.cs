@@ -40,7 +40,7 @@ namespace Bearded.Photones.GameUI {
             this.geometries = geometries;
         }
 
-        public void Render(GameObject value) {
+        public void Render(GameObject<GameState> value) {
             value.Visit(RenderPhoton, RenderPlanet);
         }
 

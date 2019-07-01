@@ -3,21 +3,21 @@
 open Bearded.Utilities.SpaceTime
 open System.Collections.Generic
 
-type public Tile() =
-    let mutable content : List<GameObject> = List<GameObject>()
+type public Tile<'GameState>() =
+    let mutable content : List<GameObject<'GameState>> = List<GameObject<'GameState>>()
 
     member this.Clear() =
         content.Clear()
 
-    member this.Add(value : GameObject) =
+    member this.Add(value : GameObject<'GameState>) =
         content.Add(value)
 
     member this.Get() =
-        content :> seq<GameObject>
+        content :> seq<GameObject<'GameState>>
 
 
-type public TileMap(originX : Unit, originY : Unit, width : Unit, height : Unit, rows : int, columns : int) =
-    let tiles : array<array<Tile>> = [| for _ in 1..rows -> [| for _ in 1..columns -> Tile() |] |]
+type public TileMap<'GameState>(originX : Unit, originY : Unit, width : Unit, height : Unit, rows : int, columns : int) =
+    let tiles : array<array<Tile<'GameState>>> = [| for _ in 1..rows -> [| for _ in 1..columns -> Tile() |] |]
     let tileWidth = width / (single columns)
     let tileHeight = height / (single rows)
     let y2Row (y:Unit) = (y - originY) / height * (single rows) |> int
@@ -31,10 +31,9 @@ type public TileMap(originX : Unit, originY : Unit, width : Unit, height : Unit,
         Unit.op_LessThan(originY, point.Y) &&
         Unit.op_LessThan(point.Y, originY + height)
 
-    // Does this do boxing?
     let capBetween (lower:int) (upper:int) (value:int) : int = min upper (max lower value)
 
-    member public this.Update (objects : seq<GameObject>) =
+    member public this.Update (objects : seq<GameObject<'GameState>>) =
         for row in tiles do
             for tile in row do
                 tile.Clear()
@@ -54,12 +53,7 @@ type public TileMap(originX : Unit, originY : Unit, width : Unit, height : Unit,
         seq {
         for col = firstColumn to lastColumn do
             for row = firstRow to lastRow do
-                // TODO: We could add another filter here by checking on the point in the tile that is closest to `from`
                 for candidate in tiles.[row].[col].Get() do 
                     if isPointWithinRadius from radius candidate.Position then yield candidate else ()
         }
-
-    interface ITileMap with
-        member this.GetNeighbors (from : Position2) (radius : Unit) =
-            this.GetNeighbors from radius |> Seq.cast
 

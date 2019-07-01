@@ -9,7 +9,7 @@ namespace GameLogic
 open Bearded.Utilities.SpaceTime
 open Utils
 
-module public Photon =
+module public PhotonCode =
 
     let private getRndSpeed () = rndSingle () - 0.5f
     let private smallRandomVelocity () =
@@ -40,16 +40,16 @@ module public Photon =
 
     let interactionRadius = Unit(0.05f)
 
-    let update (this : PhotonState) (gameState : IGameState) (elapsed : TimeSpan) (totalTime : TimeSpan) = 
+    let rec update (this : PhotonState) (gameState : GameState) (elapsed : TimeSpan) (totalTime : TimeSpan) = 
 
         let mutable alive = true
 
-        // apply game of life rules once per second
+        // apply game of life like rules once per second
         if (totalTime.NumericValue - (totalTime.NumericValue |> int |> float)) < elapsed.NumericValue then
             let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
             match Seq.length neighbors with
             | t when t < 2 -> alive <- false
-            | t when t < 20 -> gameState.SpawnPhoton this
+            | t when t < 20 -> gameState.Spawn (Photon (UpdatableState(this, update)))
             | t when t < 200 -> ()
             | _ -> alive <- false
         else ()

@@ -3,7 +3,7 @@
 open System.Collections.Generic
 open Bearded.Utilities.SpaceTime
 
-type GameState(gameObjects : List<GameObject>) = 
+type GameState(gameObjects : List<GameObject<GameState>>) = 
 
     let tileMap = TileMap(Unit(-1.0f), Unit(-1.0f), Unit(2.0f), Unit(2.0f), 200, 200)
 
@@ -22,15 +22,7 @@ type GameState(gameObjects : List<GameObject>) =
         for o in _gameObjects do
             o.Refresh()
 
-        tileMap.Update(Seq.cast _gameObjects)
+        tileMap.Update(_gameObjects)
 
-    interface IGameState with
-        member this.SpawnPhoton (state : PhotonState) =
-            _gameObjects.Add(Photon (UpdatableState(state,Photon.update)))
-
-        member this.GameObjects = _gameObjects |> Seq.map (fun x -> x :> IGameObject)
-        member this.TileMap = upcast this.TileMap
-
-        member this.Update (elapsedTime: TimeSpan) (totalTime: TimeSpan): unit =
-            this.Update(elapsedTime, totalTime)
-
+    member this.Spawn (obj : GameObject<GameState>) =
+        _gameObjects.Add(obj)
