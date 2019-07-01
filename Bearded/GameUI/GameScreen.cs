@@ -24,11 +24,9 @@ namespace Bearded.Photones.GameUI {
         }
 
         public override void Update(BeardedUpdateEventArgs args) {
+            _game.Update(args.UpdateEventArgs);
+
             var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.UpdateEventArgs.ElapsedTimeInS);
-            var totalTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.UpdateEventArgs.TimeInS);
-
-            _game.Update(elapsedTime, totalTime);
-
             ParticleSystem.Get.Update(elapsedTime);
         }
 

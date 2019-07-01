@@ -8,6 +8,7 @@ namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
 open Utils
+open amulware.Graphics
 
 module public Photon =
 
@@ -40,12 +41,14 @@ module public Photon =
 
     let interactionRadius = Unit(0.05f)
 
-    let rec update (this : PhotonData) (gameState : GameState) (elapsed : TimeSpan) (totalTime : TimeSpan) = 
+    let rec update (this : PhotonData) (gameState : GameState) (uea : UpdateEventArgs) = 
 
         let mutable alive = true
+        let elapsed = uea.ElapsedTimeInS
+        let totalTime = uea.TimeInS
 
         // apply game of life like rules once per second
-        if (totalTime.NumericValue - (totalTime.NumericValue |> int |> float)) < elapsed.NumericValue then
+        if (totalTime - (totalTime |> int |> float)) < elapsed then
             let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
             match Seq.length neighbors with
             | t when t < 2 -> alive <- false
@@ -54,13 +57,13 @@ module public Photon =
             | _ -> alive <- false
         else ()
 
-        let vToGoal = velocityToGoal this elapsed
+        let vToGoal = velocityToGoal this (TimeSpan(elapsed))
         let velocity =
             this.Speed
             + capAccToGoal vToGoal
             + (smallRandomVelocity ())
             |> capTotal
-        let position = this.Position + velocity * elapsed
+        let position = this.Position + velocity * (TimeSpan(elapsed))
         let pointOfAttractionIndex = if hasReachedPointOfAttraction this then (this.PoaIndex + 1) % pointsOfAttraction.Length else this.PoaIndex
         {Position = position; Speed = velocity; PoaIndex = pointOfAttractionIndex; Alive = alive}
 
