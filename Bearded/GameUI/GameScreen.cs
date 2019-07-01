@@ -23,9 +23,9 @@ namespace Bearded.Photones.GameUI {
             _geometries = geometryManger;
         }
 
-        public override void Update(BeardedUpdateEventArgs args) {
-            _game.Update(args.UpdateEventArgs);
-
+        public override void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
+            _game.Update(tracer, args.UpdateEventArgs);
+            
             var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.UpdateEventArgs.ElapsedTimeInS);
             ParticleSystem.Get.Update(elapsedTime);
         }

@@ -19,7 +19,7 @@ namespace Bearded.Photones.GameUI {
             _geometries.ConsolasFont.DrawString(new Vector2(0, 20), _stats.ElapsedTimeString);
         }
 
-        public override void Update(BeardedUpdateEventArgs args) {
+        public override void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
             _stats = args.PerformanceStats;
         }
     }

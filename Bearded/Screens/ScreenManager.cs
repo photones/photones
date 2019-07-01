@@ -1,4 +1,4 @@
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using amulware.Graphics;
 using Bearded.Photones.Performance;
@@ -17,9 +17,9 @@ namespace Bearded.Photones.Screens {
             _pressedCharacterInterface = _pressedCharacterList.AsReadOnly();
         }
 
-        public void Update(BeardedUpdateEventArgs args) {
+        public void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
             handleInput(args.UpdateEventArgs);
-            UpdateAll(args);
+            UpdateAll(tracer, args);
         }
 
         private void handleInput(UpdateEventArgs args) {

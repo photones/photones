@@ -4,16 +4,16 @@ open System.Collections.Generic
 open System
 open Bearded.Utilities.SpaceTime
 open amulware.Graphics
+open Utils
 
-// TODO: move UpdateArgs into F# code, such that we don't have to add parameters for each new thing that we need
-type public UpdatableState<'ObjectState, 'GameState> (initialState: 'ObjectState, update: 'ObjectState -> 'GameState -> UpdateEventArgs -> 'ObjectState) =
+type public UpdatableState<'ObjectState, 'GameState> (initialState: 'ObjectState, update: Tracer -> 'ObjectState -> 'GameState -> UpdateEventArgs -> 'ObjectState) =
     let mutable futureState : 'ObjectState = initialState
     let mutable currentState : 'ObjectState = initialState
 
     member this.State = currentState
 
-    member this.Update (world : 'GameState) (uea : UpdateEventArgs) =
-        futureState <- update currentState world uea
+    member this.Update (tracer : Tracer) (world : 'GameState) (uea : UpdateEventArgs) =
+        futureState <- update tracer currentState world uea
 
     member this.Refresh () =
         currentState <- futureState
@@ -33,10 +33,10 @@ type GameObject<'GameState> =
         | Photon s -> s.State.Position
         | Planet s -> s.State.Position
 
-    member this.Update (gameState : 'GameState) (uea : UpdateEventArgs) =
+    member this.Update (tracer : Tracer) (gameState : 'GameState) (uea : UpdateEventArgs) =
         match this with
-        | Photon s -> s.Update gameState uea
-        | Planet s -> s.Update gameState uea
+        | Photon s -> s.Update tracer gameState uea
+        | Planet s -> s.Update tracer gameState uea
 
     member this.Refresh () =
         match this with

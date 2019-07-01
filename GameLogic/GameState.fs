@@ -3,6 +3,7 @@
 open System.Collections.Generic
 open Bearded.Utilities.SpaceTime
 open amulware.Graphics
+open Utils
 
 type GameState(gameObjects : List<GameObject<GameState>>) = 
 
@@ -13,13 +14,13 @@ type GameState(gameObjects : List<GameObject<GameState>>) =
     member this.TileMap = tileMap
     member this.GameObjects = _gameObjects
 
-    member this.Update(uea: UpdateEventArgs): unit =
+    member this.Update(tracer: Tracer, uea: UpdateEventArgs): unit =
         // filter alive objects
         _gameObjects <- List(_gameObjects |> List.ofSeq |> List.filter (fun o -> o.Alive))
         // Collection can be modified during update
         let tmpGameObjects = List(_gameObjects)
         for o in tmpGameObjects do
-            o.Update this uea
+            o.Update tracer this uea
         for o in _gameObjects do
             o.Refresh()
 

@@ -41,7 +41,7 @@ module public Photon =
 
     let interactionRadius = Unit(0.05f)
 
-    let rec update (this : PhotonData) (gameState : GameState) (uea : UpdateEventArgs) = 
+    let rec update (tracer : Tracer) (this : PhotonData) (gameState : GameState) (uea : UpdateEventArgs) = 
 
         let mutable alive = true
         let elapsed = uea.ElapsedTimeInS

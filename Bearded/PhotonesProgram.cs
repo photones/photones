@@ -101,7 +101,8 @@ namespace Bearded.Photones {
                 Close();
             }
 
-            _screenManager.Update(e);
+            var tracer = new Utils.Tracer(_logger.Debug.Log);
+            _screenManager.Update(tracer, e);
 
             _performanceMonitor.EndFrame();
             _afterFrame?.Invoke(this, e);

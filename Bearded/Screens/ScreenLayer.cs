@@ -1,4 +1,4 @@
-using amulware.Graphics;
+﻿using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
@@ -37,7 +37,7 @@ namespace Bearded.Photones.Screens {
         }
 
         public virtual bool HandleInput(UpdateEventArgs args, InputState inputState) => true;
-        public abstract void Update(BeardedUpdateEventArgs args);
+        public abstract void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args);
         public abstract void Draw();
         protected virtual void OnViewportSizeChanged() { }
 

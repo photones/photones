@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
@@ -23,7 +23,7 @@ namespace Bearded.Photones.Screens {
             Screen = Screen.GetCanvas();
         }
 
-        public override void Update(BeardedUpdateEventArgs args) {
+        public override void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
             _components.ForEach(c => c.Update(args.UpdateEventArgs));
         }
 

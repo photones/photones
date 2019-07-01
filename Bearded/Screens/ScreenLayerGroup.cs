@@ -1,4 +1,4 @@
-using amulware.Graphics;
+﻿using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.UI;
 
@@ -10,8 +10,8 @@ namespace Bearded.Photones.Screens {
             this.parent = parent;
         }
 
-        public void Update(BeardedUpdateEventArgs args) {
-            UpdateAll(args);
+        public void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
+            UpdateAll(tracer, args);
         }
 
         public bool HandleInput(UpdateEventArgs args, InputState inputState) {
