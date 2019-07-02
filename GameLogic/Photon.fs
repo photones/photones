@@ -12,9 +12,9 @@ open amulware.Graphics
 
 module public Photon =
 
-    let private getRndSpeed () = rndSingle () - 0.5f
+    let private getRandomSpeed () = randomSingle () - 0.5f
     let private smallRandomVelocity () =
-        Velocity2(getRndSpeed (), getRndSpeed ()) * 0.02f
+        Velocity2(getRandomSpeed (), getRandomSpeed ()) * 0.02f
 
     let private capVelocity maxSpeed (v: Velocity2) =
         if v.Length.NumericValue > maxSpeed then Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
