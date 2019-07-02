@@ -3,6 +3,7 @@ using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
+using GameLogic;
 
 namespace Bearded.Photones.Screens {
     class ScreenLayerCollection {
@@ -19,7 +20,7 @@ namespace Bearded.Photones.Screens {
             return true;
         }
 
-        protected void UpdateAll(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
+        protected void UpdateAll(Tracer tracer, BeardedUpdateEventArgs args) {
             _screenLayers.ForEach((layer) => layer.Update(tracer, args));
             removeScreenLayersQueuedForRemoval();
         }

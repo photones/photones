@@ -1,6 +1,7 @@
 ﻿using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.UI;
+using GameLogic;
 
 namespace Bearded.Photones.Screens {
     abstract class ScreenLayerGroup : ScreenLayerCollection, IScreenLayer {
@@ -10,7 +11,7 @@ namespace Bearded.Photones.Screens {
             this.parent = parent;
         }
 
-        public void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
+        public void Update(Tracer tracer, BeardedUpdateEventArgs args) {
             UpdateAll(tracer, args);
         }
 

@@ -14,6 +14,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using Bearded.Photones.Performance;
+using GameLogic;
 
 namespace Bearded.Photones {
     public class PhotonesProgram : Program {
@@ -50,7 +51,7 @@ namespace Bearded.Photones {
         private readonly PerformanceMonitor _performanceMonitor;
         private readonly GameStatistics _gameStatistics;
         private readonly Action<PhotonesProgram, BeardedUpdateEventArgs> _afterFrame;
-        private readonly Utils.Tracer _tracer;
+        private readonly Tracer _tracer;
 
         public PhotonesProgram(Logger logger, Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
@@ -62,7 +63,7 @@ namespace Bearded.Photones {
             _performanceMonitor = new PerformanceMonitor();
             _gameStatistics = new GameStatistics();
             _afterFrame = afterFrame;
-            _tracer = new Utils.Tracer(_logger.Debug.Log, (nrGameObjects) => {
+            _tracer = new Tracer(_logger.Debug.Log, (nrGameObjects) => {
                 _gameStatistics.NrGameObjects = nrGameObjects;
             });
         }

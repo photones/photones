@@ -4,6 +4,7 @@ using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.UI;
 using Bearded.Utilities.Input;
+using GameLogic;
 
 namespace Bearded.Photones.Screens {
     class ScreenManager : ScreenLayerCollection {
@@ -17,7 +18,7 @@ namespace Bearded.Photones.Screens {
             _pressedCharacterInterface = _pressedCharacterList.AsReadOnly();
         }
 
-        public void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
+        public void Update(Tracer tracer, BeardedUpdateEventArgs args) {
             handleInput(args.UpdateEventArgs);
             UpdateAll(tracer, args);
         }

@@ -2,6 +2,7 @@
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Screens;
 using OpenTK;
+using GameLogic;
 
 namespace Bearded.Photones.GameUI {
     class HudScreen : UIScreenLayer {
@@ -20,7 +21,7 @@ namespace Bearded.Photones.GameUI {
             _geometries.ConsolasFont.DrawString(new Vector2(0, 40), _stats.NrGameObjectsString);
         }
 
-        public override void Update(Utils.Tracer tracer, BeardedUpdateEventArgs args) {
+        public override void Update(Tracer tracer, BeardedUpdateEventArgs args) {
             _stats = args.PerformanceStats;
         }
     }
