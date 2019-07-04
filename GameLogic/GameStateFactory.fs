@@ -21,9 +21,9 @@ module GameStateFactory =
         let angle2 = angle + Mathf.PiOver2
         let pos = Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius |> Position2
         let speed = Vector2(Mathf.Cos(angle2), Mathf.Sin(angle2)) |> Velocity2
-        {Position = pos; Speed = speed * 1.0f * (1.0f/radius); PoaIndex = randomInt Photon.pointsOfAttraction.Length; Alive = true}
+        {Position = pos; Speed = speed * 1.0f * (1.0f/radius); PointOfAttractionIndex = randomInt Photon.PointsOfAttraction.Length; Alive = true}
 
     let BuildInitialGameState() =
-        let photons = [0..1000] |> List.map (fun i -> Photon (UpdatableState<PhotonData, GameState>(buildRandomPhoton i, Photon.update)))
+        let photons = [0..1000] |> List.map (fun i -> Photon.CreatePhoton (buildRandomPhoton i))
         GameState(List<GameObject<GameState>>(photons))
 

@@ -41,7 +41,6 @@ type public TileMap<'GameState>(originX : Unit, originY : Unit, width : Unit, he
         for obj in objects do
             if isPointWithinMap obj.Position then
                 (tileForPosition obj.Position).Add(obj)
-            else ()
 
     member public this.GetNeighbors (from : Position2) (radius : Unit) =
         let columnBound = capBetween 0 (columns - 1)
@@ -54,6 +53,6 @@ type public TileMap<'GameState>(originX : Unit, originY : Unit, width : Unit, he
         for col = firstColumn to lastColumn do
             for row = firstRow to lastRow do
                 for candidate in tiles.[row].[col].Get() do 
-                    if isPointWithinRadius from radius candidate.Position then yield candidate else ()
+                    if isPointWithinRadius from radius candidate.Position then yield candidate
         }
 

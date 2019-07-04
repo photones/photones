@@ -13,8 +13,8 @@ namespace Bearded.Photones.GameUI {
             _gameState = GameStateFactory.BuildInitialGameState();
         }
 
-        public void Update(Tracer tracer, UpdateEventArgs uea) {
-            _gameState.Update(tracer, uea);
+        public void Update(Tracer tracer, UpdateEventArgs updateArgs) {
+            _gameState.Update(tracer, updateArgs);
         }
 
         public void Draw(GeometryManager geometries) {

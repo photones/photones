@@ -6,14 +6,18 @@ open Bearded.Utilities.SpaceTime
 open amulware.Graphics
 open Utils
 
-type public UpdatableState<'ObjectState, 'GameState> (initialState: 'ObjectState, update: Tracer -> 'ObjectState -> 'GameState -> UpdateEventArgs -> 'ObjectState) =
+type public UpdatableState<'ObjectState, 'GameState>
+        (
+            initialState: 'ObjectState,
+            update: Tracer -> 'ObjectState -> 'GameState -> UpdateEventArgs -> 'ObjectState
+        ) =
     let mutable futureState : 'ObjectState = initialState
     let mutable currentState : 'ObjectState = initialState
 
     member this.State = currentState
 
-    member this.Update (tracer : Tracer) (world : 'GameState) (uea : UpdateEventArgs) =
-        futureState <- update tracer currentState world uea
+    member this.Update (tracer : Tracer) (world : 'GameState) (updateArgs : UpdateEventArgs) =
+        futureState <- update tracer currentState world updateArgs
 
     member this.Refresh () =
         currentState <- futureState
@@ -33,10 +37,10 @@ type GameObject<'GameState> =
         | Photon s -> s.State.Position
         | Planet s -> s.State.Position
 
-    member this.Update (tracer : Tracer) (gameState : 'GameState) (uea : UpdateEventArgs) =
+    member this.Update (tracer : Tracer) (gameState : 'GameState) (updateArgs : UpdateEventArgs) =
         match this with
-        | Photon s -> s.Update tracer gameState uea
-        | Planet s -> s.Update tracer gameState uea
+        | Photon s -> s.Update tracer gameState updateArgs
+        | Planet s -> s.Update tracer gameState updateArgs
 
     member this.Refresh () =
         match this with

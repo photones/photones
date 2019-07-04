@@ -90,8 +90,8 @@ namespace Bearded.Photones {
             _inputManager.ProcessEventsAsync();
         }
 
-        protected override void OnUpdate(UpdateEventArgs uea) {
-            if (uea.ElapsedTimeInS < 0.0001) {
+        protected override void OnUpdate(UpdateEventArgs updateArgs) {
+            if (updateArgs.ElapsedTimeInS < 0.0001) {
                 // This is basically to skip the first frame, because its elapsed time is out of whack
                 // We do a GC though, to clean up initialization garbage, to prevent that from happening in game
                 // This saves one big stutter a few seconds into the game.
@@ -100,8 +100,12 @@ namespace Bearded.Photones {
             }
 
 
-            var performanceSummary = new PerformanceSummary(_performanceMonitor.FrameTime.Stats, _performanceMonitor.ElapsedTime.Stats, _performanceMonitor.FrameTime.CurrentValue, _gameStatistics.NrGameObjects);
-            var e = new BeardedUpdateEventArgs(uea, performanceSummary);
+            var performanceSummary = new PerformanceSummary(
+                _performanceMonitor.FrameTime.Stats,
+                _performanceMonitor.ElapsedTime.Stats,
+                _performanceMonitor.FrameTime.CurrentValue,
+                _gameStatistics.NrGameObjects);
+            var e = new BeardedUpdateEventArgs(updateArgs, performanceSummary);
 
             _performanceMonitor.StartFrame(e.UpdateEventArgs.ElapsedTimeInS);
 
