@@ -54,8 +54,12 @@
     <Compile Include="AssemblyInfo.fs" />
     <Content Include="packages.config" />
     <Compile Include="Utils.fs" />
-    <Compile Include="Photon.fs" />
+    <Compile Include="Data.fs" />
+    <Compile Include="GameObjects.fs" />
+    <Compile Include="TileMap.fs" />
     <Compile Include="GameState.fs" />
+    <Compile Include="Photon.fs" />
+    <Compile Include="Planet.fs" />
     <Compile Include="GameStateFactory.fs" />
     <Content Include="OpenTK.dll.config" />
   </ItemGroup>

@@ -14,6 +14,7 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using Bearded.Photones.Performance;
+using GameLogic;
 
 namespace Bearded.Photones {
     public class PhotonesProgram : Program {
@@ -48,7 +49,9 @@ namespace Bearded.Photones {
         private RenderContext _renderContext;
         private ScreenManager _screenManager;
         private readonly PerformanceMonitor _performanceMonitor;
+        private readonly GameStatistics _gameStatistics;
         private readonly Action<PhotonesProgram, BeardedUpdateEventArgs> _afterFrame;
+        private readonly Tracer _tracer;
 
         public PhotonesProgram(Logger logger, Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
@@ -58,7 +61,11 @@ namespace Bearded.Photones {
             Console.WriteLine(GL.GetString(StringName.Version));
             _logger = logger;
             _performanceMonitor = new PerformanceMonitor();
+            _gameStatistics = new GameStatistics();
             _afterFrame = afterFrame;
+            _tracer = new Tracer(_logger.Debug.Log, (nrGameObjects) => {
+                _gameStatistics.NrGameObjects = nrGameObjects;
+            });
         }
 
         protected override void OnLoad(EventArgs e) {
@@ -83,8 +90,8 @@ namespace Bearded.Photones {
             _inputManager.ProcessEventsAsync();
         }
 
-        protected override void OnUpdate(UpdateEventArgs uea) {
-            if (uea.ElapsedTimeInS < 0.0001) {
+        protected override void OnUpdate(UpdateEventArgs updateArgs) {
+            if (updateArgs.ElapsedTimeInS < 0.0001) {
                 // This is basically to skip the first frame, because its elapsed time is out of whack
                 // We do a GC though, to clean up initialization garbage, to prevent that from happening in game
                 // This saves one big stutter a few seconds into the game.
@@ -92,7 +99,13 @@ namespace Bearded.Photones {
                 return;
             }
 
-            var e = new BeardedUpdateEventArgs(uea, _performanceMonitor.GetPerformanceSummary());
+
+            var performanceSummary = new PerformanceSummary(
+                _performanceMonitor.FrameTime.Stats,
+                _performanceMonitor.ElapsedTime.Stats,
+                _performanceMonitor.FrameTime.CurrentValue,
+                _gameStatistics.NrGameObjects);
+            var e = new BeardedUpdateEventArgs(updateArgs, performanceSummary);
 
             _performanceMonitor.StartFrame(e.UpdateEventArgs.ElapsedTimeInS);
 
@@ -101,7 +114,7 @@ namespace Bearded.Photones {
                 Close();
             }
 
-            _screenManager.Update(e);
+            _screenManager.Update(_tracer, e);
 
             _performanceMonitor.EndFrame();
             _afterFrame?.Invoke(this, e);

@@ -7,14 +7,14 @@ using amulware.Graphics;
 namespace Bearded.Photones.GameUI {
 
     class Beardgame {
-        private GameState _gameState;
+        private readonly GameState _gameState;
 
         public Beardgame() {
             _gameState = GameStateFactory.BuildInitialGameState();
         }
 
-        public void Update(TimeSpan elapsedTime) {
-            _gameState = _gameState.Update(elapsedTime);
+        public void Update(Tracer tracer, UpdateEventArgs updateArgs) {
+            _gameState.Update(tracer, updateArgs);
         }
 
         public void Draw(GeometryManager geometries) {
@@ -26,10 +26,9 @@ namespace Bearded.Photones.GameUI {
             geometries.PhotonGeometry.DrawParticle(new Vector2(-1, 1), coordcolor);
             geometries.PhotonGeometry.DrawParticle(new Vector2(-1, -1), coordcolor);
 
-            // Photons
-            var photoncolor = Color.DarkGoldenrod;
-            foreach (var photon in _gameState.Photons) {
-                geometries.PhotonGeometry.DrawParticle(photon.Position.NumericValue, photoncolor);
+            var renderer = new GameObjectRenderer(geometries);
+            foreach (var gameObject in _gameState.GameObjects) {
+                renderer.Render(gameObject);
             }
         }
     }

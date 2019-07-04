@@ -56,7 +56,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameStatistics.cs" />
     <Compile Include="GameUI\Beardgame.cs" />
+    <Compile Include="GameUI\GameObjectRenderer.cs" />
     <Compile Include="Performance\PerformanceMonitor.cs" />
     <Compile Include="GameUI\GameScreen.cs" />
     <Compile Include="Performance\PerformanceSummary.cs" />

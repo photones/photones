@@ -2,6 +2,9 @@
 *.txt text eol=lf
 *.md text eol=lf
 *.cs text eol=lf
+*.vs text eol=lf
+*.gs text eol=lf
+*.fs text eol=lf
 *.js text eol=lf
 *.ts text eol=lf
 *.html text eol=lf
@@ -10,6 +13,8 @@
 *.cshtml text eol=lf
 *.csproj text eol=lf
 *.csproj.DotSettings text eol=lf
+*.fsproj text eol=lf
+*.fsproj.DotSettings text eol=lf
 *.aspx text eol=lf
 *.ascx text eol=lf
 *.vm text eol=lf

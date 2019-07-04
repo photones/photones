@@ -40,9 +40,5 @@ namespace Bearded.Photones.Performance {
                 ElapsedTime.Refresh();
             }
         }
-
-        public PerformanceSummary GetPerformanceSummary() {
-            return new PerformanceSummary(FrameTime.Stats, ElapsedTime.Stats, FrameTime.CurrentValue);
-        }
     }
 }

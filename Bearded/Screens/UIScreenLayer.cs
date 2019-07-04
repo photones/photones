@@ -1,10 +1,11 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using amulware.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
 using Bearded.Photones.UI.Components;
 using OpenTK;
+using GameLogic;
 
 namespace Bearded.Photones.Screens {
     abstract class UIScreenLayer : ScreenLayer {
@@ -23,7 +24,7 @@ namespace Bearded.Photones.Screens {
             Screen = Screen.GetCanvas();
         }
 
-        public override void Update(BeardedUpdateEventArgs args) {
+        public override void Update(Tracer tracer, BeardedUpdateEventArgs args) {
             _components.ForEach(c => c.Update(args.UpdateEventArgs));
         }
 
