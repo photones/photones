@@ -3,6 +3,13 @@
 open Bearded.Utilities.SpaceTime
 open System.Collections.Generic
 
+(**
+The worldspace is split up into rectangular tiles. A Tile contains zero or
+more game objects. This way we can quickly look up which gameobjects are
+within proximity of a certain point, as long as the tiles are not too big
+and crowded.
+*)
+
 type public Tile<'GameState>() =
     let mutable content : List<GameObject<'GameState>> = List<GameObject<'GameState>>()
 
