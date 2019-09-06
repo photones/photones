@@ -33,7 +33,7 @@
       </div>
       <hr />
       <div class="row">
-        <div class="span9" id="main">
+        <div class="span9" id="main" style="overflow-x: auto">
           {document}
           {tooltips}
         </div>
@@ -42,8 +42,6 @@
           <ul class="nav nav-list" id="menu">
             <li class="nav-header">{project-name}</li>
             <li><a href="index.html">Home page</a></li>
-            {nav-items}
-            <li><a href="GameObjects.html">Game Objects</a></li>
             <!--
 
               Here you can add links to other pages of the documentation
@@ -55,6 +53,7 @@
               * <li class="nav-header">Sub-heading</li>
 
             -->
+            {nav-items}
           </ul>
         </div>
       </div>
