@@ -53,7 +53,7 @@ let sourceFiles =
 
 let template = Path.Combine(source, "templates", "template-project.html")
 
-let navHtml = sourceFiles |> Seq.map (fun (f, p, _) -> sprintf @"<li><a href=""%s"">%s</a></li>" (p + ".html") p) |> String.concat ""
+let navHtml = sourceFiles |> Seq.map (fun (_, p, _) -> sprintf @"<li><a href=""%s"">%s</a></li>" (p + ".html") p) |> String.concat ""
 
 let projectInfo =
   [ "page-description", "F# Game Programming"
@@ -69,10 +69,9 @@ let generateIndexHtml () =
 
 let generateSourceFileDocs () =
     for (f, p, _) in sourceFiles do
-        if f <> "AssemblyInfo.fs" then
-            let path = Path.Combine(source, "..", f)
-            let outputfile = Path.Combine(outputdir, sprintf "%s.html" p)
-            RazorLiterate.ProcessScriptFile(path, template, outputfile, replacements = projectInfo)
+        let path = Path.Combine(source, "..", f)
+        let outputfile = Path.Combine(outputdir, sprintf "%s.html" p)
+        RazorLiterate.ProcessScriptFile(path, template, outputfile, replacements = projectInfo)
 
 generateIndexHtml ()
 generateSourceFileDocs ()
