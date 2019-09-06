@@ -1396,7 +1396,6 @@
       <Paket>True</Paket>
     </Content>
     <None Include="docs\build.fsx" />
-    <None Include="docs\blog.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

@@ -1,10 +1,7 @@
 ﻿namespace GameLogic
 
-open System.Collections.Generic
 open System
-open Bearded.Utilities.SpaceTime
 open amulware.Graphics
-open Utils
 
 type public UpdatableState<'ObjectState, 'GameState>
         (

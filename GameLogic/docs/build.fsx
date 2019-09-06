@@ -1,7 +1,9 @@
-﻿// Given a typical setup (with 'FSharp.Formatting' referenced using NuGet),
+﻿open System.Text.RegularExpressions
+open System.IO
+
+// Given a typical setup (with 'FSharp.Formatting' referenced using NuGet),
 // the following will include binaries and load the literate script
 #load "../../packages/FSharp.Formatting/FSharp.Formatting.fsx"
-open System.IO
 open FSharp.Literate
 open FSharp.Formatting.Razor
 
@@ -14,9 +16,7 @@ let source = __SOURCE_DIRECTORY__
 let outputdir = Path.Combine(source, "..", "..", "docs")
 let stylesdir = Path.Combine(source, "styles")
 let contentdir = Path.Combine(outputdir, "content")
-printfn "%s" source
-printfn "%s" outputdir
-printfn "%s" contentdir
+printfn "Output dir: %s" outputdir
 
 // Create output directories & copy content files there
 // (We have two sets of samples in "output" and "output-all" directories,
@@ -26,11 +26,26 @@ if not (Directory.Exists(outputdir)) then
 if not (Directory.Exists(contentdir)) then
   Directory.CreateDirectory contentdir |> ignore
 
-let indexFile = Path.Combine(source, "index.html")
-File.Copy(indexFile, Path.Combine(outputdir, "index.html"), true)
 for fileInfo in DirectoryInfo(stylesdir).EnumerateFiles() do
     printfn "copying %s" fileInfo.FullName
     fileInfo.CopyTo(Path.Combine(contentdir, fileInfo.Name), true) |> ignore
+
+let read (file:string) =
+    seq { use reader = new StreamReader(file)
+          while not reader.EndOfStream do yield reader.ReadLine() }
+
+let (|Regex|_|) pattern input =
+    let m = Regex.Match(input, pattern)
+    if m.Success then Some(List.tail [ for g in m.Groups -> g.Value ])
+    else None
+
+let sourceFiles =
+    seq {
+        for line in (read (Path.Combine(source, "..", "GameLogic.fsproj"))) do
+            match line with
+            | Regex @"<Compile Include=""(?!AssemblyInfo)((.*)([.]fs))""" [ filename; prefix; suffix ] -> yield filename, prefix, suffix
+            | _ -> ()
+    }
 
 // ----------------------------------------------------------------------------
 // GENERATE DOCUMENTS
@@ -38,21 +53,26 @@ for fileInfo in DirectoryInfo(stylesdir).EnumerateFiles() do
 
 let template = Path.Combine(source, "templates", "template-project.html")
 
+let navHtml = sourceFiles |> Seq.map (fun (f, p, _) -> sprintf @"<li><a href=""%s"">%s</a></li>" (p + ".html") p) |> String.concat ""
+
 let projectInfo =
   [ "page-description", "F# Game Programming"
     "page-author", "Chiel ten Brinke"
     "github-link", "https://github.com/Mattias1/photones"
-    "project-name", "F# Game Programming" ]
+    "project-name", "Photones"
+    "nav-items", navHtml]
 
 let generateIndexHtml () =
     let md = Path.Combine(source, "index.md")
     let outputfile = Path.Combine(outputdir, "index.html")
     RazorLiterate.ProcessMarkdown(md, template, outputfile, replacements = projectInfo)
 
-let generateGameObjectsDocs () =
-    let script = Path.Combine(source, "..", "GameObjects.fs")
-    let outputfile = Path.Combine(outputdir, "GameObjects.html")
-    RazorLiterate.ProcessScriptFile(script, template, outputfile, replacements = projectInfo)
+let generateSourceFileDocs () =
+    for (f, p, _) in sourceFiles do
+        if f <> "AssemblyInfo.fs" then
+            let path = Path.Combine(source, "..", f)
+            let outputfile = Path.Combine(outputdir, sprintf "%s.html" p)
+            RazorLiterate.ProcessScriptFile(path, template, outputfile, replacements = projectInfo)
 
 generateIndexHtml ()
-generateGameObjectsDocs ()
+generateSourceFileDocs ()
