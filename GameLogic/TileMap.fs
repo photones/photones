@@ -23,7 +23,8 @@ type public Tile<'GameState>() =
         content :> seq<GameObject<'GameState>>
 
 
-type public TileMap<'GameState>(originX : Unit, originY : Unit, width : Unit, height : Unit, rows : int, columns : int) =
+type public TileMap<'GameState>
+        (originX : Unit, originY : Unit, width : Unit, height : Unit, rows : int, columns : int) =
     let tiles : array<array<Tile<'GameState>>> = [| for _ in 1..rows -> [| for _ in 1..columns -> Tile() |] |]
     let tileWidth = width / (single columns)
     let tileHeight = height / (single rows)

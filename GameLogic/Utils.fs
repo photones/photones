@@ -6,7 +6,8 @@ open System
 
 type Tracer(logger: Action<string>, setNrGameObjects: Action<int>) =
     member public this.Log msg = if not (Object.Equals(logger, null)) then logger.Invoke(msg)
-    member public this.CountGameObjects nr = if not (Object.Equals(setNrGameObjects, null)) then setNrGameObjects.Invoke(nr)
+    member public this.CountGameObjects nr =
+        if not (Object.Equals(setNrGameObjects, null)) then setNrGameObjects.Invoke(nr)
 
 module Utils =
 
