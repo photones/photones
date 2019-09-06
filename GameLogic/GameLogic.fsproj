@@ -50,39 +50,6 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
-  <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
-    <Content Include="paket.references" />
-    <Compile Include="Utils.fs" />
-    <Compile Include="Data.fs" />
-    <Compile Include="GameObjects.fs" />
-    <Compile Include="TileMap.fs" />
-    <Compile Include="GameState.fs" />
-    <Compile Include="Photon.fs" />
-    <Compile Include="Planet.fs" />
-    <Compile Include="GameStateFactory.fs" />
-    <Content Include="OpenTK.dll.config">
-      <Paket>True</Paket>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\lib\awgraphics\src\amulware.Graphics\amulware.Graphics.csproj">
-      <Name>amulware.Graphics</Name>
-      <Project>{59beda5c-d68a-4011-89ba-c09421d22974}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj">
-      <Name>Bearded.Utilities</Name>
-      <Project>{3f06fcfb-7ae5-44df-bf91-619e6d415883}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -1414,4 +1381,37 @@
       </ItemGroup>
     </When>
   </Choose>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Content Include="paket.references" />
+    <Compile Include="Utils.fs" />
+    <Compile Include="Data.fs" />
+    <Compile Include="GameObjects.fs" />
+    <Compile Include="TileMap.fs" />
+    <Compile Include="GameState.fs" />
+    <Compile Include="Photon.fs" />
+    <Compile Include="Planet.fs" />
+    <Compile Include="GameStateFactory.fs" />
+    <Content Include="OpenTK.dll.config">
+      <Paket>True</Paket>
+    </Content>
+    <None Include="docs\build.fsx" />
+    <None Include="docs\blog.fsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <ProjectReference Include="..\lib\awgraphics\src\amulware.Graphics\amulware.Graphics.csproj">
+      <Name>amulware.Graphics</Name>
+      <Project>{59beda5c-d68a-4011-89ba-c09421d22974}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj">
+      <Name>Bearded.Utilities</Name>
+      <Project>{3f06fcfb-7ae5-44df-bf91-619e6d415883}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
