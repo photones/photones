@@ -31,17 +31,23 @@ module public Photon =
         Position2(-0.3f,0.6f);
         ]
 
-    let private pointOfAttraction (this : PhotonData) : Position2 = PointsOfAttraction.[this.PointOfAttractionIndex]
-    let private hasReachedPointOfAttraction (this : PhotonData) = Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
+    let private pointOfAttraction (this : PhotonData) : Position2 =
+        PointsOfAttraction.[this.PointOfAttractionIndex]
+    let private hasReachedPointOfAttraction (this : PhotonData) =
+        Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
 
     let private velocityToGoal (this : PhotonData) (elapsedTime: TimeSpan) =
         let diff = pointOfAttraction this - this.Position
-        let acceleration = if diff.Length = Unit.Zero then Acceleration2(0.0f, 0.0f) else Acceleration2(diff.NumericValue.Normalized() * 1.0f)
+        let acceleration =
+            if diff.Length = Unit.Zero
+            then Acceleration2(0.0f, 0.0f)
+            else Acceleration2(diff.NumericValue.Normalized() * 1.0f)
         acceleration * elapsedTime
 
     let private interactionRadius = Unit(0.05f)
 
-    let rec Update (tracer : Tracer) (this : PhotonData) (gameState : GameState) (updateArgs : UpdateEventArgs) = 
+    let rec Update
+            (tracer : Tracer) (this : PhotonData) (gameState : GameState) (updateArgs : UpdateEventArgs) = 
 
         let mutable alive = true
         let elapsed = updateArgs.ElapsedTimeInS
@@ -63,7 +69,15 @@ module public Photon =
             + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * (TimeSpan(elapsed))
-        let pointOfAttractionIndex = if hasReachedPointOfAttraction this then (this.PointOfAttractionIndex + 1) % PointsOfAttraction.Length else this.PointOfAttractionIndex
-        {Position = position; Speed = velocity; PointOfAttractionIndex = pointOfAttractionIndex; Alive = alive}
+        let pointOfAttractionIndex =
+            if hasReachedPointOfAttraction this
+            then (this.PointOfAttractionIndex + 1) % PointsOfAttraction.Length
+            else this.PointOfAttractionIndex
+        {
+            Position = position;
+            Speed = velocity;
+            PointOfAttractionIndex = pointOfAttractionIndex;
+            Alive = alive
+        }
 
     let public CreatePhoton (data: PhotonData) = Photon (UpdatableState<PhotonData, GameState>(data, Update))

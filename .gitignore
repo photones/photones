@@ -4,3 +4,5 @@ packages/
 .vs/
 *.suo
 *.swp
+
+.paket/paket.exe

@@ -1,0 +1,20 @@
+references: strict
+framework: >= net462
+source https://api.nuget.org/v3/index.json
+
+nuget FluentAssertions 5.6.0
+nuget FsCheck.Xunit 2.12.1
+nuget FSharp.Core 4.5.2
+nuget Newtonsoft.Json 9.0.1
+nuget OpenTK 2.0.0 prerelease
+nuget System.Collections.Immutable 1.5.0
+nuget System.ValueTuple 4.5.0 prerelease
+nuget xunit 2.4.1 prerelease
+nuget xunit.abstractions 2.0.3 prerelease
+nuget xunit.analyzers 0.10.0 prerelease
+nuget xunit.assert 2.4.1 prerelease
+nuget xunit.core 2.4.1 prerelease
+nuget xunit.extensibility.core 2.4.1 prerelease
+nuget xunit.extensibility.execution 2.4.1 prerelease
+nuget xunit.runner.console 2.4.1
+nuget FSharp.Formatting

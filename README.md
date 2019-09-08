@@ -5,3 +5,7 @@ A simple strategy game, whose description features key buzzwords like object-ori
 ## Requirements
 
 Visual Studio 2017 (Community edition or higher)
+
+## Documentation
+
+https://mattias1.github.io/photones/

@@ -1,29 +1,19 @@
 ﻿namespace GameLogic
-
-open System.Collections.Generic
 open System
-open Bearded.Utilities.SpaceTime
 open amulware.Graphics
-open Utils
 
-type public UpdatableState<'ObjectState, 'GameState>
-        (
-            initialState: 'ObjectState,
-            update: Tracer -> 'ObjectState -> 'GameState -> UpdateEventArgs -> 'ObjectState
-        ) =
-    let mutable futureState : 'ObjectState = initialState
-    let mutable currentState : 'ObjectState = initialState
+(**
+We would like to exhaustively handle all different types of game objects in
+various parts of the code. and make sure we don't miss cases as we add new
+objects. In a regular OO language it is common to do this through a
+[double dispatch construction](https://en.wikipedia.org/wiki/Visitor_pattern).
+However, F# makes this virtually impossible to implement, because F# cannot
+easily deal with circular references in the code. Luckily, in F# we can use
+Discriminated Unions to do exhaustive pattern matches, so we don't need double
+dispatch patterns for this.
+*)
 
-    member this.State = currentState
-
-    member this.Update (tracer : Tracer) (world : 'GameState) (updateArgs : UpdateEventArgs) =
-        futureState <- update tracer currentState world updateArgs
-
-    member this.Refresh () =
-        currentState <- futureState
-
-
-type GameObject<'GameState> =
+type public GameObject<'GameState> =
     | Photon of UpdatableState<PhotonData, 'GameState>
     | Planet of UpdatableState<PlanetData, 'GameState>
 
@@ -47,7 +37,7 @@ type GameObject<'GameState> =
         | Photon s -> s.Refresh ()
         | Planet s -> s.Refresh ()
 
-    ///<summary>Expose a visitor method to allow C# code to exhaustively match all possibilities</summary>
+    /// Expose a visitor method to allow C# code to exhaustively match all possibilities
     member this.Visit (visitPhoton : Action<PhotonData>, visitPlanet : Action<PlanetData>) : unit =
         match this with
         | Photon s -> visitPhoton.Invoke(s.State)
