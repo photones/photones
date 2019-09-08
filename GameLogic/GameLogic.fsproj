@@ -63,7 +63,8 @@
     <Content Include="paket.references" />
     <Compile Include="Utils.fs" />
     <Compile Include="Data.fs" />
-    <Compile Include="GameObjects.fs" />
+    <Compile Include="UpdatableState.fs" />
+    <Compile Include="GameObject.fs" />
     <Compile Include="TileMap.fs" />
     <Compile Include="GameState.fs" />
     <Compile Include="Photon.fs" />
@@ -73,6 +74,7 @@
       <Paket>True</Paket>
     </Content>
     <None Include="docs\build.fsx" />
+    <None Include="docs\index.md" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

@@ -21,10 +21,17 @@ printfn "Output dir: %s" outputdir
 // Create output directories & copy content files there
 // (We have two sets of samples in "output" and "output-all" directories,
 //  for simplicitly, this just creates them & copies content there)
-if not (Directory.Exists(outputdir)) then
-  Directory.CreateDirectory outputdir |> ignore
-if not (Directory.Exists(contentdir)) then
-  Directory.CreateDirectory contentdir |> ignore
+let deleteDir dir =
+    if Directory.Exists(dir) then
+        for f in Directory.EnumerateFiles(dir) do
+            File.Delete f
+        for d in Directory.EnumerateDirectories(dir) do
+            Directory.Delete (d, true)
+
+deleteDir outputdir
+deleteDir contentdir
+Directory.CreateDirectory outputdir |> ignore
+Directory.CreateDirectory contentdir |> ignore
 
 for fileInfo in DirectoryInfo(stylesdir).EnumerateFiles() do
     printfn "copying %s" fileInfo.FullName
