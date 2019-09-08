@@ -1,7 +1,7 @@
 ﻿open System.Text.RegularExpressions
 open System.IO
 
-// Given a typical setup (with 'FSharp.Formatting' referenced using NuGet),
+// Given a typical setup (with 'FSharp.Formatting' referenced using Paket),
 // the following will include binaries and load the literate script
 #load "../../packages/FSharp.Formatting/FSharp.Formatting.fsx"
 open FSharp.Literate
