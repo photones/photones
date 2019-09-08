@@ -1,3 +1,4 @@
+REFERENCES: STRICT
 NUGET
   remote: https://api.nuget.org/v3/index.json
     FluentAssertions (5.6)
