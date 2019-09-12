@@ -51,16 +51,14 @@ module public Photon =
 
         let mutable alive = true
         let elapsed = updateArgs.ElapsedTimeInS
-        let totalTime = updateArgs.TimeInS
 
         // apply game of life like rules once per second
-        if (totalTime - (totalTime |> int |> float)) < elapsed then
-            let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
-            match Seq.length neighbors with
-            | t when t < 2 -> alive <- false
-            | t when t < 20 -> gameState.Spawn (Photon (UpdatableState(this, Update)))
-            | t when t < 200 -> ()
-            | _ -> alive <- false
+        let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
+        match Seq.length neighbors with
+        | t when t < 1 -> alive <- false
+        | t when t < 5 -> gameState.Spawn (Photon (UpdatableState(this, Update)))
+        | t when t < 100 -> ()
+        | _ -> alive <- false
 
         let vToGoal = velocityToGoal this (TimeSpan(elapsed))
         let velocity =
