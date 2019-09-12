@@ -7,16 +7,9 @@ echo "Root of repository: $root"
 echo
 
 cd "$root"
-source_files=$(find . \( -name \*.cs -or -name \*.fs \) \
-    \( -path "./Bearded/*" \
-    -or -path "./Bearded.Test/*" \
-    -or -path "./GameLogic/*" \)\
-    -not -path "./obj/*" \
-    -not -path "./bin/*")
-
 
 # Check if source files contain tab characters.
-files_with_tabs=$(echo "$source_files" | xargs grep -UPla '\t')
+files_with_tabs=$(git grep -Pla '\t' -- *.fs *.cs)
 if [[ -n "$files_with_tabs" ]]; then
     echo
     echo "The following files contain tab characters:"
@@ -29,7 +22,7 @@ fi
 #echo "$files_with_tabs" | xargs sed -zi 's/\t/    /g'
 
 # Check if all lines in source files end with a windows line ending
-files_with_crlf=$(echo "$source_files" | xargs grep -UPlza '\r\n')
+files_with_crlf=$(git ls-files *.fs *.cs | xargs grep -UPlza '\r\n')
 if [[ -n "$files_with_crlf" ]]; then
     echo
     echo "The following files contain windows line endings:"
@@ -42,13 +35,13 @@ fi
 #echo "$files_with_crlf" | xargs dos2unix
 
 # Check if the length of all source lines are limited by some predefined constant.
-# Both for readability, and to catch respective zos compilation errors early on.
-files_with_too_long_lines=$(echo "$source_files" | xargs grep -la '.\{100\}')
-if [[ -n "$files_with_too_long_lines" ]]; then
+too_long_lines=$(git grep -n '.\{100\}' -- *.fs *.cs)
+if [[ -n "$too_long_lines" ]]; then
     echo
-    echo "The following files contain lines that are too long:"
+    echo "The following lines are too long:"
     echo
-    echo "$files_with_too_long_lines"
+    # Repeat command for colored output
+    git grep -n '.\{100\}' -- *.fs *.cs
     exitcode=1
 fi
 
