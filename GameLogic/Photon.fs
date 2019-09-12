@@ -1,10 +1,4 @@
-﻿#if INTERACTIVE
-#r @"amulware.Graphics.dll"
-#r @"Bearded.Utilities.dll"
-#r @"OpenTK.dll"
-#endif
-
-namespace GameLogic
+﻿namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
 open Utils
@@ -22,22 +16,9 @@ module public Photon =
     let private capAccToGoal = capVelocity 0.1f
     let private capTotal = capVelocity 0.4f
         
-    let private attractionRadius = 0.2f
-
-    let PointsOfAttraction = [
-        Position2(-0.1f,0.3f);
-        Position2(0.6f,0.1f);
-        Position2(0.0f,-0.6f);
-        Position2(-0.3f,0.6f);
-        ]
-
-    let private pointOfAttraction (this : PhotonData) : Position2 =
-        PointsOfAttraction.[this.PointOfAttractionIndex]
-    let private hasReachedPointOfAttraction (this : PhotonData) =
-        Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
-
     let private velocityToGoal (this : PhotonData) (elapsedTime: TimeSpan) =
-        let diff = pointOfAttraction this - this.Position
+        let pointOfAttraction = Position2(0.0f, 0.0f)
+        let diff = pointOfAttraction - this.Position
         let acceleration =
             if diff.Length = Unit.Zero
             then Acceleration2(0.0f, 0.0f)
@@ -67,14 +48,9 @@ module public Photon =
             + (smallRandomVelocity ())
             |> capTotal
         let position = this.Position + velocity * (TimeSpan(elapsed))
-        let pointOfAttractionIndex =
-            if hasReachedPointOfAttraction this
-            then (this.PointOfAttractionIndex + 1) % PointsOfAttraction.Length
-            else this.PointOfAttractionIndex
         {
             Position = position;
             Speed = velocity;
-            PointOfAttractionIndex = pointOfAttractionIndex;
             Alive = alive
         }
 

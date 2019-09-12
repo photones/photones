@@ -1,16 +1,24 @@
-﻿#if INTERACTIVE
-#r @"amulware.Graphics.dll"
-#r @"Bearded.Utilities.dll"
-#r @"OpenTK.dll"
-#endif
-
-namespace GameLogic
+﻿namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
 open Utils
+open amulware.Graphics
 
 module public Planet =
 
-    let update (this : PlanetData) (elapsed : TimeSpan) : PlanetData = 
-        {Position = Position2.Zero; Size = 0.0f}
+    let Update (tracer : Tracer) (this : PlanetData) (gameState : GameState)
+                (updateArgs : UpdateEventArgs) : PlanetData = 
+        // Spawn a photon every frame
+        let photon = Photon.CreatePhoton ({
+                Position = this.Position;
+                Speed = Velocity2(0.0f, 0.0f);
+                Alive = true
+            })
+        gameState.Spawn photon
+
+        {
+            Position = this.Position;
+        }
+
+    let public CreatePlanet (data: PlanetData) = Planet (UpdatableState<PlanetData, GameState>(data, Update))
 
