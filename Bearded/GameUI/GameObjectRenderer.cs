@@ -16,6 +16,8 @@ namespace Bearded.Photones.GameUI {
 
         public void RenderPhoton(PhotonData value) {
             var photoncolor = Color.DarkGoldenrod;
+            if (value.PlayerIndex == 1)
+                photoncolor = Color.Purple;
             geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, photoncolor);
         }
 

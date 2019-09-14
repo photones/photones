@@ -5,7 +5,7 @@ module GameStateFactory =
     open System.Collections.Generic
 
     let BuildInitialGameState() =
-        let planet1 = Planet.CreatePlanet ({Position = Position2(-1.0f, 0.0f)})
-        let planet2 = Planet.CreatePlanet ({Position = Position2(1.0f, 0.0f)})
+        let planet1 = Planet.CreatePlanet ({Position = Position2(-1.0f, 0.0f); PlayerIndex = 0uy;})
+        let planet2 = Planet.CreatePlanet ({Position = Position2(1.0f, 0.0f); PlayerIndex = 1uy;})
         GameState(List<GameObject<GameState>>([planet1;planet2]))
 

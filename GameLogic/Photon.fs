@@ -45,7 +45,8 @@ module public Photon =
         {
             Position = position;
             Speed = velocity;
-            Alive = alive
+            Alive = alive;
+            PlayerIndex = this.PlayerIndex;
         }
 
     let public CreatePhoton (data: PhotonData) = Photon (UpdatableState<PhotonData, GameState>(data, Update))

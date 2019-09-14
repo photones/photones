@@ -12,12 +12,14 @@ module public Planet =
         let photon = Photon.CreatePhoton ({
                 Position = this.Position;
                 Speed = Velocity2(0.0f, 0.0f);
-                Alive = true
+                Alive = true;
+                PlayerIndex = this.PlayerIndex;
             })
         gameState.Spawn photon
 
         {
             Position = this.Position;
+            PlayerIndex = this.PlayerIndex;
         }
 
     let public CreatePlanet (data: PlanetData) = Planet (UpdatableState<PlanetData, GameState>(data, Update))
