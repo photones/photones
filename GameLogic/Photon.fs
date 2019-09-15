@@ -3,6 +3,8 @@
 open Bearded.Utilities.SpaceTime
 open Utils
 open amulware.Graphics
+open Microsoft.FSharp.Core
+open Microsoft.FSharp.Collections
 
 module public Photon =
 
@@ -25,6 +27,7 @@ module public Photon =
         capToGoal (acceleration * elapsedTime)
 
     let private interactionRadius = Unit(0.05f)
+    let private collisionRadius = Unit(0.0005f)
 
     let rec Update
             (tracer : Tracer) (this : PhotonData) (gameState : GameState) (updateArgs : UpdateEventArgs) = 
@@ -36,6 +39,13 @@ module public Photon =
 
         let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
         // FIXME: Get avg neighbor position and move away from it
+
+        let collidingNeighbors = gameState.TileMap.GetNeighbors this.Position collisionRadius
+        // FIXME: don't iterate the whole sequence
+        for n in collidingNeighbors do
+            match n with
+            | Planet _ -> ()
+            | Photon d -> if d.State.PlayerIndex <> this.PlayerIndex then alive <- false
 
         let perturbation = smallRandomVelocity ()
         let vToGoal = velocityToGoal this elapsedT

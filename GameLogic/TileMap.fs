@@ -2,6 +2,7 @@
 
 open Bearded.Utilities.SpaceTime
 open System.Collections.Generic
+open System
 
 (**
 The worldspace is split up into rectangular tiles. A Tile contains zero or
@@ -38,7 +39,10 @@ type public TileMap<'GameState>
         else
             None
 
-    let isPointWithinRadius (origin:Position2) (radius:Unit) (point:Position2) = true
+    let isPointWithinRadius (origin:Position2) (radius:Unit) (point:Position2) =
+        let d = origin - point
+        Squared.op_LessThan(d.LengthSquared, radius.Squared)
+
     let isPointWithinMap (point:Position2) =
         Unit.op_LessThan(originX, point.X) &&
         Unit.op_LessThan(point.X, originX + width) && 
