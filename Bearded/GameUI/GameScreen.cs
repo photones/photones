@@ -7,6 +7,7 @@ using Bearded.Photones.Screens;
 using Bearded.Photones.UI;
 using OpenTK;
 using GameLogic;
+using Bearded.Utilities.SpaceTime;
 
 namespace Bearded.Photones.GameUI {
     class GameScreen : ScreenLayer {
@@ -17,17 +18,17 @@ namespace Bearded.Photones.GameUI {
         public override Matrix4 ProjectionMatrix => _camera.Projection;
         public override Matrix4 ViewMatrix => _camera.View;
 
-        public GameScreen(ScreenManager screenManager, GeometryManager geometryManger)
+        public GameScreen(ScreenManager screenManager, GeometryManager geometryManager)
                 : base(screenManager) {
             _camera = new Camera3D();
             _game = new Beardgame();
-            _geometries = geometryManger;
+            _geometries = geometryManager;
         }
 
         public override void Update(Tracer tracer, BeardedUpdateEventArgs args) {
             _game.Update(tracer, args.UpdateEventArgs);
-            
-            var elapsedTime = new Bearded.Utilities.SpaceTime.TimeSpan(args.UpdateEventArgs.ElapsedTimeInS);
+
+            var elapsedTime = new TimeSpan(args.UpdateEventArgs.ElapsedTimeInS);
             ParticleSystem.Get.Update(elapsedTime);
         }
 

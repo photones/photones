@@ -9,7 +9,8 @@ namespace Bearded.Photones.GameUI {
         private readonly GeometryManager _geometries;
         private PerformanceSummary _stats;
 
-        public HudScreen(ScreenLayerCollection parent, GeometryManager geometries) : base(parent, geometries) {
+        public HudScreen(ScreenLayerCollection parent, GeometryManager geometries)
+            : base(parent, geometries) {
             _geometries = geometries;
         }
 

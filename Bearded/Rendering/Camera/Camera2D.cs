@@ -1,4 +1,4 @@
-using OpenTK;
+﻿using OpenTK;
 
 namespace Bearded.Photones.Rendering.Camera {
     public class Camera2D : ICamera {
@@ -13,7 +13,12 @@ namespace Bearded.Photones.Rendering.Camera {
                 * new Matrix4(Vector4.UnitX, -Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW)
                 * Matrix4.LookAt(-2f * Vector3.UnitZ, Vector3.UnitZ, -Vector3.UnitY);
 
-            Projection = Matrix4.CreatePerspectiveOffCenter(-w / 4f, w / 4f, h / 4f, -h / 4f, 1f, 64f);
+            Projection = Matrix4.CreatePerspectiveOffCenter(-w / 4f,
+                w / 4f,
+                h / 4f,
+                -h / 4f,
+                1f,
+                64f);
         }
     }
 }

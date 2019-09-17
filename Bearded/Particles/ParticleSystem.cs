@@ -1,11 +1,12 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Bearded.Photones.Rendering;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 
 namespace Bearded.Photones.Particles {
     class ParticleSystem {
         private static ParticleSystem particleSystem;
-        public static ParticleSystem Get => particleSystem ?? (particleSystem = new ParticleSystem());
+        public static ParticleSystem Get =>
+            particleSystem ?? (particleSystem = new ParticleSystem());
 
         private List<Particle> Particles { get; set; }
 

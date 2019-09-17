@@ -90,13 +90,9 @@
     <Compile Include="Screens\ScreenManager.cs" />
     <Compile Include="Screens\UIScreenLayer.cs" />
     <Compile Include="UI\Bounds.cs" />
-    <Compile Include="UI\BoundsHelpers.cs" />
     <Compile Include="UI\Components\UIComponent.cs" />
-    <Compile Include="UI\FixedOffsetDimension.cs" />
-    <Compile Include="UI\FixedSizeDimension.cs" />
     <Compile Include="UI\IDimension.cs" />
     <Compile Include="UI\InputState.cs" />
-    <Compile Include="UI\ScalingDimension.cs" />
     <Compile Include="UI\Screen.cs" />
     <Compile Include="Utilities\EnumerableProxy.cs" />
     <Compile Include="Utilities\Line.cs" />

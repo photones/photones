@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using OpenTK;
 using Bearded.Utilities;
 
@@ -11,7 +11,8 @@ namespace Bearded.Photones.Rendering.Camera {
         public Vector3 Up { get; private set; }
 
         public Camera3D()
-            : this(Vector3.UnitZ, Vector3.Zero, Vector3.UnitY) { } // xy as 2D, z from the screen
+            // xy as 2D, z from the screen
+            : this(Vector3.UnitZ, Vector3.Zero, Vector3.UnitY) { }
 
         public Camera3D(Vector3 camEye, Vector3 camFocus, Vector3 camUp) {
             Eye = camEye;
@@ -29,7 +30,10 @@ namespace Bearded.Photones.Rendering.Camera {
         }
 
         void updateProjection() {
-            Projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2, PhotonesProgram.WIDTH / PhotonesProgram.HEIGHT, 1f, 100f);
+            Projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver2,
+                PhotonesProgram.WIDTH / PhotonesProgram.HEIGHT,
+                1f,
+                100f);
         }
 
         public void Move(Vector3 direction) {

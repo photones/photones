@@ -53,9 +53,11 @@ namespace Bearded.Photones {
         private readonly Action<PhotonesProgram, BeardedUpdateEventArgs> _afterFrame;
         private readonly Tracer _tracer;
 
-        public PhotonesProgram(Logger logger, Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null)
+        public PhotonesProgram(Logger logger,
+                Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null)
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
-                GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR, GraphicsContextFlags.Default) {
+                GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR,
+                GraphicsContextFlags.Default) {
             Console.WriteLine(DisplayDevice.Default.ToString());
             Console.WriteLine(GL.GetString(StringName.Renderer));
             Console.WriteLine(GL.GetString(StringName.Version));
@@ -74,8 +76,10 @@ namespace Bearded.Photones {
             _inputManager = new InputManager(this);
 
             _screenManager = new ScreenManager(_inputManager);
-            _screenManager.AddScreenLayerOnTop(new GameScreen(_screenManager, _renderContext.Geometries));
-            _screenManager.AddScreenLayerOnTop(new HudScreen(_screenManager, _renderContext.Geometries));
+            _screenManager.AddScreenLayerOnTop(new GameScreen(_screenManager,
+                _renderContext.Geometries));
+            _screenManager.AddScreenLayerOnTop(new HudScreen(_screenManager,
+                _renderContext.Geometries));
 
             KeyPress += (sender, args) => _screenManager.RegisterPressedCharacter(args.KeyChar);
 
@@ -92,9 +96,10 @@ namespace Bearded.Photones {
 
         protected override void OnUpdate(UpdateEventArgs updateArgs) {
             if (updateArgs.ElapsedTimeInS < 0.0001) {
-                // This is basically to skip the first frame, because its elapsed time is out of whack
-                // We do a GC though, to clean up initialization garbage, to prevent that from happening in game
-                // This saves one big stutter a few seconds into the game.
+                // This is basically to skip the first frame, because its
+                // elapsed time is out of whack We do a GC though, to clean up
+                // initialization garbage, to prevent that from happening in
+                // game This saves one big stutter a few seconds into the game.
                 GC.Collect();
                 return;
             }
