@@ -1,4 +1,4 @@
-using amulware.Graphics;
+﻿using amulware.Graphics;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Particles.Behaviors;
 using Bearded.Utilities;
@@ -44,7 +44,9 @@ namespace Bearded.Photones.Particles {
             float lifetime = 1 - (float)(Lifetime / InitialLifetime);
 
             geometries.SpriteGeometry.Size = SizeBehavior.Calculate(this, lifetime);
-            geometries.SpriteGeometry.Color = new Color(ColorBehavior.Calculate(this, lifetime), (byte)(255 * AlphaBehavior.Calculate(this, lifetime)));
+            geometries.SpriteGeometry.Color = new Color(
+                ColorBehavior.Calculate(this, lifetime),
+                (byte)(255 * AlphaBehavior.Calculate(this, lifetime)));
             geometries.SpriteGeometry.DrawSprite(Position.NumericValue);
         }
     }

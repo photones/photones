@@ -13,7 +13,9 @@ module public Photon =
     let private smallRandomVelocity () = Velocity2(getRandomSpeed (), getRandomSpeed ()) * 0.02f
 
     let private capVelocity maxSpeed (v: Velocity2) =
-        if v.Length.NumericValue > maxSpeed then Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
+        if v.Length.NumericValue > maxSpeed
+        then Velocity2(v.NumericValue.Normalized() * maxSpeed)
+        else v
 
     let private capToGoal = capVelocity 0.1f
     let private capTotal = capVelocity 0.4f
@@ -45,8 +47,8 @@ module public Photon =
 
     let getPosition (photon: PhotonData) = photon.Position
 
-    let rec Update
-            (tracer : Tracer) (this : PhotonData) (gameState : GameState) (updateArgs : UpdateEventArgs) = 
+    let rec Update (tracer : Tracer) (this : PhotonData)
+            (gameState : GameState) (updateArgs : UpdateEventArgs) = 
 
         let elapsedS = updateArgs.ElapsedTimeInS
         let elapsedT = TimeSpan(elapsedS)
@@ -69,4 +71,6 @@ module public Photon =
             PlayerIndex = this.PlayerIndex;
         }
 
-    let public CreatePhoton (data: PhotonData) = Photon (UpdatableState<PhotonData, GameState>(data, Update))
+    let public CreatePhoton (data: PhotonData) =
+        Photon (UpdatableState<PhotonData, GameState>(data, Update))
+

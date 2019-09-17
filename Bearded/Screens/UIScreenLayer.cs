@@ -19,7 +19,8 @@ namespace Bearded.Photones.Screens {
 
         private readonly List<UIComponent> _components = new List<UIComponent>();
 
-        protected UIScreenLayer(ScreenLayerCollection parent, GeometryManager geometries) : base(parent) {
+        protected UIScreenLayer(ScreenLayerCollection parent, GeometryManager geometries)
+                : base(parent) {
             Geometries = geometries;
             Screen = Screen.GetCanvas();
         }
@@ -42,12 +43,18 @@ namespace Bearded.Photones.Screens {
         }
 
         protected override void OnViewportSizeChanged() {
-            // These 2D matrices create a pixel perfect projection with a scale from 1:1 from the z=0 plane to the screen.
+            // These 2D matrices create a pixel perfect projection with a scale
+            // from 1:1 from the z=0 plane to the screen.
             var (w, h) = ViewportSize;
             _viewMatrix = Matrix4.CreateTranslation(-w / 2f, -h / 2f, 0)
                 * new Matrix4(Vector4.UnitX, -Vector4.UnitY, Vector4.UnitZ, Vector4.UnitW)
                 * Matrix4.LookAt(-2f * Vector3.UnitZ, Vector3.UnitZ, -Vector3.UnitY);
-            _projectionMatrix = Matrix4.CreatePerspectiveOffCenter(-w / 4f, w / 4f, h / 4f, -h / 4f, 1f, 64f);
+            _projectionMatrix = Matrix4.CreatePerspectiveOffCenter(-w / 4f,
+                w / 4f,
+                h / 4f,
+                -h / 4f,
+                1f,
+                64f);
 
             Screen.OnResize(ViewportSize);
         }

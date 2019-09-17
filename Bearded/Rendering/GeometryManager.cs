@@ -1,4 +1,4 @@
-using amulware.Graphics;
+﻿using amulware.Graphics;
 using Bearded.Photones.Particles;
 using OpenTK;
 
@@ -20,7 +20,9 @@ namespace Bearded.Photones.Rendering {
         }
 
         private void createSprites() {
-            SpriteGeometry = createSpriteGeometry(surfaces.SpriteSurface, Particle.WIDTH, Particle.HEIGHT);
+            SpriteGeometry = createSpriteGeometry(surfaces.SpriteSurface,
+                Particle.WIDTH,
+                Particle.HEIGHT);
             PhotonGeometry = createParticleGeometry(surfaces.PhotonSurface);
         }
 
@@ -29,14 +31,14 @@ namespace Bearded.Photones.Rendering {
             ConsolasFont = new FontGeometry(surfaces.ConsolasFontSurface, surfaces.ConsolasFont);
         }
 
-        private Sprite2DGeometry createSpriteGeometry(IndexedSurface<UVColorVertexData> surface, float w, float h) {
-            var geo = new Sprite2DGeometry(surface);
-            geo.Size = new Vector2(w, h);
-
+        private Sprite2DGeometry createSpriteGeometry(IndexedSurface<UVColorVertexData> surface,
+                float w, float h) {
+            var geo = new Sprite2DGeometry(surface) { Size = new Vector2(w, h) };
             return geo;
         }
 
-        private Photon2DGeometry createParticleGeometry(ExpandingVertexSurface<PhotonVertexData> surface) {
+        private Photon2DGeometry createParticleGeometry(
+                ExpandingVertexSurface<PhotonVertexData> surface) {
             return new Photon2DGeometry(surface);
         }
     }

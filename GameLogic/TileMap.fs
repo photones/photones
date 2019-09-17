@@ -26,7 +26,8 @@ type public Tile<'GameState>() =
 
 type public TileMap<'GameState>
         (originX : Unit, originY : Unit, width : Unit, height : Unit, rows : int, columns : int) =
-    let tiles : array<array<Tile<'GameState>>> = [| for _ in 1..rows -> [| for _ in 1..columns -> Tile() |] |]
+    let tiles : array<array<Tile<'GameState>>> =
+        [| for _ in 1..rows -> [| for _ in 1..columns -> Tile() |] |]
     let tileWidth = width / (single columns)
     let tileHeight = height / (single rows)
     let y2Row (y:Unit) = (y - originY) / height * (single rows) |> int

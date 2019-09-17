@@ -63,8 +63,9 @@ namespace Bearded.Photones.Screens {
         }
 
         public void RemoveScreenLayer(IScreenLayer screenLayer) {
-            // If you delete a screen layer during the HandleInput method or outside of the main loop entirely, another
-            // update may take place before the screen is actually deleted.
+            // If you delete a screen layer during the HandleInput method or
+            // outside of the main loop entirely, another update may take place
+            // before the screen is actually deleted.
             _screenLayersToRemove.Add(screenLayer);
         }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using amulware.Graphics;
 using amulware.Graphics.ShaderManagement;
 using Bearded.Photones.Particles;
@@ -35,7 +35,9 @@ namespace Bearded.Photones.Rendering {
         }
 
         private void createSurfaces() {
-            SpriteSurface = createSpriteSurface("particles/particle.png", Particle.WIDTH, Particle.HEIGHT);
+            SpriteSurface = createSpriteSurface("particles/particle.png",
+                Particle.WIDTH,
+                Particle.HEIGHT);
             PhotonSurface = createPhotonSurface();
 
             FreshmanFont = Font.FromJsonFile(font("freshman_monospaced_numbers.json"));
@@ -45,7 +47,8 @@ namespace Bearded.Photones.Rendering {
         }
 
         private ExpandingVertexSurface<PhotonVertexData> createPhotonSurface() {
-            return new ExpandingVertexSurface<PhotonVertexData>(OpenTK.Graphics.OpenGL.PrimitiveType.Points)
+            return new ExpandingVertexSurface<PhotonVertexData>(
+                    OpenTK.Graphics.OpenGL.PrimitiveType.Points)
                 .WithShader(_shaders["photon"])
                 .AndSettings(
                     ViewMatrix, ProjectionMatrix,
@@ -54,7 +57,8 @@ namespace Bearded.Photones.Rendering {
                 );
         }
 
-        private IndexedSurface<UVColorVertexData> createSpriteSurface(string spritePath, float w, float h) {
+        private IndexedSurface<UVColorVertexData> createSpriteSurface(string spritePath, float w,
+                float h) {
             var t = new Texture(sprite(spritePath));
             if (t.Width != w || t.Height != h) {
                 throw new ArgumentException($"Sprite size is incorrect ({spritePath}).");
@@ -76,7 +80,7 @@ namespace Bearded.Photones.Rendering {
                 .AndSettings(
                     ViewMatrix,
                     ProjectionMatrix,
-                    new TextureUniform("diffuse", new Texture(font(fontPath), preMultiplyAlpha: true)),
+                    new TextureUniform("diffuse", new Texture(font(fontPath), true)),
                     SurfaceBlendSetting.Alpha, SurfaceDepthMaskSetting.DontMask
                 );
         }
@@ -100,7 +104,8 @@ namespace Bearded.Photones.Rendering {
             }
         }
 
-        public static SurfaceWrapper<T> WithShader<T>(this T surface, ISurfaceShader shader) where T : Surface {
+        public static SurfaceWrapper<T> WithShader<T>(this T surface, ISurfaceShader shader)
+                where T : Surface {
             if (shader == null) {
                 throw new Exception("Shader not found");
             }

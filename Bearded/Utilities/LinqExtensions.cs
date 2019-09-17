@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Bearded.Photones.Utilities {
@@ -9,7 +9,8 @@ namespace Bearded.Photones.Utilities {
             }
         }
 
-        public static TValue ValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key) {
+        public static TValue ValueOrDefault<TKey, TValue>(this Dictionary<TKey, TValue> dict,
+                TKey key) {
             dict.TryGetValue(key, out TValue value);
             return value;
         }

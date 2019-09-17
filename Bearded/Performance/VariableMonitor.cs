@@ -19,7 +19,8 @@ namespace Bearded.Photones.Performance {
         }
 
         /// <summary>
-        /// Update Stats to reflect the statistics gathered between now and the previous Refresh call.
+        /// Update Stats to reflect the statistics gathered between now and the
+        /// previous Refresh call.
         /// </summary>
         public void Refresh() {
             Stats = _measurements;
