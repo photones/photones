@@ -56,11 +56,11 @@ type public TileMap<'GameState>
             for tile in row do
                 tile.Clear()
 
-        for obj in objects do
-            if isPointWithinMap obj.Position then
-                match tileForPosition obj.Position with
-                | Some tile -> tile.Add(obj)
-                | None -> tracer.Log(sprintf "Object outside tilemap at %s" (obj.Position.ToString()))
+        for o in objects do
+            if isPointWithinMap o.Position then
+                match tileForPosition o.Position with
+                | Some tile -> tile.Add(o)
+                | None -> tracer.Log(sprintf "Object outside tilemap at %s" (o.Position.ToString()))
 
     member public this.GetNeighbors (from : Position2) (radius : Unit) =
         let columnBound = capBetween 0 (columns - 1)

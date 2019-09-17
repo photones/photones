@@ -5,6 +5,7 @@ open Utils
 open amulware.Graphics
 open Microsoft.FSharp.Core
 open Microsoft.FSharp.Collections
+open OpenTK
 
 module public Photon =
 
@@ -29,6 +30,21 @@ module public Photon =
     let private interactionRadius = Unit(0.05f)
     let private collisionRadius = Unit(0.0005f)
 
+    let private avgPosition (positions: seq<Position2>) =
+        let sum = Seq.fold (fun total pos -> total + (Position2.Zero - pos)) Difference2.Zero positions
+        let count = Seq.length positions
+        sum * (single count) + Position2.Zero
+
+    let filterPhotons objects = 
+        seq{
+        for n in objects do
+            match n with
+            | Planet _ -> ()
+            | Photon d -> yield d.State
+        }
+
+    let getPosition (photon: PhotonData) = photon.Position
+
     let rec Update
             (tracer : Tracer) (this : PhotonData) (gameState : GameState) (updateArgs : UpdateEventArgs) = 
 
@@ -37,15 +53,9 @@ module public Photon =
 
         let mutable alive = true
 
-        let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
-        // FIXME: Get avg neighbor position and move away from it
-
         let collidingNeighbors = gameState.TileMap.GetNeighbors this.Position collisionRadius
-        // FIXME: don't iterate the whole sequence
-        for n in collidingNeighbors do
-            match n with
-            | Planet _ -> ()
-            | Photon d -> if d.State.PlayerIndex <> this.PlayerIndex then alive <- false
+        for state in filterPhotons collidingNeighbors do
+            if state.PlayerIndex <> this.PlayerIndex then alive <- false
 
         let perturbation = smallRandomVelocity ()
         let vToGoal = velocityToGoal this elapsedT
