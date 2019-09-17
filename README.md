@@ -8,4 +8,4 @@ Visual Studio 2017 (Community edition or higher)
 
 ## Documentation
 
-https://mattias1.github.io/photones/
+https://photones.github.io/photones/
