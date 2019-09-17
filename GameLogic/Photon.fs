@@ -17,7 +17,9 @@ module public Photon =
         Velocity2(getRandomSpeed (), getRandomSpeed ()) * 0.02f
 
     let private capVelocity maxSpeed (v: Velocity2) =
-        if v.Length.NumericValue > maxSpeed then Velocity2(v.NumericValue.Normalized() * maxSpeed) else v
+        if v.Length.NumericValue > maxSpeed
+        then Velocity2(v.NumericValue.Normalized() * maxSpeed)
+        else v
 
     let private capAccToGoal = capVelocity 0.1f
     let private capTotal = capVelocity 0.4f
@@ -46,8 +48,8 @@ module public Photon =
 
     let private interactionRadius = Unit(0.05f)
 
-    let rec Update
-            (tracer : Tracer) (this : PhotonData) (gameState : GameState) (updateArgs : UpdateEventArgs) = 
+    let rec Update (tracer : Tracer) (this : PhotonData)
+            (gameState : GameState) (updateArgs : UpdateEventArgs) = 
 
         let mutable alive = true
         let elapsed = updateArgs.ElapsedTimeInS
@@ -80,4 +82,6 @@ module public Photon =
             Alive = alive
         }
 
-    let public CreatePhoton (data: PhotonData) = Photon (UpdatableState<PhotonData, GameState>(data, Update))
+    let public CreatePhoton (data: PhotonData) =
+        Photon (UpdatableState<PhotonData, GameState>(data, Update))
+

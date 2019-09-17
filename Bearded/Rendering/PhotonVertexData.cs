@@ -1,4 +1,4 @@
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using amulware.Graphics;
 
@@ -27,19 +27,20 @@ namespace Bearded.Photones.Rendering {
             return 16;
         }
 
-        static private VertexAttribute[] vertexAttributes;
+        private static VertexAttribute[] vertexAttributes;
 
         /// <param name="position">The position.</param>
         /// <param name="color">The color.</param>
         public PhotonVertexData(Vector3 position, Color color) {
-            this.Position = position;
-            this.Color = color;
+            Position = position;
+            Color = color;
         }
 
         private void setVertexAttributes() {
-            vertexAttributes = new VertexAttribute[]{
+            vertexAttributes = new[]{
                 new VertexAttribute("v_position", 3, VertexAttribPointerType.Float, Size(), 0),
-                new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, Size(), 12, true)
+                new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, Size(), 12,
+                    true)
             };
         }
 
