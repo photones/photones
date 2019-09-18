@@ -5,7 +5,7 @@ open Bearded.Utilities.SpaceTime
 [<Struct>]
 type public PhotonData = {
     Position: Position2;
-    Speed: Velocity2;
+    Velocity: Velocity2;
     Alive: bool;
     PlayerIndex: byte;
 }

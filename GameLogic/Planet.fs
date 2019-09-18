@@ -9,10 +9,10 @@ module public Planet =
     let Update (tracer : Tracer) (this : PlanetData) (gameState : GameState)
                 (updateArgs : UpdateEventArgs) : PlanetData = 
         // Spawn photons every frame
-        for _ in [0..10] do
+        for _ in [1..1] do
             let photon = Photon.CreatePhoton ({
                     Position = this.Position;
-                    Speed = Velocity2(0.0f, 0.0f);
+                    Velocity = Velocity2(0.0f, 0.0f);
                     Alive = true;
                     PlayerIndex = this.PlayerIndex;
                 })
