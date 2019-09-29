@@ -63,7 +63,7 @@ type public TileMap<'GameState>
                 | Some tile -> tile.Add(o)
                 | None -> tracer.Log(sprintf "Object outside tilemap at %s" (o.Position.ToString()))
 
-    member public this.GetNeighbors (from : Position2) (radius : Unit) =
+    member public this.GetObjects (from : Position2) (radius : Unit) =
         let columnBound = capBetween 0 (columns - 1)
         let rowBound = capBetween 0 (rows - 1)
         let firstColumn = from.X - radius |> x2Column |> columnBound

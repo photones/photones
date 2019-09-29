@@ -17,7 +17,7 @@ open amulware.Graphics
 type public UpdatableState<'ObjectState, 'GameState>
         (
             initialState: 'ObjectState,
-            update: Tracer -> 'ObjectState -> 'GameState -> UpdateEventArgs -> 'ObjectState
+            update: Tracer -> UpdatableState<'ObjectState, 'GameState> -> 'GameState -> UpdateEventArgs -> 'ObjectState
         ) =
     let mutable currentState : 'ObjectState = initialState
     let mutable futureState : 'ObjectState = initialState
@@ -25,7 +25,7 @@ type public UpdatableState<'ObjectState, 'GameState>
     member this.State = currentState
 
     member this.Update (tracer : Tracer) (world : 'GameState) (updateArgs : UpdateEventArgs) =
-        futureState <- update tracer currentState world updateArgs
+        futureState <- update tracer this world updateArgs
 
     member this.Refresh () =
         currentState <- futureState
