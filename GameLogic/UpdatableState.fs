@@ -17,7 +17,8 @@ open amulware.Graphics
 type public UpdatableState<'ObjectState, 'GameState>
         (
             initialState: 'ObjectState,
-            update: Tracer -> UpdatableState<'ObjectState, 'GameState> -> 'GameState -> UpdateEventArgs -> 'ObjectState
+            update: Tracer -> UpdatableState<'ObjectState, 'GameState> -> 'GameState
+                -> UpdateEventArgs -> 'ObjectState
         ) =
     let mutable currentState : 'ObjectState = initialState
     let mutable futureState : 'ObjectState = initialState

@@ -6,8 +6,8 @@ open amulware.Graphics
 
 module public Planet =
 
-    let Update (tracer : Tracer) (this : UpdatableState<PlanetData, GameState>) (gameState : GameState)
-                (updateArgs : UpdateEventArgs) : PlanetData = 
+    let Update (tracer : Tracer) (this : UpdatableState<PlanetData, GameState>)
+            (gameState : GameState) (updateArgs : UpdateEventArgs) : PlanetData = 
         let state = this.State
         // Spawn photons every frame
         for _ in [1..1] do
@@ -24,5 +24,6 @@ module public Planet =
             PlayerIndex = state.PlayerIndex;
         }
 
-    let public CreatePlanet (data: PlanetData) = Planet (UpdatableState<PlanetData, GameState>(data, Update))
+    let public CreatePlanet (data: PlanetData) =
+        Planet (UpdatableState<PlanetData, GameState>(data, Update))
 
