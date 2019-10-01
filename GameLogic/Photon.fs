@@ -1,87 +1,113 @@
-﻿#if INTERACTIVE
-#r @"amulware.Graphics.dll"
-#r @"Bearded.Utilities.dll"
-#r @"OpenTK.dll"
-#endif
-
-namespace GameLogic
+﻿namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
 open Utils
 open amulware.Graphics
+open Microsoft.FSharp.Core
+open Microsoft.FSharp.Collections
 
 module public Photon =
 
-    let private getRandomSpeed () = randomSingle () - 0.5f
-    let private smallRandomVelocity () =
-        Velocity2(getRandomSpeed (), getRandomSpeed ()) * 0.02f
+    let private accelerationToGoal = 0.3f
+    let private accelerationRandom = 0.01f
+    let private accelerationInteraction = 0.1f
+    let private maxSpeed = 0.4f
+    let private interactionRadius = Unit(0.01f)
+    let private collisionRadius = Unit(0.003f)
+    /// The max number of interactions that will be computed.
+    /// The higher the number, the better and smoother the interactions will be, but it comes at a
+    /// cost of performance. If the interaction is programmed to move away from neighbors, and the
+    /// neighbors are all on a horizontal line, you would want to move away from that line,
+    /// orthogonally. However, what happens if this number is low and the interactionRadius is high,
+    /// is that the average neighbor position will deviate horizontally significantly more than
+    /// vertically. This means that we will move horizontally away instead of vertically.
+    let private maxNrInteractions = 5
 
-    let private capVelocity maxSpeed (v: Velocity2) =
+    let private capVelocity maxSpeed (v:Velocity2) =
         if v.Length.NumericValue > maxSpeed
         then Velocity2(v.NumericValue.Normalized() * maxSpeed)
         else v
 
-    let private capAccToGoal = capVelocity 0.1f
-    let private capTotal = capVelocity 0.4f
-        
-    let private attractionRadius = 0.2f
-
-    let PointsOfAttraction = [
-        Position2(-0.1f,0.3f);
-        Position2(0.6f,0.1f);
-        Position2(0.0f,-0.6f);
-        Position2(-0.3f,0.6f);
-        ]
-
-    let private pointOfAttraction (this : PhotonData) : Position2 =
-        PointsOfAttraction.[this.PointOfAttractionIndex]
-    let private hasReachedPointOfAttraction (this : PhotonData) =
-        Unit.op_LessThan((this.Position - pointOfAttraction this).Length, Unit(attractionRadius))
-
-    let private velocityToGoal (this : PhotonData) (elapsedTime: TimeSpan) =
-        let diff = pointOfAttraction this - this.Position
+    let private velocityToGoal
+            (state:PhotonData) (elapsedTime:TimeSpan) (accelerationConstant:single) =
+        // Hardcoded behaviour based on player index
+        let pointOfAttraction =
+            if state.PlayerIndex = 0uy
+            then Position2(0.9f, 0.0f)
+            else Position2(-0.9f, 0.0f)
+        let diff = pointOfAttraction - state.Position
         let acceleration =
             if diff.Length = Unit.Zero
-            then Acceleration2(0.0f, 0.0f)
-            else Acceleration2(diff.NumericValue.Normalized() * 1.0f)
-        acceleration * elapsedTime
+            then Acceleration2.Zero
+            // Don't use Direction2 for reasons of performance
+            else Acceleration2(diff.NumericValue.Normalized())
+        accelerationConstant * acceleration * elapsedTime
 
-    let private interactionRadius = Unit(0.05f)
+    let private randomSingle2 () = (randomSingle () - 0.5f) * 2.0f
+    let private randomVelocity (elapsedTime:TimeSpan) (accelerationConstant:single) =
+        let acceleration = new Acceleration2(randomSingle2 (), randomSingle2 ())
+        accelerationConstant * acceleration * elapsedTime
 
-    let rec Update (tracer : Tracer) (this : PhotonData)
-            (gameState : GameState) (updateArgs : UpdateEventArgs) = 
+    let private accDifference total (pos:PhotonData) = total + (pos.Position - Position2.Zero)
+    let private avgPhotonPosition (photons: list<PhotonData>) =
+        let sum = List.fold accDifference Difference2.Zero photons
+        let count = List.length photons
+        sum / (single count) + Position2.Zero
 
-        let mutable alive = true
-        let elapsed = updateArgs.ElapsedTimeInS
-        let totalTime = updateArgs.TimeInS
-
-        // apply game of life like rules once per second
-        if (totalTime - (totalTime |> int |> float)) < elapsed then
-            let neighbors = gameState.TileMap.GetNeighbors this.Position interactionRadius
-            match Seq.length neighbors with
-            | t when t < 2 -> alive <- false
-            | t when t < 20 -> gameState.Spawn (Photon (UpdatableState(this, Update)))
-            | t when t < 200 -> ()
-            | _ -> alive <- false
-
-        let vToGoal = velocityToGoal this (TimeSpan(elapsed))
-        let velocity =
-            this.Speed
-            + capAccToGoal vToGoal
-            + (smallRandomVelocity ())
-            |> capTotal
-        let position = this.Position + velocity * (TimeSpan(elapsed))
-        let pointOfAttractionIndex =
-            if hasReachedPointOfAttraction this
-            then (this.PointOfAttractionIndex + 1) % PointsOfAttraction.Length
-            else this.PointOfAttractionIndex
-        {
-            Position = position;
-            Speed = velocity;
-            PointOfAttractionIndex = pointOfAttractionIndex;
-            Alive = alive
+    let private filterPhotons (this:UpdatableState<PhotonData, GameState>) objects = seq{
+        for n in objects do
+            match n with
+            | Planet _ -> ()
+            | Photon d -> if this <> d then yield d.State
         }
 
-    let public CreatePhoton (data: PhotonData) =
+    /// Move away from friendly neighbors that are within interaction radius
+    let private interactionVelocity (this:UpdatableState<PhotonData, GameState>)
+            (gameState:GameState) (elapsedTime:TimeSpan) (accelerationConstant:single) = 
+        let neighbors = gameState.TileMap.GetObjects this.State.Position interactionRadius
+        let friendlyNeighborPhotonData =
+            filterPhotons this neighbors |>
+            Seq.filter (fun data -> data.PlayerIndex = this.State.PlayerIndex)
+        if Seq.isEmpty friendlyNeighborPhotonData
+        then Velocity2.Zero
+        else
+            let repulsionPosition =
+                friendlyNeighborPhotonData |> takeAtMost maxNrInteractions |> avgPhotonPosition
+            let diff = this.State.Position - repulsionPosition
+            // Don't use Direction2 for reasons of performance
+            let acceleration =
+                if diff.Length = Unit.Zero
+                then Acceleration2.Zero
+                else new Acceleration2(diff.NumericValue.Normalized())
+            accelerationConstant * acceleration * elapsedTime
+
+    let rec Update (tracer : Tracer) (this : UpdatableState<PhotonData, GameState>)
+            (gameState : GameState) (updateArgs : UpdateEventArgs) = 
+
+        let elapsedS = updateArgs.ElapsedTimeInS
+        let elapsedT = TimeSpan(elapsedS)
+        let state = this.State
+
+        // Check aliveness
+        let mutable alive = true
+        let collidingNeighbors = gameState.TileMap.GetObjects state.Position collisionRadius
+        for collidingState in filterPhotons this collidingNeighbors do
+            if collidingState.PlayerIndex <> state.PlayerIndex then alive <- false
+
+        // Compute new velocity and speed
+        let goalDV = velocityToGoal state elapsedT accelerationToGoal
+        let randomDV = randomVelocity elapsedT accelerationRandom
+        let interactionDV = interactionVelocity this gameState elapsedT accelerationInteraction
+        let velocity = state.Velocity + goalDV + randomDV + interactionDV |> capVelocity maxSpeed
+        let position = state.Position + velocity * elapsedT
+
+        {
+            Position = position;
+            Velocity = velocity;
+            Alive = alive;
+            PlayerIndex = state.PlayerIndex;
+        }
+
+    let CreatePhoton (data: PhotonData) =
         Photon (UpdatableState<PhotonData, GameState>(data, Update))
 

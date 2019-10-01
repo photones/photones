@@ -18,3 +18,10 @@ module Utils =
     let public randomSingle () = (single)(random.NextDouble())
     let public randomInt maxValue = random.Next(maxValue)
 
+    let takeAtMost n (sequence:seq<'T>) = [
+        let enumerator = sequence.GetEnumerator()
+        let mutable i = n
+        while i > 0 && enumerator.MoveNext() do
+            yield enumerator.Current
+            i <- i - 1
+    ]
