@@ -28,7 +28,8 @@ module public Photon =
         then Velocity2(v.NumericValue.Normalized() * maxSpeed)
         else v
 
-    let private velocityToGoal (state:PhotonData) (elapsedTime:TimeSpan) (accelerationConstant:single) =
+    let private velocityToGoal
+            (state:PhotonData) (elapsedTime:TimeSpan) (accelerationConstant:single) =
         // Hardcoded behaviour based on player index
         let pointOfAttraction =
             if state.PlayerIndex = 0uy
