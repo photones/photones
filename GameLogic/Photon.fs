@@ -8,6 +8,10 @@ open Microsoft.FSharp.Collections
 
 module public Photon =
 
+    let private accelerationToGoal = 0.3f
+    let private accelerationRandom = 0.01f
+    let private accelerationInteraction = 0.1f
+    let private maxSpeed = 0.4f
     let private interactionRadius = Unit(0.01f)
     let private collisionRadius = Unit(0.003f)
     /// The max number of interactions that will be computed.
@@ -24,7 +28,7 @@ module public Photon =
         then Velocity2(v.NumericValue.Normalized() * maxSpeed)
         else v
 
-    let private velocityToGoal (state:PhotonData) (elapsedTime:TimeSpan) (maxSpeed:single) =
+    let private velocityToGoal (state:PhotonData) (elapsedTime:TimeSpan) (accelerationConstant:single) =
         // Hardcoded behaviour based on player index
         let pointOfAttraction =
             if state.PlayerIndex = 0uy
@@ -36,12 +40,12 @@ module public Photon =
             then Acceleration2.Zero
             // Don't use Direction2 for reasons of performance
             else Acceleration2(diff.NumericValue.Normalized())
-        maxSpeed * (acceleration * elapsedTime)
+        accelerationConstant * acceleration * elapsedTime
 
     let private randomSingle2 () = (randomSingle () - 0.5f) * 2.0f
-    let private randomVelocity (elapsedTime:TimeSpan) (maxSpeed:single) =
+    let private randomVelocity (elapsedTime:TimeSpan) (accelerationConstant:single) =
         let acceleration = new Acceleration2(randomSingle2 (), randomSingle2 ())
-        maxSpeed * (acceleration * elapsedTime)
+        accelerationConstant * acceleration * elapsedTime
 
     let private accDifference total (pos:PhotonData) = total + (pos.Position - Position2.Zero)
     let private avgPhotonPosition (photons: list<PhotonData>) =
@@ -58,7 +62,7 @@ module public Photon =
 
     /// Move away from friendly neighbors that are within interaction radius
     let private interactionVelocity (this:UpdatableState<PhotonData, GameState>)
-            (gameState:GameState) (elapsedTime:TimeSpan) (maxSpeed:single) = 
+            (gameState:GameState) (elapsedTime:TimeSpan) (accelerationConstant:single) = 
         let neighbors = gameState.TileMap.GetObjects this.State.Position interactionRadius
         let friendlyNeighborPhotonData =
             filterPhotons this neighbors |>
@@ -74,7 +78,7 @@ module public Photon =
                 if diff.Length = Unit.Zero
                 then Acceleration2.Zero
                 else new Acceleration2(diff.NumericValue.Normalized())
-            maxSpeed * (acceleration * elapsedTime)
+            accelerationConstant * acceleration * elapsedTime
 
     let rec Update (tracer : Tracer) (this : UpdatableState<PhotonData, GameState>)
             (gameState : GameState) (updateArgs : UpdateEventArgs) = 
@@ -90,10 +94,10 @@ module public Photon =
             if collidingState.PlayerIndex <> state.PlayerIndex then alive <- false
 
         // Compute new velocity and speed
-        let goalDV = velocityToGoal state elapsedT 0.3f
-        let randomDV = randomVelocity elapsedT 0.01f
-        let interactionDV = interactionVelocity this gameState elapsedT 0.1f
-        let velocity = state.Velocity + goalDV + randomDV + interactionDV |> capVelocity 0.4f
+        let goalDV = velocityToGoal state elapsedT accelerationToGoal
+        let randomDV = randomVelocity elapsedT accelerationRandom
+        let interactionDV = interactionVelocity this gameState elapsedT accelerationInteraction
+        let velocity = state.Velocity + goalDV + randomDV + interactionDV |> capVelocity maxSpeed
         let position = state.Position + velocity * elapsedT
 
         {
