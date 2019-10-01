@@ -10,3 +10,5 @@ FSharp.Core
 System.ValueTuple
 FSharp.Formatting
 xunit.runner.visualstudio
+FsCheck
+FsCheck.Xunit

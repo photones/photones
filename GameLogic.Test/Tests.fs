@@ -1,7 +1,7 @@
 ﻿module Tests
 
-open System
-open Xunit
+open FsCheck.Xunit
+open GameLogic.Utils
 
 let takeAtMost1 n (sequence:seq<'T>) =
     let mutable i = n
@@ -10,6 +10,7 @@ let takeAtMost1 n (sequence:seq<'T>) =
         i >= 0
         ) sequence |> Seq.toList
 
-[<Fact>]
-let ``My test`` () =
-    Assert.True(true)
+[<Property>]
+let ``Test takeAtMost against alternative implementation``(n:int, xs:list<int>) =
+    takeAtMost n xs = takeAtMost1 n xs
+

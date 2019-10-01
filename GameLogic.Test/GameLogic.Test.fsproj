@@ -8,5 +8,9 @@
     <Compile Include="Tests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameLogic\GameLogic.fsproj" />
+    <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj" />
+  </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
