@@ -1,0 +1,14 @@
+OpenTK
+xunit
+xunit.abstractions
+xunit.analyzers
+xunit.assert
+xunit.core
+xunit.extensibility.core
+xunit.extensibility.execution
+FSharp.Core
+System.ValueTuple
+FSharp.Formatting
+xunit.runner.visualstudio
+FsCheck
+FsCheck.Xunit
