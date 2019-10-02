@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="docs\Example.fsx" />
     <Compile Include="Tests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
@@ -12,5 +13,6 @@
     <ProjectReference Include="..\GameLogic\GameLogic.fsproj" />
     <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>

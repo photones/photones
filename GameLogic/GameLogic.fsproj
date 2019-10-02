@@ -61,6 +61,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Content Include="paket.references" />
     <Compile Include="Utils.fs" />
+    <Compile Include="OpenTkUtils.fs" />
     <Compile Include="Data.fs" />
     <Compile Include="UpdatableState.fs" />
     <Compile Include="GameObject.fs" />
@@ -72,8 +73,8 @@
     <Content Include="OpenTK.dll.config">
       <Paket>True</Paket>
     </Content>
-    <None Include="docs\build.fsx" />
     <None Include="docs\index.md" />
+    <None Include="BuildDocs.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
