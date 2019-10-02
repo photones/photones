@@ -79,9 +79,11 @@ let generateIndexHtml () =
     RazorLiterate.ProcessMarkdown(md, template, outputfile, replacements = projectInfo)
 
 let generateSourceFileDocs () =
+    let fsi = FsiEvaluator()
     for (path, _, p, _) in sourceFiles do
         let outputfile = Path.Combine(outputdir, sprintf "%s.html" p)
-        RazorLiterate.ProcessScriptFile(path, template, outputfile, replacements = projectInfo)
+        RazorLiterate.ProcessScriptFile(path, template, outputfile,
+            replacements = projectInfo, fsiEvaluator = fsi)
 
 generateIndexHtml ()
 generateSourceFileDocs ()
