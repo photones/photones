@@ -5,6 +5,7 @@
 *.vs text eol=lf
 *.gs text eol=lf
 *.fs text eol=lf
+*.fsx text eol=lf
 *.js text eol=lf
 *.ts text eol=lf
 *.html text eol=lf
