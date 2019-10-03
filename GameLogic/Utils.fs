@@ -13,7 +13,8 @@ module Utils =
     let public randomSingle () = (single)(random.NextDouble())
     let public randomInt maxValue = random.Next(maxValue)
 
-    /// See https://photones.github.io/photones/Performance%20of%20takeAtMost.html for a performance evaluation.
+    /// See https://photones.github.io/photones/Performance%20of%20takeAtMost.html for a performance
+    /// evaluation.
     let takeAtMost n (sequence:seq<'T>) = [
         let enumerator = sequence.GetEnumerator()
         let mutable i = n
