@@ -32,3 +32,7 @@
 *.sln text eol=lf
 *.vcproj text eol=lf
 *.vcxproj text eol=lf
+
+*.git* text eol=lf
+*.references text eol=lf
+*.dependencies text eol=lf
