@@ -82,8 +82,8 @@ We do a simple test whereby we evaluate the functions on a list of size n and ar
 | TakeAtMost1 |     1000 | 54,183.0 us | 650.906 us | 5700.0000 |     - |     - |         - |
 
 
-As you can see, the difference is minimal, but our hypothesis seems to hold minimally.
-However, the hypothesis that `takeAtMost1` would cause more allocations on the heap seems to be false.
+As you can see, the difference is minimal, but our hypothesis seems to hold minimally. However, the
+hypothesis that `takeAtMost1` would cause more allocations on the heap seems to be false.
 
 
 ***
