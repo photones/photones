@@ -22,7 +22,7 @@ fi
 #echo "$files_with_tabs" | xargs sed -zi 's/\t/    /g'
 
 # Check if all lines in source files end with a unix line ending
-files_with_crlf=$(git ls-files *.fsx *.fs *.cs | xargs grep -UPlza '\r\n')
+files_with_crlf=$(git ls-files *.fsx *.fs *.cs | xargs -d '\n' grep -UPlza '\r\n')
 if [[ -n "$files_with_crlf" ]]; then
     echo
     echo "The following files contain windows line endings:"
