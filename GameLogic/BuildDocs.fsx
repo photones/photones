@@ -51,8 +51,8 @@ let sourceFiles =
             let projectFile = Path.Combine(solutiondir, project, project + ".fsproj");
             for line in read projectFile do
                 match line with
-                | Regex @"<None Include=""docs[\\]((.*)([.]fsx))"""
-                    [ filename; prefix; suffix ] ->
+                | Regex @"<(Compile|None) Include=""docs[\\]((.*)([.]fsx?))"""
+                    [ _; filename; prefix; suffix ] ->
                     let path = Path.Combine(solutiondir, project, "docs", filename)
                     yield path, filename, prefix, suffix
                 | _ -> ()
@@ -64,7 +64,8 @@ let sourceFiles =
 
 let template = Path.Combine(source, "docs", "templates", "template-project.html")
 
-let navHtml = sourceFiles |> Seq.map (fun (_, _, p, _) -> sprintf @"<li><a href=""%s"">%s</a></li>" (p + ".html") p) |> String.concat ""
+let documentLink (_, _, p, _) = sprintf @"<li><a href=""%s"">%s</a></li>" (p + ".html") p
+let navHtml = sourceFiles |> Seq.map documentLink |> String.concat ""
 
 let projectInfo =
   [ "page-description", "F# Game Programming"
@@ -79,11 +80,10 @@ let generateIndexHtml () =
     RazorLiterate.ProcessMarkdown(md, template, outputfile, replacements = projectInfo)
 
 let generateSourceFileDocs () =
-    let fsi = FsiEvaluator()
     for (path, _, p, _) in sourceFiles do
         let outputfile = Path.Combine(outputdir, sprintf "%s.html" p)
         RazorLiterate.ProcessScriptFile(path, template, outputfile,
-            replacements = projectInfo, fsiEvaluator = fsi)
+            replacements = projectInfo, lineNumbers = false)
 
 generateIndexHtml ()
 generateSourceFileDocs ()
