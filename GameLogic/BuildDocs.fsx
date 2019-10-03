@@ -1,4 +1,4 @@
-﻿open System.Text.RegularExpressions
+open System.Text.RegularExpressions
 open System.IO
 
 // Given a typical setup (with 'FSharp.Formatting' referenced using Paket),
