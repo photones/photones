@@ -10,13 +10,16 @@ type GameState(gameObjects : List<GameObject<GameState>>) =
     let tileMap = TileMap(Unit(-1.0f), Unit(-1.0f), Unit(2.0f), Unit(2.0f), 200, 200)
 
     let mutable _gameObjects = gameObjects
+    let mutable _deadGameObjects = List<GameObject<GameState>>()
 
     member this.TileMap = tileMap
     member this.GameObjects = _gameObjects
+    member this.DeadGameObjects = _deadGameObjects
 
     member this.Update(tracer: Tracer, updateArgs: UpdateEventArgs): unit =
         tileMap.Update(tracer, _gameObjects)
 
+        _deadGameObjects <- List(_gameObjects |> Seq.filter (fun o -> not o.Alive))
         _gameObjects <- List(_gameObjects |> Seq.filter (fun o -> o.Alive))
         // Collection can be modified during update, so create a list for iteration
         for o in List(_gameObjects) do

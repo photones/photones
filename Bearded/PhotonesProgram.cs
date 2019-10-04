@@ -97,7 +97,7 @@ namespace Bearded.Photones {
         protected override void OnUpdate(UpdateEventArgs updateArgs) {
             if (updateArgs.ElapsedTimeInS < 0.0001) {
                 // This is basically to skip the first frame, because its
-                // elapsed time is out of whack We do a GC though, to clean up
+                // elapsed time is out of whack. We do a GC though, to clean up
                 // initialization garbage, to prevent that from happening in
                 // game This saves one big stutter a few seconds into the game.
                 GC.Collect();

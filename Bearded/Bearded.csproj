@@ -63,7 +63,7 @@
     <Compile Include="GameUI\GameScreen.cs" />
     <Compile Include="Performance\PerformanceSummary.cs" />
     <Compile Include="Performance\BeardedUpdateEventArgs.cs" />
-    <Compile Include="Particles\Behaviors\ConstantParticleBehavior.cs" />
+    <Compile Include="Particles\Behaviors\ConstantBehavior.cs" />
     <Compile Include="Particles\Behaviors\IParticleBehavior.cs" />
     <Compile Include="Particles\Behaviors\LerpLifetime\LerpFloatBehavior.cs" />
     <Compile Include="Particles\Behaviors\LerpLifetime\LerpVector2Behavior.cs" />
