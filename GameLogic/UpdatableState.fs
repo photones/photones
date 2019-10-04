@@ -1,6 +1,6 @@
 ﻿namespace GameLogic
 
-open amulware.Graphics
+open Bearded.Utilities.SpaceTime
 
 (**
 We cannot work with an immutable gamestate, because this requires creating many
@@ -15,15 +15,15 @@ type public UpdatableState<'ObjectState, 'GameState>
         (
             initialState: 'ObjectState,
             update: Tracer -> UpdatableState<'ObjectState, 'GameState> -> 'GameState
-                -> UpdateEventArgs -> 'ObjectState
+                -> TimeSpan -> 'ObjectState
         ) =
     let mutable currentState : 'ObjectState = initialState
     let mutable futureState : 'ObjectState = initialState
 
     member this.State = currentState
 
-    member this.Update (tracer : Tracer) (world : 'GameState) (updateArgs : UpdateEventArgs) =
-        futureState <- update tracer this world updateArgs
+    member this.Update (tracer : Tracer) (world : 'GameState) (elapsedS : TimeSpan) =
+        futureState <- update tracer this world elapsedS
 
     member this.Refresh () =
         currentState <- futureState

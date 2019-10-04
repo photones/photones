@@ -11,6 +11,8 @@ using Bearded.Utilities.SpaceTime;
 
 namespace Bearded.Photones.GameUI {
     class GameScreen : ScreenLayer {
+        public const float TIME_MODIFIER = 0.5f;
+
         private readonly Camera3D _camera;
         private readonly Beardgame _game;
         private readonly GeometryManager _geometries;
@@ -26,9 +28,8 @@ namespace Bearded.Photones.GameUI {
         }
 
         public override void Update(Tracer tracer, BeardedUpdateEventArgs args) {
-            _game.Update(tracer, args.UpdateEventArgs);
-
-            var elapsedTime = new TimeSpan(args.UpdateEventArgs.ElapsedTimeInS);
+            var elapsedTime = new TimeSpan(args.UpdateEventArgs.ElapsedTimeInS * TIME_MODIFIER);
+            _game.Update(tracer, elapsedTime);
             ParticleSystem.Get.Update(elapsedTime);
         }
 

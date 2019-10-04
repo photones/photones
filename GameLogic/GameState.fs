@@ -16,14 +16,14 @@ type GameState(gameObjects : List<GameObject<GameState>>) =
     member this.GameObjects = _gameObjects
     member this.DeadGameObjects = _deadGameObjects
 
-    member this.Update(tracer: Tracer, updateArgs: UpdateEventArgs): unit =
+    member this.Update(tracer: Tracer, elapsedS: TimeSpan): unit =
         tileMap.Update(tracer, _gameObjects)
 
         _deadGameObjects <- List(_gameObjects |> Seq.filter (fun o -> not o.Alive))
         _gameObjects <- List(_gameObjects |> Seq.filter (fun o -> o.Alive))
         // Collection can be modified during update, so create a list for iteration
         for o in List(_gameObjects) do
-            o.Update tracer this updateArgs
+            o.Update tracer this elapsedS
         for o in _gameObjects do
             o.Refresh()
 

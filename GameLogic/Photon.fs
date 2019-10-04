@@ -2,7 +2,6 @@
 
 open Bearded.Utilities.SpaceTime
 open Utils
-open amulware.Graphics
 open Microsoft.FSharp.Core
 open Microsoft.FSharp.Collections
 
@@ -82,10 +81,8 @@ module public Photon =
             accelerationConstant * acceleration * elapsedTime
 
     let rec Update (tracer : Tracer) (this : UpdatableState<PhotonData, GameState>)
-            (gameState : GameState) (updateArgs : UpdateEventArgs) = 
+            (gameState : GameState) (elapsedS : TimeSpan) = 
 
-        let elapsedS = updateArgs.ElapsedTimeInS
-        let elapsedT = TimeSpan(elapsedS)
         let state = this.State
 
         // Check aliveness
@@ -95,11 +92,11 @@ module public Photon =
             if collidingState.PlayerIndex <> state.PlayerIndex then alive <- false
 
         // Compute new velocity and speed
-        let goalDV = velocityToGoal state elapsedT accelerationToGoal
-        let randomDV = randomVelocity elapsedT accelerationRandom
-        let interactionDV = interactionVelocity this gameState elapsedT accelerationInteraction
+        let goalDV = velocityToGoal state elapsedS accelerationToGoal
+        let randomDV = randomVelocity elapsedS accelerationRandom
+        let interactionDV = interactionVelocity this gameState elapsedS accelerationInteraction
         let velocity = state.Velocity + goalDV + randomDV + interactionDV |> capVelocity maxSpeed
-        let position = state.Position + velocity * elapsedT
+        let position = state.Position + velocity * elapsedS
 
         {
             Position = position;

@@ -1,6 +1,6 @@
 ﻿namespace GameLogic
 open System
-open amulware.Graphics
+open Bearded.Utilities.SpaceTime
 
 (**
 We would like to exhaustively handle all different types of game objects in
@@ -27,10 +27,10 @@ type public GameObject<'GameState> =
         | Photon s -> s.State.Position
         | Planet s -> s.State.Position
 
-    member this.Update (tracer : Tracer) (gameState : 'GameState) (updateArgs : UpdateEventArgs) =
+    member this.Update (tracer : Tracer) (gameState : 'GameState) (elapsedS : TimeSpan) =
         match this with
-        | Photon s -> s.Update tracer gameState updateArgs
-        | Planet s -> s.Update tracer gameState updateArgs
+        | Photon s -> s.Update tracer gameState elapsedS
+        | Planet s -> s.Update tracer gameState elapsedS
 
     member this.Refresh () =
         match this with

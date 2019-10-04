@@ -1,13 +1,11 @@
 ﻿namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
-open Utils
-open amulware.Graphics
 
 module public Planet =
 
     let Update (tracer : Tracer) (this : UpdatableState<PlanetData, GameState>)
-            (gameState : GameState) (updateArgs : UpdateEventArgs) : PlanetData = 
+            (gameState : GameState) (elapsedS : TimeSpan) : PlanetData = 
         let state = this.State
         // Spawn photons every frame
         for _ in [1..1] do
