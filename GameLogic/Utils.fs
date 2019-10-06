@@ -1,7 +1,5 @@
 ﻿namespace GameLogic
-open OpenTK
-open Bearded.Utilities
-open System.Collections.Generic
+open System.Text.RegularExpressions
 open System
 
 type Tracer(logger: Action<string>, setNrGameObjects: Action<int>) =
@@ -11,13 +9,12 @@ type Tracer(logger: Action<string>, setNrGameObjects: Action<int>) =
 
 module Utils =
 
-    type OpenTK.Vector2 with
-        member this.FromPolar(angle, radius) = Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius
-
     let private random = System.Random()
     let public randomSingle () = (single)(random.NextDouble())
     let public randomInt maxValue = random.Next(maxValue)
 
+    /// See https://photones.github.io/photones/Performance%20of%20takeAtMost.html for a performance
+    /// evaluation.
     let takeAtMost n (sequence:seq<'T>) = [
         let enumerator = sequence.GetEnumerator()
         let mutable i = n
@@ -25,3 +22,8 @@ module Utils =
             yield enumerator.Current
             i <- i - 1
     ]
+
+    let (|Regex|_|) pattern input =
+        let m = Regex.Match(input, pattern)
+        if m.Success then Some(List.tail [ for g in m.Groups -> g.Value ])
+        else None
