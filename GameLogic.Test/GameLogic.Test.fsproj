@@ -12,7 +12,6 @@
     <Compile Include="Tests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\GameLogic\GameLogic.fsproj" />
     <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj" />
