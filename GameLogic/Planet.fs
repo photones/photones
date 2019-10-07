@@ -8,8 +8,8 @@ module public Planet =
 
     let spawnRate = 100.0 // # per second
 
-    let Update (tracer : Tracer) (this : UpdatableState<PlanetData, GameState>)
-            (gameState : GameState) (elapsedS : TimeSpan) : PlanetData = 
+    let Update (tracer:Tracer) (this:UpdatableState<PlanetData, GameState>)
+            (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
         let state = this.State
 
         // Compute number of spawns.

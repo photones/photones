@@ -87,10 +87,11 @@ module public Photon =
                 filterPhotons this neighbors |>
                 Seq.filter (fun neighbor -> neighbor.PlayerIndex = this.State.PlayerIndex)
             | Aggressive -> Seq.empty
+
         repulse this elapsedTime accelerationConstant repulseFrom
 
-    let rec Update (tracer : Tracer) (this : UpdatableState<PhotonData, GameState>)
-            (gameState : GameState) (elapsedS : TimeSpan) = 
+    let rec Update (tracer:Tracer) (this:UpdatableState<PhotonData, GameState>)
+            (gameState:GameState) (elapsedS:TimeSpan) = 
 
         let state = this.State
 

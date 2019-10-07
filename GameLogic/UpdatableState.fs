@@ -17,12 +17,12 @@ type public UpdatableState<'ObjectState, 'GameState>
             update: Tracer -> UpdatableState<'ObjectState, 'GameState> -> 'GameState
                 -> TimeSpan -> 'ObjectState
         ) =
-    let mutable currentState : 'ObjectState = initialState
-    let mutable futureState : 'ObjectState = initialState
+    let mutable currentState:'ObjectState = initialState
+    let mutable futureState:'ObjectState = initialState
 
     member this.State = currentState
 
-    member this.Update (tracer : Tracer) (world : 'GameState) (elapsedS : TimeSpan) =
+    member this.Update (tracer:Tracer) (world:'GameState) (elapsedS:TimeSpan) =
         futureState <- update tracer this world elapsedS
 
     member this.Refresh () =

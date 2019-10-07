@@ -3,7 +3,7 @@
 open System.Collections.Generic
 open Bearded.Utilities.SpaceTime
 
-type GameState(gameObjects : List<GameObject<GameState>>) = 
+type GameState(gameObjects:List<GameObject<GameState>>) = 
 
     let tileMap = TileMap(Unit(-1.5f), Unit(-1.0f), Unit(3.0f), Unit(2.0f), 200, 300)
 
@@ -27,5 +27,5 @@ type GameState(gameObjects : List<GameObject<GameState>>) =
 
         tracer.CountGameObjects (_gameObjects.Count)
 
-    member this.Spawn (obj : GameObject<GameState>) =
+    member this.Spawn (obj:GameObject<GameState>) =
         _gameObjects.Add(obj)
