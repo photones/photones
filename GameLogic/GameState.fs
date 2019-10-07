@@ -2,8 +2,6 @@
 
 open System.Collections.Generic
 open Bearded.Utilities.SpaceTime
-open amulware.Graphics
-open Utils
 
 type GameState(gameObjects : List<GameObject<GameState>>) = 
 

@@ -9,7 +9,7 @@ module public Photon =
 
     let private accelerationToGoal = 0.3f
     let private accelerationRandom = 0.01f
-    let private accelerationInteraction = 0.1f
+    let private accelerationInteraction = 0.2f
     let private maxSpeed = 0.4f
     let private interactionRadius = Unit(0.01f)
     let private collisionRadius = Unit(0.003f)
@@ -60,18 +60,13 @@ module public Photon =
             | Photon d -> if this <> d then yield d.State
         }
 
-    /// Move away from friendly neighbors that are within interaction radius
-    let private interactionVelocity (this:UpdatableState<PhotonData, GameState>)
-            (gameState:GameState) (elapsedTime:TimeSpan) (accelerationConstant:single) = 
-        let neighbors = gameState.TileMap.GetObjects this.State.Position interactionRadius
-        let friendlyNeighborPhotonData =
-            filterPhotons this neighbors |>
-            Seq.filter (fun data -> data.PlayerIndex = this.State.PlayerIndex)
-        if Seq.isEmpty friendlyNeighborPhotonData
+    let private repulse (this:UpdatableState<PhotonData, GameState>)
+            (elapsedTime:TimeSpan) (accelerationConstant:single) (from:seq<PhotonData>) =
+        if Seq.isEmpty from
         then Velocity2.Zero
         else
             let repulsionPosition =
-                friendlyNeighborPhotonData |> takeAtMost maxNrInteractions |> avgPhotonPosition
+                from |> takeAtMost maxNrInteractions |> avgPhotonPosition
             let diff = this.State.Position - repulsionPosition
             // Don't use Direction2 for reasons of performance
             let acceleration =
@@ -79,6 +74,20 @@ module public Photon =
                 then Acceleration2.Zero
                 else new Acceleration2(diff.NumericValue.Normalized())
             accelerationConstant * acceleration * elapsedTime
+
+    /// Move away from friendly neighbors that are within interaction radius
+    let private interactionVelocity (this:UpdatableState<PhotonData, GameState>)
+            (gameState:GameState) (elapsedTime:TimeSpan) (accelerationConstant:single) = 
+        let state = this.State
+        let neighbors = gameState.TileMap.GetObjects this.State.Position interactionRadius
+        let repulseFrom =
+            match state.Behavior with
+            | Shy -> filterPhotons this neighbors
+            | Neutral ->
+                filterPhotons this neighbors |>
+                Seq.filter (fun neighbor -> neighbor.PlayerIndex = this.State.PlayerIndex)
+            | Aggressive -> Seq.empty
+        repulse this elapsedTime accelerationConstant repulseFrom
 
     let rec Update (tracer : Tracer) (this : UpdatableState<PhotonData, GameState>)
             (gameState : GameState) (elapsedS : TimeSpan) = 
@@ -103,6 +112,7 @@ module public Photon =
             Velocity = velocity;
             Alive = alive;
             PlayerIndex = state.PlayerIndex;
+            Behavior = state.Behavior;
         }
 
     let CreatePhoton (data: PhotonData) =

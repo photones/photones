@@ -22,6 +22,7 @@ module public Planet =
         let additionalSpawnOutcome = bernoulli additionalSpawnChance
         let totalSpawns = (int certainSpawns) + additionalSpawnOutcome
 
+        let behavior = if state.PlayerIndex = 0uy then Shy else Neutral
         // Spawn photons every frame
         for i = 1 to totalSpawns do
             let photon = Photon.CreatePhoton ({
@@ -29,6 +30,7 @@ module public Planet =
                     Velocity = Velocity2(0.0f, 0.0f);
                     Alive = true;
                     PlayerIndex = state.PlayerIndex;
+                    Behavior = behavior;
                 })
             gameState.Spawn photon
 
