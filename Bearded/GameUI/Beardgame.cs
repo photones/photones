@@ -19,6 +19,7 @@ namespace Bearded.Photones.GameUI {
         public void Update(Tracer tracer, TimeSpan elapsedS) {
             _gameState.Update(tracer, elapsedS);
 
+            // Explosions
             foreach (var gameObject in _gameState.DeadGameObjects) {
                 var particle = new Particle();
                 particle.AlphaBehavior = new LerpFloatBehavior(1, 0);

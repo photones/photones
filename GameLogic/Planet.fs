@@ -1,14 +1,29 @@
 ﻿namespace GameLogic
 
+open System
 open Bearded.Utilities.SpaceTime
+open Utils
 
 module public Planet =
+
+    let spawnRate = 100.0 // # per second
 
     let Update (tracer : Tracer) (this : UpdatableState<PlanetData, GameState>)
             (gameState : GameState) (elapsedS : TimeSpan) : PlanetData = 
         let state = this.State
+
+        // Compute number of spawns.
+        // Usually the spawnrate is less than 1. We don't want to hassle with communicating with
+        // other frames about how many photons they've already spawned. So we take the stochastic
+        // approach.
+        let expectedNrOfSpawns = spawnRate * elapsedS.NumericValue
+        let certainSpawns = Math.Floor(expectedNrOfSpawns)
+        let additionalSpawnChance = expectedNrOfSpawns - certainSpawns
+        let additionalSpawnOutcome = bernoulli additionalSpawnChance
+        let totalSpawns = (int certainSpawns) + additionalSpawnOutcome
+
         // Spawn photons every frame
-        for _ in [1..1] do
+        for i = 1 to totalSpawns do
             let photon = Photon.CreatePhoton ({
                     Position = state.Position;
                     Velocity = Velocity2(0.0f, 0.0f);

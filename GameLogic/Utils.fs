@@ -13,6 +13,8 @@ module Utils =
     let public randomSingle () = (single)(random.NextDouble())
     let public randomInt maxValue = random.Next(maxValue)
 
+    let public bernoulli p = if random.NextDouble() < p then 1 else 0
+
     /// See https://photones.github.io/photones/Performance%20of%20takeAtMost.html for a performance
     /// evaluation.
     let takeAtMost n (sequence:seq<'T>) = [
