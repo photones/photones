@@ -7,6 +7,8 @@ open Microsoft.FSharp.Collections
 
 module public Photon =
 
+    type T = UpdatableState<PhotonData, GameState>
+
     let private accelerationToGoal = 0.3f
     let private accelerationRandom = 0.01f
     let private accelerationInteraction = 0.2f
@@ -53,14 +55,14 @@ module public Photon =
         let count = List.length photons
         sum / (single count) + Position2.Zero
 
-    let private filterPhotons (this:UpdatableState<PhotonData, GameState>) objects = seq{
+    let private filterPhotons (this:T) objects = seq{
         for n in objects do
             match n with
             | Planet _ -> ()
             | Photon d -> if this <> d then yield d.State
         }
 
-    let private repulse (this:UpdatableState<PhotonData, GameState>)
+    let private repulse (this:T)
             (elapsedTime:TimeSpan) (accelerationConstant:single) (from:seq<PhotonData>) =
         if Seq.isEmpty from
         then Velocity2.Zero
@@ -76,7 +78,7 @@ module public Photon =
             accelerationConstant * acceleration * elapsedTime
 
     /// Move away from friendly neighbors that are within interaction radius
-    let private interactionVelocity (this:UpdatableState<PhotonData, GameState>)
+    let private interactionVelocity (this:T)
             (gameState:GameState) (elapsedTime:TimeSpan) (accelerationConstant:single) = 
         let state = this.State
         let neighbors = gameState.TileMap.GetObjects this.State.Position interactionRadius
@@ -90,7 +92,7 @@ module public Photon =
 
         repulse this elapsedTime accelerationConstant repulseFrom
 
-    let rec Update (tracer:Tracer) (this:UpdatableState<PhotonData, GameState>)
+    let rec Update (tracer:Tracer) (this:T)
             (gameState:GameState) (elapsedS:TimeSpan) = 
 
         let state = this.State
@@ -117,5 +119,5 @@ module public Photon =
         }
 
     let CreatePhoton (data: PhotonData) =
-        Photon (UpdatableState<PhotonData, GameState>(data, Update))
+        Photon (T(data, Update))
 

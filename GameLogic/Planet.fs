@@ -6,9 +6,11 @@ open Utils
 
 module public Planet =
 
+    type T = UpdatableState<PlanetData, GameState>
+
     let spawnRate = 100.0 // # per second
 
-    let Update (tracer:Tracer) (this:UpdatableState<PlanetData, GameState>)
+    let Update (tracer:Tracer) (this:T)
             (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
         let state = this.State
 
@@ -40,5 +42,5 @@ module public Planet =
         }
 
     let public CreatePlanet (data: PlanetData) =
-        Planet (UpdatableState<PlanetData, GameState>(data, Update))
+        Planet (T(data, Update))
 
