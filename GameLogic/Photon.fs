@@ -100,10 +100,7 @@ module public Photon =
         let state = this.State
         let neighbors = getNeighbors this gameState friendlyInteractionRadius
         let friendlies = neighbors |> Seq.filter (isFriendly state)
-        match state.Behavior with
-        | Shy -> repulse state elapsedTime accelerationFriendlyInteraction friendlies
-        | Neutral -> Velocity2.Zero
-        | Aggressive -> attract state elapsedTime accelerationFriendlyInteraction friendlies
+        repulse state elapsedTime accelerationFriendlyInteraction friendlies
 
     let rec Update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
         let state = this.State
