@@ -61,7 +61,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Content Include="paket.references" />
     <Compile Include="Utils.fs" />
-    <Compile Include="OpenTkUtils.fs" />
+    <Compile Include="LibraryExtensions.fs" />
     <Compile Include="Data.fs" />
     <Compile Include="UpdatableState.fs" />
     <Compile Include="GameObject.fs" />
