@@ -24,7 +24,7 @@ module public Planet =
         let additionalSpawnOutcome = bernoulli additionalSpawnChance
         let totalSpawns = (int certainSpawns) + additionalSpawnOutcome
 
-        let behavior = if state.PlayerIndex = 0uy then Shy else Neutral
+        let behavior = if state.PlayerIndex = 0uy then Aggressive else Shy
         // Spawn photons every frame
         for i = 1 to totalSpawns do
             let photon = Photon.CreatePhoton ({

@@ -10,7 +10,7 @@ module public Photon =
 
     type T = UpdatableState<PhotonData, GameState>
 
-    let private accelerationToGoal = Acceleration 0.3f
+    let private accelerationGoal = Acceleration 0.3f
     let private accelerationRandom = Acceleration 0.01f
     let private accelerationFriendlyInteraction = Acceleration 0.1f
     let private accelerationHostileInteraction = Acceleration 0.1f
@@ -44,7 +44,7 @@ module public Photon =
             if state.PlayerIndex = 0uy
             then Position2(0.9f, 0.0f)
             else Position2(-0.9f, 0.0f)
-        let acceleration = Acceleration2.Towards(state.Position, attractionPoint, accelerationToGoal)
+        let acceleration = Acceleration2.Towards(state.Position, attractionPoint, accelerationGoal)
         acceleration * elapsedTime
 
     let private randomSingle2 () = (randomSingle () - 0.5f) * 2.0f
