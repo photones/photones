@@ -13,6 +13,10 @@ namespace Bearded.Photones.Rendering {
         /// </summary>
         public Vector3 Position; // 12 bytes
         /// <summary>
+        /// The radius
+        /// </summary>
+        public float Radius; // 4 bytes
+        /// <summary>
         /// The color
         /// </summary>
         public Color Color; // 4 bytes
@@ -20,26 +24,26 @@ namespace Bearded.Photones.Rendering {
         /// <summary>
         /// This method returns the size of the vertex data struct in bytes
         /// </summary>
-        /// <returns>
-        /// Struct's size in bytes
-        /// </returns>
         public int Size() {
-            return 16;
+            return 20;
         }
 
         private static VertexAttribute[] vertexAttributes;
 
         /// <param name="position">The position.</param>
+        /// <param name="radius">The radius.</param>
         /// <param name="color">The color.</param>
-        public PhotonVertexData(Vector3 position, Color color) {
+        public PhotonVertexData(Vector3 position, float radius, Color color) {
             Position = position;
+            Radius = radius;
             Color = color;
         }
 
         private void setVertexAttributes() {
             vertexAttributes = new[]{
                 new VertexAttribute("v_position", 3, VertexAttribPointerType.Float, Size(), 0),
-                new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, Size(), 12,
+                new VertexAttribute("v_radius", 1, VertexAttribPointerType.Float, Size(), 12),
+                new VertexAttribute("v_color", 4, VertexAttribPointerType.UnsignedByte, Size(), 16,
                     true)
             };
         }

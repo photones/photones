@@ -17,7 +17,6 @@ module public Photon =
     let private maxSpeed = Speed 0.4f
     let private hostileInteractionRadius = Unit 0.01f
     let private friendlyInteractionRadius = Unit 0.01f
-    let private collisionRadius = Unit 0.003f
     /// The max number of interactions that will be computed.
     /// The higher the number, the better and smoother the interactions will be, but it comes at a
     /// cost of performance. If the interaction is programmed to move away from neighbors, and the
@@ -107,7 +106,7 @@ module public Photon =
 
         // Check aliveness
         let mutable alive = true
-        let collidingPhotons = getNeighbors this gameState collisionRadius
+        let collidingPhotons = getNeighbors this gameState state.Size
         let collidingHostiles = collidingPhotons |> Seq.filter (isHostile state)
         if Seq.isEmpty collidingHostiles |> not then alive <- false
 
@@ -124,6 +123,7 @@ module public Photon =
         {
             Position = position;
             Velocity = velocity;
+            Size = state.Size;
             Alive = alive;
             PlayerIndex = state.PlayerIndex;
             Behavior = state.Behavior;

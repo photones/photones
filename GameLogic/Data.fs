@@ -8,6 +8,7 @@ type PhotonBehavior = Shy | Neutral | Aggressive
 type public PhotonData = {
     Position: Position2;
     Velocity: Velocity2;
+    Size: Unit; // Radius of physical presence
     Alive: bool;
     PlayerIndex: byte;
     Behavior: PhotonBehavior;
@@ -16,6 +17,7 @@ type public PhotonData = {
 [<Struct>]
 type public PlanetData = {
     Position: Position2;
+    Size: Unit; // Radius of physical presence
     PlayerIndex: byte;
 }
 

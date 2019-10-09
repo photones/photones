@@ -1,6 +1,7 @@
 ﻿using Bearded.Photones.Rendering;
 using GameLogic;
 using amulware.Graphics;
+using System;
 
 namespace Bearded.Photones.GameUI {
     class GameObjectRenderer {
@@ -14,14 +15,23 @@ namespace Bearded.Photones.GameUI {
             value.Visit(RenderPhoton, RenderPlanet);
         }
 
+        public static Color PlayerColor(byte playerIndex) {
+            switch (playerIndex) {
+                case 0: return Color.DarkGoldenrod;
+                case 1: return Color.HotPink;
+            }
+            throw new NotImplementedException();
+        }
+
         public void RenderPhoton(PhotonData value) {
-            var photoncolor = Color.DarkGoldenrod;
-            if (value.PlayerIndex == 1)
-                photoncolor = Color.HotPink;
-            geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, photoncolor);
+            var color = PlayerColor(value.PlayerIndex);
+            geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, value.Size.NumericValue, color);
         }
 
         public void RenderPlanet(PlanetData value) {
+            var color = PlayerColor(value.PlayerIndex);
+            // Draw Planets as big photons
+            geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, value.Size.NumericValue, color);
         }
     }
 }

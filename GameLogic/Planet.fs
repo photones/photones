@@ -30,6 +30,7 @@ module public Planet =
             let photon = Photon.CreatePhoton ({
                     Position = state.Position;
                     Velocity = Velocity2(0.0f, 0.0f);
+                    Size = Unit 0.03f;
                     Alive = true;
                     PlayerIndex = state.PlayerIndex;
                     Behavior = behavior;
@@ -38,6 +39,7 @@ module public Planet =
 
         {
             Position = state.Position;
+            Size = state.Size;
             PlayerIndex = state.PlayerIndex;
         }
 

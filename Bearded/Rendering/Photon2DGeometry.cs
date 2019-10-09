@@ -17,13 +17,12 @@ namespace Bearded.Photones.Rendering {
             Surface = surface;
         }
 
-        public void DrawParticle(Vector3 position, Color color) {
-            Surface.AddVertex(new PhotonVertexData(position, color));
+        public void DrawParticle(Vector3 position, float radius, Color color) {
+            Surface.AddVertex(new PhotonVertexData(position, radius, color));
         }
 
-        public void DrawParticle(Vector2 position, Color? color = default) {
-            var c = color ?? Color;
-            this.DrawParticle(new Vector3(position.X, position.Y, 0), c);
+        public void DrawParticle(Vector2 position, float radius, Color color) {
+            DrawParticle(new Vector3(position.X, position.Y, 0), radius, color);
         }
     }
 }

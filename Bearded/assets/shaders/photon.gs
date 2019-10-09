@@ -5,6 +5,7 @@ layout (triangle_strip, max_vertices = 4) out;
 
 in Vertex {
     vec4 position;
+    float radius;
     vec4 color;
 } v[];
 
@@ -37,5 +38,5 @@ void rect(vec4 center, float size, vec4 color) {
 
 void main() {
     // Total diagonal size is 0.01
-    rect(v[0].position, 0.005, v[0].color);
+    rect(v[0].position, v[0].radius, v[0].color);
 }
