@@ -20,7 +20,7 @@ type public GameObject<'GameState> =
     member this.Alive =
         match this with
         | Photon s -> s.State.Alive
-        | Planet s -> true
+        | Planet s -> s.State.Alive
 
     member this.Position =
         match this with

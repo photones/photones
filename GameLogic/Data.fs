@@ -18,6 +18,7 @@ type public PhotonData = {
 type public PlanetData = {
     Position: Position2;
     Size: Unit; // Radius of physical presence
+    Alive: bool;
     PlayerIndex: byte;
 }
 

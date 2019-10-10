@@ -11,7 +11,7 @@ using Bearded.Utilities.SpaceTime;
 
 namespace Bearded.Photones.GameUI {
     class GameScreen : ScreenLayer {
-        public const float TIME_MODIFIER = 0.5f;
+        public const float TIME_MODIFIER = 1.0f;
 
         private readonly Camera3D _camera;
         private readonly Beardgame _game;

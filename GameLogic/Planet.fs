@@ -10,6 +10,18 @@ module public Planet =
 
     let spawnRate = 100.0 // # per second
 
+    let private isHostile (state:PlanetData) (other:PhotonData) =
+        other.PlayerIndex <> state.PlayerIndex
+
+    let private getNeighbors (this:T) (gameState:GameState) (radius:Unit) =
+        let neighbors = gameState.TileMap.GetObjects this.State.Position radius
+        seq {
+            for n in neighbors do
+                match n with
+                | Planet _ -> ()
+                | Photon d -> yield d.State
+        }
+
     let Update (tracer:Tracer) (this:T)
             (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
         let state = this.State
@@ -37,9 +49,16 @@ module public Planet =
                 })
             gameState.Spawn photon
 
+        // Check aliveness
+        let mutable alive = true
+        let collidingPhotons = getNeighbors this gameState state.Size
+        let collidingHostiles = collidingPhotons |> Seq.filter (isHostile state)
+        if Seq.isEmpty collidingHostiles |> not then alive <- false
+
         {
             Position = state.Position;
             Size = state.Size;
+            Alive = alive;
             PlayerIndex = state.PlayerIndex;
         }
 
