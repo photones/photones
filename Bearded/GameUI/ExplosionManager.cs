@@ -15,7 +15,7 @@ namespace Bearded.Photones.GameUI {
             var particle = new Particle();
             particle.AlphaBehavior = new LerpFloatBehavior(1, 0);
             particle.ColorBehavior = new ConstantBehavior<Color>(Color.WhiteSmoke);
-            particle.SizeBehavior = new LerpVector2Behavior(photon.Size.NumericValue, 0);
+            particle.SizeBehavior = new LerpVector2Behavior(photon.Size.NumericValue * 2, 0);
             particle.Lifetime = new TimeSpan(0.8);
             particle.Position = photon.Position;
             ParticleSystem.Get.Add(particle);
@@ -25,7 +25,7 @@ namespace Bearded.Photones.GameUI {
             var particle = new Particle();
             particle.AlphaBehavior = new LerpFloatBehavior(1, 0);
             particle.ColorBehavior = new ConstantBehavior<Color>(Color.WhiteSmoke);
-            particle.SizeBehavior = new LerpVector2Behavior(planet.Size.NumericValue, 0);
+            particle.SizeBehavior = new LerpVector2Behavior(planet.Size.NumericValue * 2, 0);
             particle.Lifetime = new TimeSpan(0.8);
             particle.Position = planet.Position;
             ParticleSystem.Get.Add(particle);

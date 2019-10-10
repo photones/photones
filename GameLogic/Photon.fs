@@ -15,8 +15,8 @@ module public Photon =
     let private accelerationFriendlyInteraction = Acceleration 0.1f
     let private accelerationHostileInteraction = Acceleration 0.1f
     let private maxSpeed = Speed 0.4f
-    let private hostileInteractionRadius = Unit 0.01f
-    let private friendlyInteractionRadius = Unit 0.01f
+    let private hostileInteractionRadius = Unit 0.03f
+    let private friendlyInteractionRadius = Unit 0.03f
     /// The max number of interactions that will be computed.
     /// The higher the number, the better and smoother the interactions will be, but it comes at a
     /// cost of performance. If the interaction is programmed to move away from neighbors, and the

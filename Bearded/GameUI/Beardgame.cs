@@ -25,8 +25,7 @@ namespace Bearded.Photones.GameUI {
         public void Draw(GeometryManager geometries) {
             // Coord system
             var coordcolor = Color.Red;
-            var size = 0.5f;
-            geometries.PhotonGeometry.DrawParticle(new Vector2(0, 0), size, coordcolor);
+            var size = 0.1f;
             geometries.PhotonGeometry.DrawParticle(new Vector2(1, 1), size, coordcolor);
             geometries.PhotonGeometry.DrawParticle(new Vector2(1, -1), size, coordcolor);
             geometries.PhotonGeometry.DrawParticle(new Vector2(-1, 1), size, coordcolor);
