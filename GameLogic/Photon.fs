@@ -12,11 +12,11 @@ module public Photon =
 
     let private accelerationGoal = Acceleration 0.3f
     let private accelerationRandom = Acceleration 0.01f
-    let private accelerationFriendlyInteraction = Acceleration 0.1f
-    let private accelerationHostileInteraction = Acceleration 0.1f
+    let private accelerationFriendlyInteraction = Acceleration 0.2f
+    let private accelerationHostileInteraction = Acceleration 0.2f
     let private maxSpeed = Speed 0.4f
-    let private hostileInteractionRadius = Unit 0.03f
-    let private friendlyInteractionRadius = Unit 0.03f
+    let private hostileInteractionRadius = Unit 0.05f
+    let private friendlyInteractionRadius = Unit 0.05f
     /// The max number of interactions that will be computed.
     /// The higher the number, the better and smoother the interactions will be, but it comes at a
     /// cost of performance. If the interaction is programmed to move away from neighbors, and the
@@ -31,18 +31,22 @@ module public Photon =
         then Velocity2(v.NumericValue.Normalized() * maxSpeed.NumericValue)
         else v
 
-    let private isFriendly (state:PhotonData) (other:PhotonData) =
-        other.PlayerIndex = state.PlayerIndex
+    let private allPlanets (gameState:GameState) = 
+        seq {
+            for o in gameState.GameObjects do
+                match o with
+                | Planet d -> yield d.State
+                | Photon d -> ()
+        }
 
-    let private isHostile (state:PhotonData) (other:PhotonData) =
-        other.PlayerIndex <> state.PlayerIndex
-
-    let private dvGoal (state:PhotonData) (elapsedTime:TimeSpan) =
-        // Hardcoded behaviour based on player index
+    let private dvGoal (state:PhotonData) (gameState:GameState) (elapsedTime:TimeSpan) =
+        // Just pick a hostile planet
+        let planets = allPlanets gameState
+        let hostilePlanets = planets |> Seq.filter (fun s -> s.PlayerIndex <> state.PlayerIndex)
         let attractionPoint =
-            if state.PlayerIndex = 0uy
-            then Position2(0.9f, 0.0f)
-            else Position2(-0.9f, 0.0f)
+            if Seq.isEmpty hostilePlanets
+            then Position2.Zero
+            else (Seq.head hostilePlanets).Position
         let acceleration = Acceleration2.Towards(state.Position, attractionPoint, accelerationGoal)
         acceleration * elapsedTime
 
@@ -66,6 +70,12 @@ module public Photon =
                 | Planet _ -> ()
                 | Photon d -> if this <> d then yield d.State
         }
+
+    let private isFriendly (state:PhotonData) (other:PhotonData) =
+        other.PlayerIndex = state.PlayerIndex
+
+    let private isHostile (state:PhotonData) (other:PhotonData) =
+        other.PlayerIndex <> state.PlayerIndex
 
     let private repulse (state:PhotonData) (elapsedTime:TimeSpan)
             (acceleration:Acceleration) (from:seq<PhotonData>) =
@@ -111,7 +121,7 @@ module public Photon =
         if Seq.isEmpty collidingHostiles |> not then alive <- false
 
         // Compute new velocity and position
-        let ΔV1 = dvGoal state elapsedS
+        let ΔV1 = dvGoal state gameState elapsedS
         let ΔV2 = dvRandom elapsedS
         let ΔV3 = dvFriendlyInteraction this gameState elapsedS
         let ΔV4 = dvHostileInteraction this gameState elapsedS
