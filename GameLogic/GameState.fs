@@ -4,21 +4,22 @@ open System.Collections.Generic
 open Bearded.Utilities.SpaceTime
 
 
-type public IUpdatetablePlayer<'GameState> =
-    inherit IPlayer
-    abstract member Update: Tracer -> 'GameState -> TimeSpan -> unit
-
-type GameState(players:List<IUpdatetablePlayer<GameState>>, gameObjects:List<GameObject<GameState>>) = 
+type GameState
+     (
+     players:List<UpdatableState<PlayerData,GameState>>,
+     gameObjects:List<GameObject<GameState>>
+     ) = 
 
     let tileMap = TileMap(Unit(-2.0f), Unit(-2.0f), Unit(4.0f), Unit(4.0f), 400, 400)
 
     let mutable _gameObjects = gameObjects
     let mutable _deadGameObjects = List<GameObject<GameState>>()
-    let mutable _players = players
+    let _players = players
 
     member this.TileMap = tileMap
     member this.GameObjects = _gameObjects
     member this.DeadGameObjects = _deadGameObjects
+    member this.Players = _players
 
     member this.Update(tracer: Tracer, elapsedS: TimeSpan): unit =
         tileMap.Update(tracer, _gameObjects)

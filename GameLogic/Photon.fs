@@ -32,7 +32,8 @@ module public Photon =
         else v
 
     let private dvGoal (state:PhotonData) (gameState:GameState) (elapsedTime:TimeSpan) =
-        let attractionPoint = state.Player.Target
+        let player = Player.getPlayerById gameState state.PlayerId
+        let attractionPoint = player.State.Target
         let acceleration = Acceleration2.Towards(state.Position, attractionPoint, accelerationGoal)
         acceleration * elapsedTime
 
@@ -58,10 +59,10 @@ module public Photon =
         }
 
     let private isFriendly (state:PhotonData) (other:PhotonData) =
-        other.Player = state.Player
+        other.PlayerId = state.PlayerId
 
     let private isHostile (state:PhotonData) (other:PhotonData) =
-        other.Player <> state.Player
+        other.PlayerId <> state.PlayerId
 
     let private repulse (state:PhotonData) (elapsedTime:TimeSpan)
             (acceleration:Acceleration) (from:seq<PhotonData>) =
@@ -124,7 +125,7 @@ module public Photon =
             Velocity = velocity;
             Size = state.Size;
             Alive = alive;
-            Player = state.Player;
+            PlayerId = state.PlayerId;
             Behavior = state.Behavior;
         }
 

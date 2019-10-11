@@ -1,33 +1,35 @@
 ﻿using Bearded.Photones.Rendering;
 using GameLogic;
-using amulware.Graphics;
-using System;
 
 namespace Bearded.Photones.GameUI {
     class GameObjectRenderer {
-        private readonly GeometryManager geometries;
+        private readonly GeometryManager _geometries;
+        private GameState _gameState;
 
         public GameObjectRenderer(GeometryManager geometries) {
-            this.geometries = geometries;
+            _geometries = geometries;
         }
 
-        public void Render(GameObject<GameState> value) {
+        public void Render(GameState gameState, GameObject<GameState> value) {
+            _gameState = gameState;
             value.Visit(RenderPhoton, RenderPlanet);
         }
 
-        public void RenderPhoton(PhotonData value) {
-            var color = value.Player.Color;
-            var position = value.Position.NumericValue;
-            var size = value.Size.NumericValue;
-            geometries.PhotonGeometry.DrawParticle(position, size, color);
+        public void RenderPhoton(PhotonData state) {
+            var player = Player.getPlayerById(_gameState, state.PlayerId);
+            var color = player.State.Color;
+            var position = state.Position.NumericValue;
+            var size = state.Size.NumericValue;
+            _geometries.PhotonGeometry.DrawParticle(position, size, color);
         }
 
-        public void RenderPlanet(PlanetData value) {
-            var color = value.Player.Color;
-            var position = value.Position.NumericValue;
-            var size = value.Size.NumericValue;
+        public void RenderPlanet(PlanetData state) {
+            var player = Player.getPlayerById(_gameState, state.PlayerId);
+            var color = player.State.Color;
+            var position = state.Position.NumericValue;
+            var size = state.Size.NumericValue;
             // Draw Planets as big photons
-            geometries.PhotonGeometry.DrawParticle(position, size, color);
+            _geometries.PhotonGeometry.DrawParticle(position, size, color);
         }
     }
 }

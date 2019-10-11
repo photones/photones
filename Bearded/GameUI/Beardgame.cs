@@ -33,7 +33,7 @@ namespace Bearded.Photones.GameUI {
 
             var renderer = new GameObjectRenderer(geometries);
             foreach (var gameObject in _gameState.GameObjects) {
-                renderer.Render(gameObject);
+                renderer.Render(_gameState, gameObject);
             }
         }
     }

@@ -5,27 +5,37 @@ open Bearded.Utilities.SpaceTime
 open amulware.Graphics
 open Utils
 
-type public Player(id:byte, color:Color) =
+module public Player =
 
-    let mutable _target = Position2.Zero
+    type T = UpdatableState<PlayerData, GameState>
 
-    let allPlanets (gameState:GameState) = 
-        seq {
-            for o in gameState.GameObjects do
-                match o with
-                | Planet d -> yield d.State
-                | Photon _ -> ()
+    let allPlanets (gameState:GameState) = [
+        for o in gameState.GameObjects do
+            match o with
+            | Planet d -> yield d.State
+            | Photon _ -> ()
+    ]
+
+    let rec Update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
+        let state = this.State
+        let planets = allPlanets gameState
+        let hostilePlanets = planets |> List.filter (fun s -> s.PlayerId <> state.Id)
+        let target =
+            if Seq.isEmpty hostilePlanets
+            then Position2.Zero
+            else
+                let index = randomInt (hostilePlanets.Length)
+                let randomHostilePlanet = hostilePlanets.[index]
+                randomHostilePlanet.Position
+
+        {
+            Id = state.Id;
+            Color = state.Color;
+            Target = target;
         }
 
-    interface IUpdatetablePlayer<GameState> with 
-        member this.Id = id
-        member this.Color = color
-        member this.Target = _target
+    let public CreatePlayer (data: PlayerData) =
+        T(data, Update)
 
-        member this.Update (tracer:Tracer) (gameState:GameState) (elapsedS:TimeSpan) = 
-            let planets = allPlanets gameState
-            let hostilePlanets = planets |> Seq.filter (fun s -> s.Player <> (this :> IPlayer))
-            _target <-
-                if Seq.isEmpty hostilePlanets
-                then Position2.Zero
-                else (Seq.head hostilePlanets).Position
+    let getPlayerById (gameState:GameState) (id:byte) =
+        gameState.Players |> Seq.find (fun p -> p.State.Id = id)

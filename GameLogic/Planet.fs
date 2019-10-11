@@ -11,7 +11,7 @@ module public Planet =
     let spawnRate = 100.0 // # per second
 
     let private isHostile (state:PlanetData) (other:PhotonData) =
-        other.Player <> state.Player
+        other.PlayerId <> state.PlayerId
 
     let private getNeighbors (this:T) (gameState:GameState) (radius:Unit) =
         let neighbors = gameState.TileMap.GetObjects this.State.Position radius
@@ -44,7 +44,7 @@ module public Planet =
                     Velocity = Velocity2(0.0f, 0.0f);
                     Size = Unit 0.01f;
                     Alive = true;
-                    Player = state.Player;
+                    PlayerId = state.PlayerId;
                     Behavior = behavior;
                 })
             gameState.Spawn photon
@@ -59,7 +59,7 @@ module public Planet =
             Position = state.Position;
             Size = state.Size;
             Alive = alive;
-            Player = state.Player;
+            PlayerId = state.PlayerId;
         }
 
     let public CreatePlanet (data: PlanetData) =
