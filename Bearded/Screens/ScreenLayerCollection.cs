@@ -20,8 +20,8 @@ namespace Bearded.Photones.Screens {
             return true;
         }
 
-        protected void UpdateAll(Tracer tracer, BeardedUpdateEventArgs args) {
-            _screenLayers.ForEach((layer) => layer.Update(tracer, args));
+        protected void UpdateAll(BeardedUpdateEventArgs args) {
+            _screenLayers.ForEach((layer) => layer.Update(args));
             removeScreenLayersQueuedForRemoval();
         }
 

@@ -16,7 +16,7 @@ module public Player =
             | Photon _ -> ()
     ]
 
-    let rec update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
+    let rec update (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
         let state = this.State
         let planets = allPlanets gameState
         let hostilePlanets = planets |> List.filter (fun s -> s.PlayerId <> state.Id)
@@ -24,7 +24,8 @@ module public Player =
             if Seq.isEmpty hostilePlanets
             then Position2.Zero
             else
-                let index = randomInt (hostilePlanets.Length)
+                // Just some deterministic but arbitrary choice
+                let index = (int state.Id) % (hostilePlanets.Length)
                 let randomHostilePlanet = hostilePlanets.[index]
                 randomHostilePlanet.Position
 

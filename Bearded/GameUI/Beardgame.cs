@@ -13,8 +13,8 @@ namespace Bearded.Photones.GameUI {
             _gameState = GameStateFactory.BuildInitialGameState();
         }
 
-        public void Update(Tracer tracer, TimeSpan elapsedS) {
-            _gameState.Update(tracer, elapsedS);
+        public void Update(TimeSpan elapsedS) {
+            _gameState.Update(elapsedS);
 
             // Explosions
             foreach (var gameObject in _gameState.DeadGameObjects) {

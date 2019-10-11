@@ -2,12 +2,18 @@
 open System.Text.RegularExpressions
 open System
 
-type Tracer(logger: Action<string>, setNrGameObjects: Action<int>) =
-    member public this.Log msg = if not (Object.Equals(logger, null)) then logger.Invoke(msg)
-    member public this.CountGameObjects nr =
-        if not (Object.Equals(setNrGameObjects, null)) then setNrGameObjects.Invoke(nr)
+type ITracer =
+    abstract member Log : string -> unit
+    abstract member CountGameObjects : int -> unit
+
+type NullTracer() =
+    interface ITracer with
+        member this.Log _ = ()
+        member this.CountGameObjects _ = ()
 
 module Utils =
+
+    let mutable public Tracer : ITracer = NullTracer() :> ITracer
 
     let private random = System.Random()
     let public randomSingle () = (single)(random.NextDouble())

@@ -28,11 +28,11 @@ namespace Bearded.Photones.GameUI {
             _geometries = geometryManager;
         }
 
-        public override void Update(Tracer tracer, BeardedUpdateEventArgs args) {
+        public override void Update(BeardedUpdateEventArgs args) {
             var elapsedSeconds = args.UpdateEventArgs.ElapsedTimeInS * TIME_MODIFIER;
             var cappedElapsedSeconds = System.Math.Min(MAX_ELAPSED_SECONDS, elapsedSeconds);
             var elapsedTime = new TimeSpan(cappedElapsedSeconds);
-            _game.Update(tracer, elapsedTime);
+            _game.Update(elapsedTime);
             ParticleSystem.Get.Update(elapsedTime);
         }
 

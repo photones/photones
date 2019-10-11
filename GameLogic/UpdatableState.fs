@@ -14,7 +14,7 @@ This update method has the possibility to change the futureState of the game obj
 type public UpdatableState<'ObjectState, 'GameState>
     (
         initialState: 'ObjectState,
-        update: Tracer -> UpdatableState<'ObjectState, 'GameState> -> 'GameState
+        update: UpdatableState<'ObjectState, 'GameState> -> 'GameState
             -> TimeSpan -> 'ObjectState
     ) =
     let mutable currentState:'ObjectState = initialState
@@ -22,8 +22,8 @@ type public UpdatableState<'ObjectState, 'GameState>
 
     member this.State = currentState
 
-    member this.Update (tracer:Tracer) (world:'GameState) (elapsedS:TimeSpan) =
-        futureState <- update tracer this world elapsedS
+    member this.Update (world:'GameState) (elapsedS:TimeSpan) =
+        futureState <- update this world elapsedS
 
     member this.Refresh () =
         currentState <- futureState

@@ -103,7 +103,7 @@ module public Photon =
         let collidingHostiles = collidingPhotons |> Seq.filter (isHostile this.State)
         Seq.isEmpty collidingHostiles |> not
 
-    let rec update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
+    let rec update (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
         let state = this.State
 
         // Check aliveness

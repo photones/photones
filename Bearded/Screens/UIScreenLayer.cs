@@ -25,7 +25,7 @@ namespace Bearded.Photones.Screens {
             Screen = Screen.GetCanvas();
         }
 
-        public override void Update(Tracer tracer, BeardedUpdateEventArgs args) {
+        public override void Update(BeardedUpdateEventArgs args) {
             _components.ForEach(c => c.Update(args.UpdateEventArgs));
         }
 

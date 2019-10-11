@@ -22,8 +22,7 @@ module public Planet =
                 | Photon d -> yield d.State
         }
 
-    let update (tracer:Tracer) (this:T)
-            (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
+    let update (this:T) (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
         let state = this.State
 
         // Compute number of spawns.

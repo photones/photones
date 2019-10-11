@@ -98,6 +98,7 @@
     <Compile Include="Utilities\EnumerableProxy.cs" />
     <Compile Include="Utilities\Line.cs" />
     <Compile Include="Utilities\LinqExtensions.cs" />
+    <Compile Include="Utilities\Tracer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="OpenTK.dll.config">
