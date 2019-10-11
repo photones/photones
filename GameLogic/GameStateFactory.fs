@@ -33,12 +33,12 @@ module GameStateFactory =
         })
         let player6 = Player.createPlayer({
             Id = 5uy;
-            Color = Color.GreenYellow;
+            Color = Color.ForestGreen;
             Target = Position2.Zero
         })
         let player7 = Player.createPlayer({
             Id = 6uy;
-            Color = Color.MediumVioletRed;
+            Color = Color(0xFF8B2222u); // Pale red
             Target = Position2.Zero
         })
         let player8 = Player.createPlayer({
