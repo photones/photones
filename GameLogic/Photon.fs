@@ -11,12 +11,12 @@ module public Photon =
     type T = UpdatableState<PhotonData, GameState>
 
     let private accelerationGoal = Acceleration 0.3f
-    let private accelerationRandom = Acceleration 0.01f
+    let private accelerationRandom = Acceleration 0.0001f
     let private accelerationFriendlyInteraction = Acceleration 0.2f
     let private accelerationHostileInteraction = Acceleration 0.2f
     let private maxSpeed = Speed 0.4f
-    let private hostileInteractionRadius = Unit 0.05f
-    let private friendlyInteractionRadius = Unit 0.05f
+    let private hostileInteractionRadius = Unit 0.03f
+    let private friendlyInteractionRadius = Unit 0.03f
     /// The max number of interactions that will be computed.
     /// The higher the number, the better and smoother the interactions will be, but it comes at a
     /// cost of performance. If the interaction is programmed to move away from neighbors, and the
@@ -24,7 +24,7 @@ module public Photon =
     /// orthogonally. However, what happens if this number is low and the interactionRadius is high,
     /// is that the average neighbor position will deviate horizontally significantly more than
     /// vertically. This means that we will move horizontally away instead of vertically.
-    let private maxNrInteractions = 5
+    let private maxNrInteractions = 100
 
     let private capVelocity (v:Velocity2) =
         if v.Length.NumericValue > maxSpeed.NumericValue
@@ -36,7 +36,7 @@ module public Photon =
             for o in gameState.GameObjects do
                 match o with
                 | Planet d -> yield d.State
-                | Photon d -> ()
+                | Photon _ -> ()
         }
 
     let private dvGoal (state:PhotonData) (gameState:GameState) (elapsedTime:TimeSpan) =
@@ -111,14 +111,17 @@ module public Photon =
         let friendlies = neighbors |> Seq.filter (isFriendly state)
         repulse state elapsedTime accelerationFriendlyInteraction friendlies
 
+    let isColliding (this:T) (gameState:GameState) = 
+        let collidingPhotons = getNeighbors this gameState this.State.Size
+        let collidingHostiles = collidingPhotons |> Seq.filter (isHostile this.State)
+        Seq.isEmpty collidingHostiles |> not
+
     let rec Update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
         let state = this.State
 
         // Check aliveness
-        let mutable alive = true
-        let collidingPhotons = getNeighbors this gameState state.Size
-        let collidingHostiles = collidingPhotons |> Seq.filter (isHostile state)
-        if Seq.isEmpty collidingHostiles |> not then alive <- false
+        let isOnTileMap = gameState.TileMap.IsOnTileMap state.Position
+        let mutable alive = isOnTileMap && (isColliding this gameState |> not) 
 
         // Compute new velocity and position
         let ΔV1 = dvGoal state gameState elapsedS

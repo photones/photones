@@ -5,7 +5,7 @@ open Bearded.Utilities.SpaceTime
 
 type GameState(gameObjects:List<GameObject<GameState>>) = 
 
-    let tileMap = TileMap(Unit(-1.5f), Unit(-1.0f), Unit(3.0f), Unit(2.0f), 200, 300)
+    let tileMap = TileMap(Unit(-2.0f), Unit(-2.0f), Unit(4.0f), Unit(4.0f), 400, 400)
 
     let mutable _gameObjects = gameObjects
     let mutable _deadGameObjects = List<GameObject<GameState>>()

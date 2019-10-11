@@ -53,6 +53,9 @@ type public TileMap<'GameState>
             | Some tile -> tile.Add(o)
             | None -> tracer.Log(sprintf "Object outside tilemap at %s" (o.Position.ToString()))
 
+    member public this.IsOnTileMap (pos:Position2) =
+        tileForPosition pos <> None
+
     member public this.GetObjects (from:Position2) (radius:Unit) =
         let columnBound = capBetween 0 (columns - 1)
         let rowBound = capBetween 0 (rows - 1)
@@ -61,6 +64,7 @@ type public TileMap<'GameState>
         let firstRow = from.Y - radius |> y2Row |> rowBound
         let lastRow = from.Y + radius |> y2Row |> rowBound
         seq {
+        // FIXME: randomize order of tiles, and interleave results
         for col = firstColumn to lastColumn do
             for row = firstRow to lastRow do
                 for candidate in tiles.[row].[col].Get() do 

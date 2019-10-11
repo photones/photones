@@ -8,7 +8,7 @@ module public Planet =
 
     type T = UpdatableState<PlanetData, GameState>
 
-    let spawnRate = 500.0 // # per second
+    let spawnRate = 100.0 // # per second
 
     let private isHostile (state:PlanetData) (other:PhotonData) =
         other.PlayerIndex <> state.PlayerIndex
