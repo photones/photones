@@ -96,7 +96,7 @@ module GameStateFactory =
             PlayerId = 7uy;
         })
         
-        let players = List<Player.T>([player1;player2;player3;player4;player5;player6;player7;player8])
-        let planets = List<GameObject<GameState>>([planet1;planet2;planet3;planet4;planet5;planet6;planet7;planet8])
-        GameState(players, planets)
+        let players = [player1;player2;player3;player4;player5;player6;player7;player8]
+        let planets = [planet1;planet2;planet3;planet4;planet5;planet6;planet7;planet8]
+        GameState(List<Player.T>(players), List<GameObject<GameState>>(planets))
 

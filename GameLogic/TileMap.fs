@@ -51,7 +51,9 @@ type public TileMap<'GameState>
         for o in objects do
             match tileForPosition o.Position with
             | Some tile -> tile.Add(o)
-            | None -> Utils.Tracer.Log(sprintf "Object outside tilemap at %s" (o.Position.ToString()))
+            | None ->
+                let msg = sprintf "Object outside tilemap at %s" (o.Position.ToString())
+                Utils.Tracer.Log(msg)
 
     member public this.IsOnTileMap (pos:Position2) =
         tileForPosition pos <> None
