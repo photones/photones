@@ -11,7 +11,7 @@ module public Planet =
     let spawnRate = 100.0 // # per second
 
     let private isHostile (state:PlanetData) (other:PhotonData) =
-        other.PlayerIndex <> state.PlayerIndex
+        other.PlayerId <> state.PlayerId
 
     let private getNeighbors (this:T) (gameState:GameState) (radius:Unit) =
         let neighbors = gameState.TileMap.GetObjects this.State.Position radius
@@ -36,7 +36,7 @@ module public Planet =
         let additionalSpawnOutcome = bernoulli additionalSpawnChance
         let totalSpawns = (int certainSpawns) + additionalSpawnOutcome
 
-        let behavior = Neutral // if state.PlayerIndex = 0uy then Aggressive else Shy
+        let behavior = Neutral // if state.PlayerId = 0uy then Aggressive else Shy
         // Spawn photons every frame
         for i = 1 to totalSpawns do
             let photon = Photon.CreatePhoton ({
@@ -44,7 +44,7 @@ module public Planet =
                     Velocity = Velocity2(0.0f, 0.0f);
                     Size = Unit 0.01f;
                     Alive = true;
-                    PlayerIndex = state.PlayerIndex;
+                    PlayerId = state.PlayerId;
                     Behavior = behavior;
                 })
             gameState.Spawn photon
@@ -59,7 +59,7 @@ module public Planet =
             Position = state.Position;
             Size = state.Size;
             Alive = alive;
-            PlayerIndex = state.PlayerIndex;
+            PlayerId = state.PlayerId;
         }
 
     let public CreatePlanet (data: PlanetData) =

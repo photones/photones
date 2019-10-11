@@ -1,6 +1,7 @@
 ﻿namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
+open amulware.Graphics
 
 type PhotonBehavior = Shy | Neutral | Aggressive
 
@@ -10,7 +11,7 @@ type public PhotonData = {
     Velocity: Velocity2;
     Size: Unit; // Radius of physical presence
     Alive: bool;
-    PlayerIndex: byte;
+    PlayerId: byte;
     Behavior: PhotonBehavior;
 }
 
@@ -19,7 +20,14 @@ type public PlanetData = {
     Position: Position2;
     Size: Unit; // Radius of physical presence
     Alive: bool;
-    PlayerIndex: byte;
+    PlayerId: byte;
+}
+
+[<Struct>]
+type public PlayerData = {
+    Id: byte;
+    Color: Color;
+    Target: Position2;
 }
 
 

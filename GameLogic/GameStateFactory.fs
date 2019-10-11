@@ -9,13 +9,13 @@ module GameStateFactory =
             Position = Position2(-1.0f, 0.0f);
             Size = Unit 0.1f;
             Alive = true;
-            PlayerIndex = 0uy;
+            PlayerId = 0uy;
         })
         let planet2 = Planet.CreatePlanet ({
             Position = Position2(1.0f, 0.0f);
             Size = Unit 0.1f;
             Alive = true;
-            PlayerIndex = 1uy;
+            PlayerId = 1uy;
         })
         GameState(List<GameObject<GameState>>([planet1;planet2]))
 

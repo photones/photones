@@ -42,7 +42,7 @@ module public Photon =
     let private dvGoal (state:PhotonData) (gameState:GameState) (elapsedTime:TimeSpan) =
         // Just pick a hostile planet
         let planets = allPlanets gameState
-        let hostilePlanets = planets |> Seq.filter (fun s -> s.PlayerIndex <> state.PlayerIndex)
+        let hostilePlanets = planets |> Seq.filter (fun s -> s.PlayerId <> state.PlayerId)
         let attractionPoint =
             if Seq.isEmpty hostilePlanets
             then Position2.Zero
@@ -72,10 +72,10 @@ module public Photon =
         }
 
     let private isFriendly (state:PhotonData) (other:PhotonData) =
-        other.PlayerIndex = state.PlayerIndex
+        other.PlayerId = state.PlayerId
 
     let private isHostile (state:PhotonData) (other:PhotonData) =
-        other.PlayerIndex <> state.PlayerIndex
+        other.PlayerId <> state.PlayerId
 
     let private repulse (state:PhotonData) (elapsedTime:TimeSpan)
             (acceleration:Acceleration) (from:seq<PhotonData>) =
@@ -138,7 +138,7 @@ module public Photon =
             Velocity = velocity;
             Size = state.Size;
             Alive = alive;
-            PlayerIndex = state.PlayerIndex;
+            PlayerId = state.PlayerId;
             Behavior = state.Behavior;
         }
 

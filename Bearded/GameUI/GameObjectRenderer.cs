@@ -24,12 +24,12 @@ namespace Bearded.Photones.GameUI {
         }
 
         public void RenderPhoton(PhotonData value) {
-            var color = PlayerColor(value.PlayerIndex);
+            var color = PlayerColor(value.PlayerId);
             geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, value.Size.NumericValue, color);
         }
 
         public void RenderPlanet(PlanetData value) {
-            var color = PlayerColor(value.PlayerIndex);
+            var color = PlayerColor(value.PlayerId);
             // Draw Planets as big photons
             geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, value.Size.NumericValue, color);
         }
