@@ -16,7 +16,7 @@ module public Player =
             | Photon _ -> ()
     ]
 
-    let rec Update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
+    let rec update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
         let state = this.State
         let planets = allPlanets gameState
         let hostilePlanets = planets |> List.filter (fun s -> s.PlayerId <> state.Id)
@@ -34,8 +34,8 @@ module public Player =
             Target = target;
         }
 
-    let public CreatePlayer (data: PlayerData) =
-        T(data, Update)
+    let createPlayer (data: PlayerData) =
+        T(data, update)
 
     let getPlayerById (gameState:GameState) (id:byte) =
         gameState.Players |> Seq.find (fun p -> p.State.Id = id)

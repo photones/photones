@@ -103,7 +103,7 @@ module public Photon =
         let collidingHostiles = collidingPhotons |> Seq.filter (isHostile this.State)
         Seq.isEmpty collidingHostiles |> not
 
-    let rec Update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
+    let rec update (tracer:Tracer) (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
         let state = this.State
 
         // Check aliveness
@@ -129,6 +129,6 @@ module public Photon =
             Behavior = state.Behavior;
         }
 
-    let CreatePhoton (data: PhotonData) =
-        Photon (T(data, Update))
+    let createPhoton (data: PhotonData) =
+        Photon (T(data, update))
 

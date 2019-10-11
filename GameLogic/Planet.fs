@@ -22,7 +22,7 @@ module public Planet =
                 | Photon d -> yield d.State
         }
 
-    let Update (tracer:Tracer) (this:T)
+    let update (tracer:Tracer) (this:T)
             (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
         let state = this.State
 
@@ -39,7 +39,7 @@ module public Planet =
         let behavior = Neutral // if state.Player = 0uy then Aggressive else Shy
         // Spawn photons every frame
         for i = 1 to totalSpawns do
-            let photon = Photon.CreatePhoton ({
+            let photon = Photon.createPhoton ({
                     Position = state.Position;
                     Velocity = Velocity2(0.0f, 0.0f);
                     Size = Unit 0.01f;
@@ -62,6 +62,6 @@ module public Planet =
             PlayerId = state.PlayerId;
         }
 
-    let public CreatePlanet (data: PlanetData) =
-        Planet (T(data, Update))
+    let public createPlanet (data: PlanetData) =
+        Planet (T(data, update))
 
