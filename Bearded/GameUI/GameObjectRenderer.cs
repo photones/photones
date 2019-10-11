@@ -15,23 +15,19 @@ namespace Bearded.Photones.GameUI {
             value.Visit(RenderPhoton, RenderPlanet);
         }
 
-        public static Color PlayerColor(byte playerIndex) {
-            switch (playerIndex) {
-                case 0: return Color.DarkGoldenrod;
-                case 1: return Color.HotPink;
-            }
-            throw new NotImplementedException();
-        }
-
         public void RenderPhoton(PhotonData value) {
-            var color = PlayerColor(value.PlayerId);
-            geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, value.Size.NumericValue, color);
+            var color = value.Player.Color;
+            var position = value.Position.NumericValue;
+            var size = value.Size.NumericValue;
+            geometries.PhotonGeometry.DrawParticle(position, size, color);
         }
 
         public void RenderPlanet(PlanetData value) {
-            var color = PlayerColor(value.PlayerId);
+            var color = value.Player.Color;
+            var position = value.Position.NumericValue;
+            var size = value.Size.NumericValue;
             // Draw Planets as big photons
-            geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, value.Size.NumericValue, color);
+            geometries.PhotonGeometry.DrawParticle(position, size, color);
         }
     }
 }

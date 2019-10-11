@@ -3,12 +3,18 @@
 open System.Collections.Generic
 open Bearded.Utilities.SpaceTime
 
-type GameState(gameObjects:List<GameObject<GameState>>) = 
+
+type public IUpdatetablePlayer<'GameState> =
+    inherit IPlayer
+    abstract member Update: Tracer -> 'GameState -> TimeSpan -> unit
+
+type GameState(players:List<IUpdatetablePlayer<GameState>>, gameObjects:List<GameObject<GameState>>) = 
 
     let tileMap = TileMap(Unit(-2.0f), Unit(-2.0f), Unit(4.0f), Unit(4.0f), 400, 400)
 
     let mutable _gameObjects = gameObjects
     let mutable _deadGameObjects = List<GameObject<GameState>>()
+    let mutable _players = players
 
     member this.TileMap = tileMap
     member this.GameObjects = _gameObjects
@@ -19,6 +25,10 @@ type GameState(gameObjects:List<GameObject<GameState>>) =
 
         _deadGameObjects <- List(_gameObjects |> Seq.filter (fun o -> not o.Alive))
         _gameObjects <- List(_gameObjects |> Seq.filter (fun o -> o.Alive))
+
+        for p in _players do
+            p.Update tracer this elapsedS
+
         // Collection can be modified during update, so create a list for iteration
         for o in List(_gameObjects) do
             o.Update tracer this elapsedS

@@ -31,22 +31,8 @@ module public Photon =
         then Velocity2(v.NumericValue.Normalized() * maxSpeed.NumericValue)
         else v
 
-    let private allPlanets (gameState:GameState) = 
-        seq {
-            for o in gameState.GameObjects do
-                match o with
-                | Planet d -> yield d.State
-                | Photon _ -> ()
-        }
-
     let private dvGoal (state:PhotonData) (gameState:GameState) (elapsedTime:TimeSpan) =
-        // Just pick a hostile planet
-        let planets = allPlanets gameState
-        let hostilePlanets = planets |> Seq.filter (fun s -> s.PlayerId <> state.PlayerId)
-        let attractionPoint =
-            if Seq.isEmpty hostilePlanets
-            then Position2.Zero
-            else (Seq.head hostilePlanets).Position
+        let attractionPoint = state.Player.Target
         let acceleration = Acceleration2.Towards(state.Position, attractionPoint, accelerationGoal)
         acceleration * elapsedTime
 
@@ -72,10 +58,10 @@ module public Photon =
         }
 
     let private isFriendly (state:PhotonData) (other:PhotonData) =
-        other.PlayerId = state.PlayerId
+        other.Player = state.Player
 
     let private isHostile (state:PhotonData) (other:PhotonData) =
-        other.PlayerId <> state.PlayerId
+        other.Player <> state.Player
 
     let private repulse (state:PhotonData) (elapsedTime:TimeSpan)
             (acceleration:Acceleration) (from:seq<PhotonData>) =
@@ -138,7 +124,7 @@ module public Photon =
             Velocity = velocity;
             Size = state.Size;
             Alive = alive;
-            PlayerId = state.PlayerId;
+            Player = state.Player;
             Behavior = state.Behavior;
         }
 

@@ -3,6 +3,12 @@
 open Bearded.Utilities.SpaceTime
 open amulware.Graphics
 
+type public IPlayer =
+    // abstract immutable property
+    abstract member Id : byte 
+    abstract member Color : Color 
+    abstract member Target : Position2 
+
 type PhotonBehavior = Shy | Neutral | Aggressive
 
 [<Struct>]
@@ -11,7 +17,7 @@ type public PhotonData = {
     Velocity: Velocity2;
     Size: Unit; // Radius of physical presence
     Alive: bool;
-    PlayerId: byte;
+    Player: IPlayer;
     Behavior: PhotonBehavior;
 }
 
@@ -20,14 +26,7 @@ type public PlanetData = {
     Position: Position2;
     Size: Unit; // Radius of physical presence
     Alive: bool;
-    PlayerId: byte;
-}
-
-[<Struct>]
-type public PlayerData = {
-    Id: byte;
-    Color: Color;
-    Target: Position2;
+    Player: IPlayer;
 }
 
 
