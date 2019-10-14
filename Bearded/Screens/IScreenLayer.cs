@@ -6,7 +6,7 @@ using GameLogic;
 
 namespace Bearded.Photones.Screens {
     interface IScreenLayer {
-        void Update(Tracer tracer, BeardedUpdateEventArgs args);
+        void Update(BeardedUpdateEventArgs args);
         // Should return false if the input should not be propagated.
         bool HandleInput(UpdateEventArgs args, InputState inputState);
         void OnResize(ViewportSize newSize);

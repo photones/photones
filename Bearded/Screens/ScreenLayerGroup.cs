@@ -11,8 +11,8 @@ namespace Bearded.Photones.Screens {
             this.parent = parent;
         }
 
-        public void Update(Tracer tracer, BeardedUpdateEventArgs args) {
-            UpdateAll(tracer, args);
+        public void Update(BeardedUpdateEventArgs args) {
+            UpdateAll(args);
         }
 
         public bool HandleInput(UpdateEventArgs args, InputState inputState) {

@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="GameStatistics.cs" />
     <Compile Include="GameUI\Beardgame.cs" />
+    <Compile Include="GameUI\ExplosionManager.cs" />
     <Compile Include="GameUI\GameObjectRenderer.cs" />
     <Compile Include="Performance\PerformanceMonitor.cs" />
     <Compile Include="GameUI\GameScreen.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Utilities\EnumerableProxy.cs" />
     <Compile Include="Utilities\Line.cs" />
     <Compile Include="Utilities\LinqExtensions.cs" />
+    <Compile Include="Utilities\Tracer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="OpenTK.dll.config">

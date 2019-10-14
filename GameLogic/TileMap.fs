@@ -43,7 +43,7 @@ type public TileMap<'GameState>
 
     let capBetween (lower:int) (upper:int) (value:int):int = min upper (max lower value)
 
-    member public this.Update (tracer: Tracer, objects: seq<GameObject<'GameState>>) =
+    member public this.Update (objects: seq<GameObject<'GameState>>) =
         for row in tiles do
             for tile in row do
                 tile.Clear()
@@ -51,7 +51,12 @@ type public TileMap<'GameState>
         for o in objects do
             match tileForPosition o.Position with
             | Some tile -> tile.Add(o)
-            | None -> tracer.Log(sprintf "Object outside tilemap at %s" (o.Position.ToString()))
+            | None ->
+                let msg = sprintf "Object outside tilemap at %s" (o.Position.ToString())
+                Utils.Tracer.Log(msg)
+
+    member public this.IsOnTileMap (pos:Position2) =
+        tileForPosition pos <> None
 
     member public this.GetObjects (from:Position2) (radius:Unit) =
         let columnBound = capBetween 0 (columns - 1)

@@ -10,8 +10,19 @@ module public Planet =
 
     let spawnRate = 100.0 // # per second
 
-    let Update (tracer:Tracer) (this:T)
-            (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
+    let private isHostile (state:PlanetData) (other:PhotonData) =
+        other.PlayerId <> state.PlayerId
+
+    let private getNeighbors (this:T) (gameState:GameState) (radius:Unit) =
+        let neighbors = gameState.TileMap.GetObjects this.State.Position radius
+        seq {
+            for n in neighbors do
+                match n with
+                | Planet _ -> ()
+                | Photon d -> yield d.State
+        }
+
+    let update (this:T) (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
         let state = this.State
 
         // Compute number of spawns.
@@ -24,23 +35,32 @@ module public Planet =
         let additionalSpawnOutcome = bernoulli additionalSpawnChance
         let totalSpawns = (int certainSpawns) + additionalSpawnOutcome
 
-        let behavior = if state.PlayerIndex = 0uy then Aggressive else Shy
+        let behavior = Neutral // if state.Player = 0uy then Aggressive else Shy
         // Spawn photons every frame
         for i = 1 to totalSpawns do
-            let photon = Photon.CreatePhoton ({
+            let photon = Photon.createPhoton ({
                     Position = state.Position;
                     Velocity = Velocity2(0.0f, 0.0f);
+                    Size = Unit 0.01f;
                     Alive = true;
-                    PlayerIndex = state.PlayerIndex;
+                    PlayerId = state.PlayerId;
                     Behavior = behavior;
                 })
             gameState.Spawn photon
 
+        // Check aliveness
+        let mutable alive = true
+        let collidingPhotons = getNeighbors this gameState state.Size
+        let collidingHostiles = collidingPhotons |> Seq.filter (isHostile state)
+        if Seq.isEmpty collidingHostiles |> not then alive <- false
+
         {
             Position = state.Position;
-            PlayerIndex = state.PlayerIndex;
+            Size = state.Size;
+            Alive = alive;
+            PlayerId = state.PlayerId;
         }
 
-    let public CreatePlanet (data: PlanetData) =
-        Planet (T(data, Update))
+    let public createPlanet (data: PlanetData) =
+        Planet (T(data, update))
 

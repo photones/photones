@@ -1,27 +1,35 @@
 ﻿using Bearded.Photones.Rendering;
 using GameLogic;
-using amulware.Graphics;
 
 namespace Bearded.Photones.GameUI {
     class GameObjectRenderer {
-        private readonly GeometryManager geometries;
+        private readonly GeometryManager _geometries;
+        private GameState _gameState;
 
         public GameObjectRenderer(GeometryManager geometries) {
-            this.geometries = geometries;
+            _geometries = geometries;
         }
 
-        public void Render(GameObject<GameState> value) {
+        public void Render(GameState gameState, GameObject<GameState> value) {
+            _gameState = gameState;
             value.Visit(RenderPhoton, RenderPlanet);
         }
 
-        public void RenderPhoton(PhotonData value) {
-            var photoncolor = Color.DarkGoldenrod;
-            if (value.PlayerIndex == 1)
-                photoncolor = Color.HotPink;
-            geometries.PhotonGeometry.DrawParticle(value.Position.NumericValue, photoncolor);
+        public void RenderPhoton(PhotonData state) {
+            var player = Player.getPlayerById(_gameState, state.PlayerId);
+            var color = player.State.Color;
+            var position = state.Position.NumericValue;
+            var size = state.Size.NumericValue;
+            _geometries.PhotonGeometry.DrawParticle(position, size, color);
         }
 
-        public void RenderPlanet(PlanetData value) {
+        public void RenderPlanet(PlanetData state) {
+            var player = Player.getPlayerById(_gameState, state.PlayerId);
+            var color = player.State.Color;
+            var position = state.Position.NumericValue;
+            var size = state.Size.NumericValue;
+            // Draw Planets as big photons
+            _geometries.PhotonGeometry.DrawParticle(position, size, color);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Bearded.Photones.Screens {
             _pressedCharacterInterface = _pressedCharacterList.AsReadOnly();
         }
 
-        public void Update(Tracer tracer, BeardedUpdateEventArgs args) {
+        public void Update(BeardedUpdateEventArgs args) {
             handleInput(args.UpdateEventArgs);
-            UpdateAll(tracer, args);
+            UpdateAll(args);
         }
 
         private void handleInput(UpdateEventArgs args) {
