@@ -12,8 +12,8 @@ module public Photon =
 
     let private accelerationGoal = Acceleration 0.3f
     let private accelerationRandom = Acceleration 0.0001f
-    let private accelerationFriendlyInteraction = Acceleration 0.2f
-    let private accelerationHostileInteraction = Acceleration 0.2f
+    let private accelerationFriendlyInteraction = Acceleration 0.15f
+    let private accelerationHostileInteraction = Acceleration 0.15f
     let private maxSpeed = Speed 0.4f
     let private hostileInteractionRadius = Unit 0.03f
     let private friendlyInteractionRadius = Unit 0.03f

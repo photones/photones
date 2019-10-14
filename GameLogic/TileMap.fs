@@ -66,7 +66,6 @@ type public TileMap<'GameState>
         let firstRow = from.Y - radius |> y2Row |> rowBound
         let lastRow = from.Y + radius |> y2Row |> rowBound
         seq {
-        // FIXME: randomize order of tiles, and interleave results
         for col = firstColumn to lastColumn do
             for row = firstRow to lastRow do
                 for candidate in tiles.[row].[col].Get() do 
