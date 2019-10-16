@@ -4,10 +4,14 @@ open Bearded.Utilities.SpaceTime
 open System.Collections.Generic
 
 (**
-The worldspace is split up into rectangular tiles. A Tile contains zero or
-more game objects. This way we can quickly look up which gameobjects are
-within proximity of a certain point, as long as the tiles are not too big
-and crowded.
+The worldspace is split up into rectangular tiles. A Tile contains zero or more game objects. This
+way we can quickly look up which gameobjects are within proximity of a certain point, as long as the
+tiles are not too big and crowded.
+
+We want to be able to quickly sample the neighborhood. This way, we can do neighborhood computations
+without impacting performance too much. If the sampling is random, then over the course of several
+frames the results will converge to something that looks as if we took the entire neighborhood into
+account.
 *)
 
 type public Tile<'GameState>() =
@@ -20,7 +24,7 @@ type public Tile<'GameState>() =
         content.Add(value)
 
     member this.Get() =
-        content :> seq<GameObject<'GameState>>
+        content
 
 
 type public TileMap<'GameState>

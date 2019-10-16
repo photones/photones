@@ -1,6 +1,7 @@
 ﻿namespace GameLogic
 open System.Text.RegularExpressions
 open System
+open System.Collections.Generic
 
 type ITracer =
     abstract member Log : string -> unit
@@ -20,6 +21,8 @@ module Utils =
     let public randomInt maxValue = random.Next(maxValue)
 
     let public bernoulli p = if random.NextDouble() < p then 1 else 0
+
+    let readonly (l:List<'T>):IReadOnlyList<'T> = l :> IReadOnlyList<'T>
 
     /// See https://photones.github.io/photones/Performance%20of%20takeAtMost.html for a performance
     /// evaluation.

@@ -2,6 +2,7 @@
 
 open System.Collections.Generic
 open Bearded.Utilities.SpaceTime
+open GameLogic.Utils
 
 
 type GameState
@@ -17,9 +18,9 @@ type GameState
     let _players = players
 
     member this.TileMap = tileMap
-    member this.GameObjects = _gameObjects
-    member this.DeadGameObjects = _deadGameObjects
-    member this.Players = _players
+    member this.GameObjects = readonly _gameObjects
+    member this.DeadGameObjects = readonly _deadGameObjects
+    member this.Players = readonly _players
 
     member this.Update(elapsedS: TimeSpan): unit =
         tileMap.Update(_gameObjects)
