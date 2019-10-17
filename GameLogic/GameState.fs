@@ -1,21 +1,22 @@
 ﻿namespace GameLogic
 
 open System.Collections.Generic
+open System.Linq
 open Bearded.Utilities.SpaceTime
 open GameLogic.Utils
 
 
 type GameState
      (
-     players:List<UpdatableState<PlayerData,GameState>>,
-     gameObjects:List<GameObject<GameState>>
+     players:IEnumerable<UpdatableState<PlayerData,GameState>>,
+     gameObjects:IEnumerable<GameObject<GameState>>
      ) = 
 
     let tileMap = TileMap(Unit(-2.0f), Unit(-2.0f), Unit(4.0f), Unit(4.0f), 400, 400)
 
-    let mutable _gameObjects = gameObjects
+    let mutable _gameObjects = gameObjects.ToList()
     let mutable _deadGameObjects = List<GameObject<GameState>>()
-    let _players = players
+    let _players = players.ToList()
 
     member this.TileMap = tileMap
     member this.GameObjects = readonly _gameObjects

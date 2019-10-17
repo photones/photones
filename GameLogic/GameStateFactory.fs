@@ -1,102 +1,61 @@
 ﻿namespace GameLogic
 
 module GameStateFactory =
+    open Bearded.Utilities
     open Bearded.Utilities.SpaceTime
+    open Bearded.Utilities.Geometry
     open System.Collections.Generic
     open amulware.Graphics
+    open System.Linq
 
-    let BuildInitialGameState() =
-        let player1 = Player.createPlayer({
-            Id = 0uy;
-            Color = Color.Goldenrod;
-            Target = Position2.Zero
-        })
-        let player2 = Player.createPlayer({
-            Id = 1uy;
-            Color = Color.HotPink;
-            Target = Position2.Zero
-        })
-        let player3 = Player.createPlayer({
-            Id = 2uy;
-            Color = Color.LightSeaGreen;
-            Target = Position2.Zero
-        })
-        let player4 = Player.createPlayer({
-            Id = 3uy;
-            Color = Color.OrangeRed;
-            Target = Position2.Zero
-        })
-        let player5 = Player.createPlayer({
-            Id = 4uy;
-            Color = Color.BlueViolet;
-            Target = Position2.Zero
-        })
-        let player6 = Player.createPlayer({
-            Id = 5uy;
-            Color = Color.ForestGreen;
-            Target = Position2.Zero
-        })
-        let player7 = Player.createPlayer({
-            Id = 6uy;
-            Color = Color(0xFFAB2222u); // Pale red
-            Target = Position2.Zero
-        })
-        let player8 = Player.createPlayer({
-            Id = 7uy;
-            Color = Color.CornflowerBlue;
-            Target = Position2.Zero
-        })
+    let emptyGameState() =
+        GameState(List<Player.T>(), List<GameObject<GameState>>())
 
-        let planet1 = Planet.createPlanet ({
-            Position = Position2(-1.0f, 0.0f);
+    let playerColors = [
+        Color.Goldenrod;
+        Color.HotPink;
+        Color.LightSeaGreen;
+        Color.OrangeRed;
+        Color.BlueViolet;
+        Color.ForestGreen;
+        Color(0xFFAB2222u); // Pale red
+        Color.CornflowerBlue;
+    ]
+
+    let addPlayer (gameState:GameState) =
+        let playerCount = gameState.Players.Count
+        let newPlayerId = byte playerCount
+        let newPlayerColor = playerColors.[int newPlayerId]
+        let newPlayer = Player.createPlayer({
+            Id = newPlayerId;
+            Target = Position2.Zero;
+            Color = newPlayerColor;
+        })
+        let players = gameState.Players.ToList()
+        players.Add(newPlayer)
+        GameState(players, gameState.GameObjects), newPlayerId
+
+    let addPlanet (position:Position2) playerId (gameState:GameState) =
+        let newPlanet = Planet.createPlanet ({
+            Position = position;
             Size = Unit 0.05f;
             Alive = true;
-            PlayerId = 0uy;
+            PlayerId = playerId;
         })
-        let planet2 = Planet.createPlanet ({
-            Position = Position2(1.0f, 0.0f);
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = 1uy;
-        })
-        let planet3 = Planet.createPlanet ({
-            Position = Position2(0.0f, 0.8f);
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = 2uy;
-        })
-        let planet4 = Planet.createPlanet ({
-            Position = Position2(0.0f, -0.8f);
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = 3uy;
-        })
-        let planet5 = Planet.createPlanet ({
-            Position = Position2(0.5f, 0.5f);
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = 4uy;
-        })
-        let planet6 = Planet.createPlanet ({
-            Position = Position2(-0.5f, -0.5f);
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = 5uy;
-        })
-        let planet7 = Planet.createPlanet ({
-            Position = Position2(-0.5f, 0.5f);
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = 6uy;
-        })
-        let planet8 = Planet.createPlanet ({
-            Position = Position2(0.5f, -0.5f);
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = 7uy;
-        })
+        let gameObjects = gameState.GameObjects.ToList()
+        gameObjects.Add(newPlanet)
+        GameState(gameState.Players, gameObjects)
+
+
+    /// Let all players start with one planet on a circle
+    let defaultScenario () =
+        let playerCount = 8
+        let radius = Unit 0.8f
+        let angle = Angle.FromRadians(Mathf.Tau / single playerCount)
+        let addPlayerWithPlanet (gameState, dir) _ =
+            let planetPos = Position2.Zero + Difference2.In(dir, radius)
+            let newGameState, newPlayerId = addPlayer gameState
+            addPlanet planetPos newPlayerId newGameState, dir + angle
+        let start = emptyGameState (), Direction2.Zero
+        Seq.fold addPlayerWithPlanet start [1..playerCount] |> fst
         
-        let players = [player1;player2;player3;player4;player5;player6;player7;player8]
-        let planets = [planet1;planet2;planet3;planet4;planet5;planet6;planet7;planet8]
-        GameState(List<Player.T>(players), List<GameObject<GameState>>(planets))
-
