@@ -8,12 +8,15 @@
     <Content Include="xunit.runner.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="docs\Performance of TileMap.fs" />
     <Compile Include="docs\Performance of takeAtMost.fs" />
     <Compile Include="Tests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Bearded\Bearded.csproj" />
     <ProjectReference Include="..\GameLogic\GameLogic.fsproj" />
+    <ProjectReference Include="..\lib\awgraphics\src\amulware.Graphics\amulware.Graphics.csproj" />
     <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

@@ -21,10 +21,10 @@ namespace Bearded.Photones.GameUI {
         public override Matrix4 ProjectionMatrix => _camera.Projection;
         public override Matrix4 ViewMatrix => _camera.View;
 
-        public GameScreen(ScreenManager screenManager, GeometryManager geometryManager)
+        public GameScreen(ScreenManager screenManager, GeometryManager geometryManager, GameState gameState)
                 : base(screenManager) {
             _camera = new Camera3D();
-            _game = new Beardgame();
+            _game = new Beardgame(gameState);
             _geometries = geometryManager;
         }
 

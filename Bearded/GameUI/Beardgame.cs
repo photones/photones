@@ -9,8 +9,8 @@ namespace Bearded.Photones.GameUI {
     class Beardgame {
         private readonly GameState _gameState;
 
-        public Beardgame() {
-            _gameState = GameStateFactory.defaultScenario();
+        public Beardgame(GameState gameState) {
+            _gameState = gameState;
         }
 
         public void Update(TimeSpan elapsedS) {

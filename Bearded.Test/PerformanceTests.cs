@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Bearded.Photones;
 using Bearded.Utilities.IO;
 using Xunit;
@@ -19,7 +17,7 @@ namespace Bearded.Test {
 
         private void RunInstance(int fps, int frames, string title, bool collect) {
             var frametimes = new List<double>(frames);
-            var game = new PhotonesProgram(new Logger(),
+            var game = new PhotonesProgram(GameLogic.GameStateFactory.defaultScenario(8),
                 (g, e) => {
                     frametimes.Add(e.PerformanceStats.FrameTime);
                     if (collect) {

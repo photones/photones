@@ -52,7 +52,10 @@ type public TileMap<'GameState>
             for tile in row do
                 tile.Clear()
 
-        for o in objects do
+        // Add the object in shuffled fashion to the list
+        let objectArray = Seq.toArray objects
+        Utils.shuffle objectArray // In-place
+        for o in objectArray do
             match tileForPosition o.Position with
             | Some tile -> tile.Add(o)
             | None ->
