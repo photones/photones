@@ -38,3 +38,12 @@ module Utils =
         let m = Regex.Match(input, pattern)
         if m.Success then Some(List.tail [ for g in m.Groups -> g.Value ])
         else None
+
+    let swap (a: _[]) x y =
+        let tmp = a.[x]
+        a.[x] <- a.[y]
+        a.[y] <- tmp
+    
+    // shuffle an array (in-place)
+    let shuffle a =
+        Array.iteri (fun i _ -> swap a i (random.Next(i, Array.length a))) a
