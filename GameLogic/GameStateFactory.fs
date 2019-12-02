@@ -8,8 +8,8 @@ module GameStateFactory =
     open amulware.Graphics
     open System.Linq
 
-    let emptyGameState() =
-        GameState(List<Player.T>(), List<GameObject<GameState>>())
+    let emptyGameState gameParameters =
+        GameState(gameParameters, List<Player.T>(), List<GameObject<GameState>>())
 
     let playerColors = [
         Color.Goldenrod;
@@ -33,7 +33,7 @@ module GameStateFactory =
         })
         let players = gameState.Players.ToList()
         players.Add(newPlayer)
-        GameState(players, gameState.GameObjects), newPlayerId
+        GameState(gameState.GameParameters, players, gameState.GameObjects), newPlayerId
 
     let addPlanet (position:Position2) playerId (gameState:GameState) =
         let newPlanet = Planet.createPlanet ({
@@ -44,11 +44,11 @@ module GameStateFactory =
         })
         let gameObjects = gameState.GameObjects.ToList()
         gameObjects.Add(newPlanet)
-        GameState(gameState.Players, gameObjects)
+        GameState(gameState.GameParameters, gameState.Players, gameObjects)
 
 
     /// Let all players start with one planet on a circle
-    let defaultScenario playerCount =
+    let defaultScenario gameParameters playerCount =
         let radius = Unit 0.8f
         let angle = Angle.FromRadians(Mathf.Tau / single playerCount)
 
@@ -57,6 +57,6 @@ module GameStateFactory =
             let newGameState, newPlayerId = addPlayer gameState
             addPlanet planetPos newPlayerId newGameState, dir + angle
 
-        let start = emptyGameState (), Direction2.Zero
+        let start = emptyGameState gameParameters, Direction2.Zero
         Seq.fold addPlayerWithPlanet start [1..playerCount] |> fst
         

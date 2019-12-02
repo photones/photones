@@ -26,7 +26,7 @@ module PerformanceOfTileMap =
         let evaluate framesToRun players =
             let game =
                 new PhotonesProgram (
-                    GameStateFactory.defaultScenario(players),
+                    GameStateFactory.defaultScenario GameParameters.defaultParameters players,
                     Action<PhotonesProgram,BeardedUpdateEventArgs>(closeAfterNFrames framesToRun)
                 )
 

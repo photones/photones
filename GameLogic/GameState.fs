@@ -8,6 +8,7 @@ open GameLogic.Utils
 
 type GameState
      (
+     gameParameters: GameParameters.T,
      players:IEnumerable<UpdatableState<PlayerData,GameState>>,
      gameObjects:IEnumerable<GameObject<GameState>>
      ) = 
@@ -18,6 +19,7 @@ type GameState
     let mutable _deadGameObjects = List<GameObject<GameState>>()
     let _players = players.ToList()
 
+    member this.GameParameters = gameParameters
     member this.TileMap = tileMap
     member this.GameObjects = readonly _gameObjects
     member this.DeadGameObjects = readonly _deadGameObjects
