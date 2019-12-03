@@ -14,12 +14,22 @@ open BenchmarkDotNet.Engines
 module PerformanceOfTileMap =
 
 (**
-This test attempts to give some insight into the performance impact of the number of
-interactions being computed.
+Preliminary investigations suggested that the computation of photon interactions form a performance
+bottleneck. We have added a game parameter to bound the number of interactions computed per frame
+per photon. The neighborhood of each photon is randomly sampled with a samplesize of at most the
+given threshold. The idea behind this is that across several frames the resulting behaviour of the
+photons will closely approximate the original behaviour.
+
+To actually verify that limiting the number of interactions being computed per photon, we conduct a
+bencmarking experiment, varying the interaction threshold. This test currently only involves one
+player continuously generating photons. We found that adding more players has a significant negative
+impact on the predictability of the number of game objects in the game, which in turn has a negative
+impact on the predictability of the workload in each case. To make the workload more comparable
+across the various test cases we only consider one player for now.
 *)
 
     [<MemoryDiagnoser; MarkdownExporter>]
-    [<SimpleJob(RunStrategy.ColdStart, targetCount = 1)>]
+    [<SimpleJob(RunStrategy.ColdStart, targetCount = 10)>]
     type Bench() =
 
         let closeAfterNFrames n (g:PhotonesProgram) (e:BeardedUpdateEventArgs) =
@@ -40,16 +50,16 @@ interactions being computed.
 
             game.Run()
 
-        [<Params (2, 8)>] 
+        [<Params (1)>] 
         member val public Players = 0 with get, set
 
-        [<Params (3000)>] 
+        [<Params (1000)>] 
         member val public Frames = 0 with get, set
 
-        [<Params (10, 100)>] 
+        [<Params (1, 5, 10, 50, 100)>] 
         member val public Interactions = 0 with get, set
 
-        [<Benchmark(Baseline=true)>]
+        [<Benchmark()>]
         member this.TimeOfNFrames() =
             evaluate this.Frames this.Players this.Interactions
 
