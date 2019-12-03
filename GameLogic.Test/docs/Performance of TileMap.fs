@@ -20,12 +20,12 @@ per photon. The neighborhood of each photon is randomly sampled with a samplesiz
 given threshold. The idea behind this is that across several frames the resulting behaviour of the
 photons will closely approximate the original behaviour.
 
-To actually verify that limiting the number of interactions being computed per photon, we conduct a
-bencmarking experiment, varying the interaction threshold. This test currently only involves one
-player continuously generating photons. We found that adding more players has a significant negative
-impact on the predictability of the number of game objects in the game, which in turn has a negative
-impact on the predictability of the workload in each case. To make the workload more comparable
-across the various test cases we only consider one player for now.
+To actually verify that limiting the number of interactions being computed per photon improve the
+performance, we conduct a benchmarking experiment, varying the interaction threshold. This test
+currently only involves one planet continuously generating photons. We found that adding more
+players has a significant negative impact on the predictability of the number of game objects in the
+game, which in turn has a negative impact on the predictability of the workload in each case. To
+make the workload comparable across the various test cases we only consider one player for now.
 *)
 
     [<MemoryDiagnoser; MarkdownExporter>]
@@ -72,6 +72,17 @@ across the various test cases we only consider one player for now.
 
 (**
 
+|           Method|Players| Frames | Interactions|     Mean |    StdDev | Allocated |
+|-----------------|-------|------- |-------------|---------:|----------:|----------:|
+|**TimeOfNFrames**| **1** |**1000**|  **1**      | **9.678 s**|**0.2550 s**|**2.73 GB**|
+|**TimeOfNFrames**| **1** |**1000**|  **5**      |**11.633 s**|**0.1762 s**|**3.12 GB**|
+|**TimeOfNFrames**| **1** |**1000**| **10**      |**13.585 s**|**0.2891 s**|**3.51 GB**|
+|**TimeOfNFrames**| **1** |**1000**| **50**      |**16.129 s**|**0.2445 s**|**4.25 GB**|
+|**TimeOfNFrames**| **1** |**1000**|**100**      |**16.176 s**|**0.1051 s**|**4.29 GB**|
+
+We can definitely see a correlation between the running time and the number of interactions per
+photon. The impact is not as big as we had hoped though. We also see a big difference in allocations
+being done. This is not something I expected to see, and may be worth investigating further.
 
 ***
 

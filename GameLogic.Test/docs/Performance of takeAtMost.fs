@@ -58,7 +58,7 @@ We do a simple test whereby we evaluate the functions on a list of size n and ar
         member this.GlobalSetupData() =
             inputList <- [for i = 1 to this.ListSize do yield i]
 
-        [<Benchmark(Baseline=true)>]
+        [<Benchmark()>]
         member this.TakeAtMost() =
             evaluate Utils.takeAtMost
 
