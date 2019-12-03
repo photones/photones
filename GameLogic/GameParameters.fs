@@ -11,8 +11,17 @@ module GameParameters =
         /// is that the average neighbor position will deviate horizontally significantly more than
         /// vertically. This means that we will move horizontally away instead of vertically.
         MaxPhotonInteractionsPerFrame: int;
+        /// To set the elapsed seconds per frame to a fixed number, make this setting nonzero.
+        FixedElapsedSeconds: float;
+        /// To multiply the elapsed seconds per frame by some factor, make this setting nonzero.
+        TimeModifier: float;
+        /// To cap the elapsed seconds per frame to some threshold, make this setting nonzero.
+        MaxElapsedSeconds: float;
     } 
 
     let defaultParameters = {
-        MaxPhotonInteractionsPerFrame = 100
+        MaxPhotonInteractionsPerFrame = 100;
+        FixedElapsedSeconds = 0.0;
+        TimeModifier = 0.5;
+        MaxElapsedSeconds = 0.010;
     }

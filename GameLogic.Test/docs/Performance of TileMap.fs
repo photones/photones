@@ -14,6 +14,8 @@ open BenchmarkDotNet.Engines
 module PerformanceOfTileMap =
 
 (**
+This test attempts to give some insight into the performance impact of the number of
+interactions being computed.
 *)
 
     [<MemoryDiagnoser; MarkdownExporter>]
@@ -23,24 +25,33 @@ module PerformanceOfTileMap =
         let closeAfterNFrames n (g:PhotonesProgram) (e:BeardedUpdateEventArgs) =
             if (e.UpdateEventArgs.Frame > n) then g.Close()
 
-        let evaluate framesToRun players =
+        let evaluate framesToRun players interactions =
+            let gameParameters = {
+                GameParameters.T.MaxPhotonInteractionsPerFrame = interactions;
+                GameParameters.T.FixedElapsedSeconds = 0.02;
+                GameParameters.T.TimeModifier = 0.0;
+                GameParameters.T.MaxElapsedSeconds = 0.0;
+            }
             let game =
                 new PhotonesProgram (
-                    GameStateFactory.defaultScenario GameParameters.defaultParameters players,
+                    GameStateFactory.defaultScenario gameParameters players,
                     Action<PhotonesProgram,BeardedUpdateEventArgs>(closeAfterNFrames framesToRun)
                 )
 
             game.Run()
 
-        [<Params (2)>] 
+        [<Params (2, 8)>] 
         member val public Players = 0 with get, set
 
-        [<Params (500)>] 
+        [<Params (3000)>] 
         member val public Frames = 0 with get, set
+
+        [<Params (10, 100)>] 
+        member val public Interactions = 0 with get, set
 
         [<Benchmark(Baseline=true)>]
         member this.TimeOfNFrames() =
-            evaluate this.Frames this.Players
+            evaluate this.Frames this.Players this.Interactions
 
 (** Now lets run the tests.  *)
 
