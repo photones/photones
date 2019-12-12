@@ -17,14 +17,6 @@ module public Photon =
     let private maxSpeed = Speed 0.4f
     let private hostileInteractionRadius = Unit 0.03f
     let private friendlyInteractionRadius = Unit 0.03f
-    /// The max number of interactions that will be computed.
-    /// The higher the number, the better and smoother the interactions will be, but it comes at a
-    /// cost of performance. If the interaction is programmed to move away from neighbors, and the
-    /// neighbors are all on a horizontal line, you would want to move away from that line,
-    /// orthogonally. However, what happens if this number is low and the interactionRadius is high,
-    /// is that the average neighbor position will deviate horizontally significantly more than
-    /// vertically. This means that we will move horizontally away instead of vertically.
-    let private maxNrInteractions = 100
 
     let private capVelocity (v:Velocity2) =
         if v.Length.NumericValue > maxSpeed.NumericValue
@@ -65,7 +57,7 @@ module public Photon =
         other.PlayerId <> state.PlayerId
 
     let private repulse (state:PhotonData) (elapsedTime:TimeSpan)
-            (acceleration:Acceleration) (from:seq<PhotonData>) =
+            (acceleration:Acceleration) (from:seq<PhotonData>) maxNrInteractions =
         if Seq.isEmpty from
         then Velocity2.Zero
         else
@@ -74,7 +66,7 @@ module public Photon =
             acceleration * elapsedTime
 
     let private attract (state:PhotonData) (elapsedTime:TimeSpan)
-            (acceleration:Acceleration) (towards:seq<PhotonData>) =
+            (acceleration:Acceleration) (towards:seq<PhotonData>) maxNrInteractions =
         if Seq.isEmpty towards
         then Velocity2.Zero
         else
@@ -82,21 +74,23 @@ module public Photon =
             let acceleration = Acceleration2.Towards(state.Position, attractionPoint, acceleration)
             acceleration * elapsedTime
 
-    let private dvHostileInteraction (this:T) (gameState:GameState)
-            (elapsedTime:TimeSpan) =
+    let private dvHostileInteraction (this:T) (gameState:GameState) (elapsedTime:TimeSpan) =
+        let maxNrInteractions = gameState.GameParameters.MaxPhotonInteractionsPerFrame
+        let acceleration = accelerationHostileInteraction 
         let state = this.State
         let neighbors = getNeighbors this gameState hostileInteractionRadius
         let hostiles = neighbors |> Seq.filter (isHostile state)
         match state.Behavior with
-        | Shy -> repulse state elapsedTime accelerationHostileInteraction hostiles
+        | Shy -> repulse state elapsedTime acceleration hostiles maxNrInteractions
         | Neutral -> Velocity2.Zero
-        | Aggressive -> attract state elapsedTime accelerationHostileInteraction hostiles
+        | Aggressive -> attract state elapsedTime acceleration hostiles maxNrInteractions
 
     let private dvFriendlyInteraction (this:T) (gameState:GameState) (elapsedTime:TimeSpan) =
+        let maxNrInteractions = gameState.GameParameters.MaxPhotonInteractionsPerFrame
         let state = this.State
         let neighbors = getNeighbors this gameState friendlyInteractionRadius
         let friendlies = neighbors |> Seq.filter (isFriendly state)
-        repulse state elapsedTime accelerationFriendlyInteraction friendlies
+        repulse state elapsedTime accelerationFriendlyInteraction friendlies maxNrInteractions
 
     let isColliding (this:T) (gameState:GameState) = 
         let collidingPhotons = getNeighbors this gameState this.State.Size

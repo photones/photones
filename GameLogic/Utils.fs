@@ -1,6 +1,7 @@
 ﻿namespace GameLogic
 open System.Text.RegularExpressions
 open System
+open System.Collections.Generic
 
 type ITracer =
     abstract member Log : string -> unit
@@ -21,6 +22,8 @@ module Utils =
 
     let public bernoulli p = if random.NextDouble() < p then 1 else 0
 
+    let readonly (l:List<'T>):IReadOnlyList<'T> = l :> IReadOnlyList<'T>
+
     /// See https://photones.github.io/photones/Performance%20of%20takeAtMost.html for a performance
     /// evaluation.
     let takeAtMost n (sequence:seq<'T>) = [
@@ -35,3 +38,12 @@ module Utils =
         let m = Regex.Match(input, pattern)
         if m.Success then Some(List.tail [ for g in m.Groups -> g.Value ])
         else None
+
+    let swap (a: _[]) x y =
+        let tmp = a.[x]
+        a.[x] <- a.[y]
+        a.[y] <- tmp
+    
+    // shuffle an array (in-place)
+    let shuffle a =
+        Array.iteri (fun i _ -> swap a i (random.Next(i, Array.length a))) a

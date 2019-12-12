@@ -28,7 +28,9 @@ namespace Bearded.Photones {
 
                 logger.Info.Log("");
                 logger.Info.Log("Creating game");
-                var game = new PhotonesProgram(logger);
+                var gameParameters = GameParameters.defaultParameters;
+                var game = new PhotonesProgram(GameStateFactory.defaultScenario(gameParameters, 2));
+                Utils.Tracer = new Tracer(logger, game._gameStatistics);
 
                 logger.Info.Log("Running game");
                 game.Run();
@@ -44,28 +46,28 @@ namespace Bearded.Photones {
         public const int MAJOR = 0;
         public const int MINOR = 0;
 
-        private readonly Logger _logger;
-
         private InputManager _inputManager;
         private RenderContext _renderContext;
         private ScreenManager _screenManager;
         private readonly PerformanceMonitor _performanceMonitor;
         private readonly GameStatistics _gameStatistics;
         private readonly Action<PhotonesProgram, BeardedUpdateEventArgs> _afterFrame;
+        private readonly GameState _gameState;
 
-        public PhotonesProgram(Logger logger,
-                Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null)
+        public PhotonesProgram(
+                GameState initialGameState,
+                Action<PhotonesProgram, BeardedUpdateEventArgs> afterFrame = null
+            )
             : base((int)WIDTH, (int)HEIGHT, GraphicsMode.Default, "photones",
                 GameWindowFlags.Default, DisplayDevice.Default, MAJOR, MINOR,
                 GraphicsContextFlags.Default) {
             Console.WriteLine(DisplayDevice.Default.ToString());
             Console.WriteLine(GL.GetString(StringName.Renderer));
             Console.WriteLine(GL.GetString(StringName.Version));
-            _logger = logger;
             _performanceMonitor = new PerformanceMonitor();
             _gameStatistics = new GameStatistics();
             _afterFrame = afterFrame;
-            Utils.Tracer = new Tracer(_logger, _gameStatistics);
+            _gameState = initialGameState;
         }
 
         protected override void OnLoad(EventArgs e) {
@@ -75,7 +77,7 @@ namespace Bearded.Photones {
 
             _screenManager = new ScreenManager(_inputManager);
             _screenManager.AddScreenLayerOnTop(new GameScreen(_screenManager,
-                _renderContext.Geometries));
+                _renderContext.Geometries, _gameState));
             _screenManager.AddScreenLayerOnTop(new HudScreen(_screenManager,
                 _renderContext.Geometries));
 
