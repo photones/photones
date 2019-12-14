@@ -24,6 +24,7 @@ module public Planet =
 
     let update (this:T) (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
         let state = this.State
+        let currentObjectCount = gameState.GameObjects.Count
 
         // Compute number of spawns.
         // Usually the spawnrate is less than 1. We don't want to hassle with communicating with
@@ -33,9 +34,9 @@ module public Planet =
         let certainSpawns = Math.Floor(expectedNrOfSpawns)
         let additionalSpawnChance = expectedNrOfSpawns - certainSpawns
         let additionalSpawnOutcome = bernoulli additionalSpawnChance
-        let totalSpawns = (int certainSpawns) + additionalSpawnOutcome
+        let totalSpawns = if currentObjectCount > 200 then 0 else (int certainSpawns) + additionalSpawnOutcome
 
-        let behavior = Neutral // if state.Player = 0uy then Aggressive else Shy
+        let behavior = Swarm
         // Spawn photons every frame
         for i = 1 to totalSpawns do
             let photon = Photon.createPhoton ({

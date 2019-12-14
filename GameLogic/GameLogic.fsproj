@@ -69,6 +69,7 @@
     <Compile Include="TileMap.fs" />
     <Compile Include="GameState.fs" />
     <Compile Include="Player.fs" />
+    <Compile Include="PhotonInteractions.fs" />
     <Compile Include="Photon.fs" />
     <Compile Include="Planet.fs" />
     <Compile Include="GameStateFactory.fs" />

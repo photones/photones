@@ -29,7 +29,7 @@ namespace Bearded.Photones {
                 logger.Info.Log("");
                 logger.Info.Log("Creating game");
                 var gameParameters = GameParameters.defaultParameters;
-                var game = new PhotonesProgram(GameStateFactory.defaultScenario(gameParameters, 2));
+                var game = new PhotonesProgram(GameStateFactory.defaultScenario(gameParameters, 1));
                 Utils.Tracer = new Tracer(logger, game._gameStatistics);
 
                 logger.Info.Log("Running game");
