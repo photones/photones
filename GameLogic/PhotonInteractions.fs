@@ -4,6 +4,7 @@ open Microsoft.FSharp.Core
 open Microsoft.FSharp.Collections
 open Utils
 open Bearded.Utilities.SpaceTime
+open Bearded.Utilities.Geometry
 open LibraryExtensions
 
 module public PhotonInteractions =
@@ -40,6 +41,12 @@ module public PhotonInteractions =
         let count = List.length photons
         sum / (single count) + Position2.Zero
 
+    let private accDirection total (pos:PhotonData) = total + (pos.Velocity.Direction - Direction2.Zero)
+    let private avgDirection (photons: list<PhotonData>) =
+        let sum = List.fold accDirection Angle.Zero photons
+        let count = List.length photons
+        Direction2.Zero + sum / (single count)
+
     let private attract (state:PhotonData) (elapsedTime:TimeSpan) (towards:list<PhotonData>) (acceleration:Acceleration) =
         if List.isEmpty towards
         then Velocity2.Zero
@@ -55,6 +62,14 @@ module public PhotonInteractions =
             let repulsionPoint = from |> avgPosition
             let repulsionAcceleration = Acceleration2.Repulse(state.Position, repulsionPoint, acceleration)
             repulsionAcceleration * elapsedTime
+
+    let private align (state:PhotonData) (elapsedTime:TimeSpan) (from:list<PhotonData>) (acceleration:Acceleration) =
+        if List.isEmpty from
+        then Velocity2.Zero
+        else
+            let alignDirection = from |> avgDirection
+            let alignAcceleration = Acceleration2.In(alignDirection, acceleration)
+            alignAcceleration * elapsedTime
 
 
     let hexagonBehaviour (state:PhotonData) (elapsedTime:TimeSpan) (gameState:GameState) =
@@ -108,10 +123,34 @@ module public PhotonInteractions =
             let pullingNeighbors = getNeighbors state gameState swarmPullRadius |> takeAtMost maxNrInteractions |> Seq.toList
             attract state elapsedTime pullingNeighbors acceleration
 
+    let smoothSwarmPushRadius = Unit 0.03f
+    let smoothSwarmAlignRadius = Unit 0.1f
+    let smoothSwarmPullRadius = Unit 0.2f
+    /// Attract and align but avoid collision
+    let smoothSwarmBehaviour (state:PhotonData) (elapsedTime:TimeSpan) (gameState:GameState) =
+        let maxNrInteractions = gameState.GameParameters.MaxPhotonInteractionsPerFrame
+        let acceleration = accelerationFriendlyInteraction
+        let pushingNeighbors = getSortedNeighbors state gameState smoothSwarmPushRadius |> takeAtMost 3
+        if not (List.isEmpty pushingNeighbors)
+        then
+            // Repulse
+            repulse state elapsedTime pushingNeighbors (acceleration*5.0f)
+        else
+            let aligningNeighbors = getSortedNeighbors state gameState smoothSwarmAlignRadius |> takeAtMost 6
+            if not (List.isEmpty aligningNeighbors)
+            then
+                // Align
+                align state elapsedTime aligningNeighbors acceleration
+            else
+                let pullingNeighbors = getNeighbors state gameState smoothSwarmPullRadius |> takeAtMost maxNrInteractions |> Seq.toList
+                // Attract
+                attract state elapsedTime pullingNeighbors acceleration
+
     let interact (state:PhotonData) (elapsedTime:TimeSpan) (gameState:GameState) =
         let behavior =
             match state.Behavior with
             | Hexagon -> hexagonBehaviour
             | Grid -> gridBehaviour
             | Swarm -> swarmBehaviour
+            | SmoothSwarm -> smoothSwarmBehaviour
         behavior state elapsedTime gameState

@@ -10,7 +10,7 @@ type public PlayerData = {
     Target: Position2;
 }
 
-type PhotonBehavior = Hexagon | Grid | Swarm
+type PhotonBehavior = Hexagon | Grid | Swarm | SmoothSwarm
 
 [<Struct>]
 type public PhotonData = {

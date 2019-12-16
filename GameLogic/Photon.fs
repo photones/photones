@@ -11,7 +11,7 @@ module public Photon =
     type T = UpdatableState<PhotonData, GameState>
 
     let private frictionFraction = 0.0f // Fraction of speed that is lost per second
-    let private accelerationGoal = Acceleration 0.5f
+    let private accelerationGoal = Acceleration 3.0f
     let private accelerationRandom = Acceleration 0.0001f
     let private maxSpeed = Speed 0.4f
 

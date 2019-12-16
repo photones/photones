@@ -36,7 +36,7 @@ module public Planet =
         let additionalSpawnOutcome = bernoulli additionalSpawnChance
         let totalSpawns = if currentObjectCount > 200 then 0 else (int certainSpawns) + additionalSpawnOutcome
 
-        let behavior = Swarm
+        let behavior = SmoothSwarm
         // Spawn photons every frame
         for i = 1 to totalSpawns do
             let photon = Photon.createPhoton ({
