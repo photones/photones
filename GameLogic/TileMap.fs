@@ -65,7 +65,11 @@ type public TileMap<'GameState>
     member public this.IsOnTileMap (pos:Position2) =
         tileForPosition pos <> None
 
-    member public this.GetObjects (from:Position2) (radius:Unit) =
+    member public this.GetObjectsSortedByDistance (from:Position2) (radius:Unit) =
+        this.GetObjects from radius |>
+            Seq.sortBy (fun o -> (o.Position - from).LengthSquared.NumericValue)
+
+    member public this.GetObjects (from:Position2) (radius:Unit) : seq<GameObject<'GameState>> =
         let columnBound = capBetween 0 (columns - 1)
         let rowBound = capBetween 0 (rows - 1)
         let firstColumn = from.X - radius |> x2Column |> columnBound

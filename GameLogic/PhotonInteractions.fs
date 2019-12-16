@@ -25,6 +25,15 @@ module public PhotonInteractions =
                 | Photon d -> if state.Position <> d.State.Position then yield d.State
         }
 
+    let public getSortedNeighbors (state:PhotonData) (gameState:GameState) (radius:Unit) =
+        let neighbors = gameState.TileMap.GetObjectsSortedByDistance state.Position radius
+        seq {
+            for n in neighbors do
+                match n with
+                | Planet _ -> ()
+                | Photon d -> if state.Position <> d.State.Position then yield d.State
+        }
+
     let private accDifference total (pos:PhotonData) = total + (pos.Position - Position2.Zero)
     let private avgPosition (photons: list<PhotonData>) =
         let sum = List.fold accDifference Difference2.Zero photons
@@ -91,10 +100,10 @@ module public PhotonInteractions =
     let swarmBehaviour (state:PhotonData) (elapsedTime:TimeSpan) (gameState:GameState) =
         let maxNrInteractions = gameState.GameParameters.MaxPhotonInteractionsPerFrame
         let acceleration = accelerationFriendlyInteraction
-        let pushingNeighbors = getNeighbors state gameState swarmPushRadius |> takeAtMost maxNrInteractions |> Seq.toList
-        if not (List.isEmpty pushingNeighbors)
+        let pushingNeighbor = getSortedNeighbors state gameState swarmPushRadius |> takeAtMost 3
+        if not (List.isEmpty pushingNeighbor)
         then
-            repulse state elapsedTime pushingNeighbors (acceleration*5.0f)
+            repulse state elapsedTime pushingNeighbor (acceleration*5.0f)
         else
             let pullingNeighbors = getNeighbors state gameState swarmPullRadius |> takeAtMost maxNrInteractions |> Seq.toList
             attract state elapsedTime pullingNeighbors acceleration
