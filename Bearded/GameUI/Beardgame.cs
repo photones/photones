@@ -31,6 +31,11 @@ namespace Bearded.Photones.GameUI {
             geometries.PhotonGeometry.DrawParticle(new Vector2(-1, 1), size, coordcolor);
             geometries.PhotonGeometry.DrawParticle(new Vector2(-1, -1), size, coordcolor);
 
+            // Draw player target
+            foreach (var player in _gameState.Players) {
+                geometries.PhotonGeometry.DrawParticle(player.State.Target.NumericValue, size, coordcolor);
+            }
+
             var renderer = new GameObjectRenderer(geometries);
             foreach (var gameObject in _gameState.GameObjects) {
                 renderer.Render(_gameState, gameObject);

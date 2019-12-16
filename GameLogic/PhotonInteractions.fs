@@ -134,7 +134,7 @@ module public PhotonInteractions =
         if not (List.isEmpty pushingNeighbors)
         then
             // Repulse
-            repulse state elapsedTime pushingNeighbors (acceleration*5.0f)
+            repulse state elapsedTime pushingNeighbors (acceleration*2.0f)
         else
             let aligningNeighbors = getSortedNeighbors state gameState smoothSwarmAlignRadius |> takeAtMost 6
             if not (List.isEmpty aligningNeighbors)

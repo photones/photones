@@ -22,6 +22,6 @@ module GameParameters =
     let defaultParameters = {
         MaxPhotonInteractionsPerFrame = 200;
         FixedElapsedSeconds = 0.0050;
-        TimeModifier = 0.5;
-        MaxElapsedSeconds = 0.0050;
+        TimeModifier = 1.5;
+        MaxElapsedSeconds = 0.0000;
     }
