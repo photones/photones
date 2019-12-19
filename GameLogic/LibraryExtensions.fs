@@ -8,6 +8,13 @@ module LibraryExtensions =
     type OpenTK.Vector2 with
         member this.FromPolar(angle, radius) = Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius
 
+    type Mass with
+        static member CenterOfMass (massFunction: Position2 -> Mass) (points: list<Position2>) =
+            let totalMass = List.sumBy massFunction points
+            let w point = (point - Position2.Zero) * (massFunction point / totalMass)
+            let relativeCenterOfMass = List.sumBy w points
+            Position2.Zero + relativeCenterOfMass
+
     type Acceleration2 with
         static member Towards(from:Position2, towards:Position2, by:Acceleration) = 
             let diff = towards - from

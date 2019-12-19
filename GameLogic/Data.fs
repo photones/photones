@@ -10,7 +10,15 @@ type public PlayerData = {
     Target: Position2;
 }
 
-type PhotonBehavior = Hexagon | Grid | Swarm | SmoothSwarm
+[<Struct>]
+type public PlanetData = {
+    Position: Position2;
+    Size: Unit; // Radius of physical presence
+    Alive: bool;
+    PlayerId: byte;
+}
+
+type PhotonBehavior = Swarm
 
 [<Struct>]
 type public PhotonData = {
@@ -20,14 +28,6 @@ type public PhotonData = {
     Alive: bool;
     PlayerId: byte;
     Behavior: PhotonBehavior;
-}
-
-[<Struct>]
-type public PlanetData = {
-    Position: Position2;
-    Size: Unit; // Radius of physical presence
-    Alive: bool;
-    PlayerId: byte;
 }
 
 

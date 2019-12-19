@@ -23,7 +23,8 @@ module public Player =
         let radians = seconds / 60.0 * System.Math.PI * 2.0
         let scaledRadians = radians * (60.0 / targetPeriodInSeconds)
         let x = System.Math.Cos(2.0 * scaledRadians)
-        let y = System.Math.Sin(3.0 * scaledRadians)
+        //let y = System.Math.Sin(3.0 * scaledRadians)
+        let y = 0.0f
         new Position2(single x, single y)
 
     let private attackHostile (state:PlayerData) (gameState:GameState) =

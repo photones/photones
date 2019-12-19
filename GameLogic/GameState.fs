@@ -36,6 +36,18 @@ type GameState
         for p in _players do
             p.Refresh()
 
+        for o in _gameObjects do
+            match o with
+            | Photon d ->
+                let neighbors = this.TileMap.GetObjects d.State.Position (Unit 0.00000001f)
+                //if neighbors.Count() > 1 then Tracer.Log("Two photons are very close")
+                for n in neighbors do
+                    match n with
+                    | Photon nd ->
+                        if nd.State.Position = d.State.Position && nd <> d then Tracer.Log("Two photons have the same position")
+                    | _ -> ()
+            | _ -> ()
+
         // Collection can be modified during update, so create a list for iteration
         for o in List(_gameObjects) do
             o.Update this elapsedS
