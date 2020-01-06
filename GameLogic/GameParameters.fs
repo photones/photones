@@ -17,6 +17,10 @@ module GameParameters =
         TimeModifier: float;
         /// To cap the elapsed seconds per frame to some threshold, make this setting nonzero.
         MaxElapsedSeconds: float;
+        /// Some modulation parameters for dev testing
+        ModA: float;
+        ModB: float;
+        ModC: float;
     } 
 
     let defaultParameters = {
@@ -24,4 +28,18 @@ module GameParameters =
         FixedElapsedSeconds = 0.0050;
         TimeModifier = 1.5;
         MaxElapsedSeconds = 0.0000;
+        ModA = 0.0;
+        ModB = 0.0;
+        ModC = 0.0;
     }
+
+    type public T with
+        // Make specific updates easily accessible in C#
+        member this.WithTimeModifier (value: float) =
+            {this with TimeModifier = value}
+        member this.WithModA (value: float) =
+            {this with ModA = value}
+        member this.WithModB (value: float) =
+            {this with ModB = value}
+        member this.WithModC (value: float) =
+            {this with ModC = value}

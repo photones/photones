@@ -48,13 +48,12 @@ namespace Bearded.Photones.GameUI {
 
         public override void Draw() {
             _game.Draw(_geometries);
-
             ParticleSystem.Get.Draw(_geometries);
         }
 
         public override bool HandleInput(UpdateEventArgs args, InputState inputState) {
-            _camera.ChangeDistance(-inputState.InputManager.DeltaScroll * .1f);
-            return true;
+            return InputHandler.HandleInput(_gameState, _camera, inputState);
         }
+
     }
 }

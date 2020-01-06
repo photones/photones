@@ -7,23 +7,27 @@ open GameLogic.Utils
 
 
 type GameState
-     (
-     gameParameters: GameParameters.T,
-     players:IEnumerable<UpdatableState<PlayerData,GameState>>,
-     gameObjects:IEnumerable<GameObject<GameState>>
-     ) = 
+    (
+    gameParameters: GameParameters.T,
+    players:IEnumerable<UpdatableState<PlayerData,GameState>>,
+    gameObjects:IEnumerable<GameObject<GameState>>
+    ) = 
 
     let tileMap = TileMap(Unit(-2.0f), Unit(-2.0f), Unit(4.0f), Unit(4.0f), 400, 400)
 
     let mutable _gameObjects = gameObjects.ToList()
     let mutable _deadGameObjects = List<GameObject<GameState>>()
+    let mutable _gameParameters = gameParameters
     let _players = players.ToList()
 
-    member this.GameParameters = gameParameters
+    member this.GameParameters = _gameParameters
     member this.TileMap = tileMap
     member this.GameObjects = readonly _gameObjects
     member this.DeadGameObjects = readonly _deadGameObjects
     member this.Players = readonly _players
+
+    member this.SetGameParameters(gameParameters: GameParameters.T): unit =
+        _gameParameters <- gameParameters
 
     member this.Update(elapsedS: TimeSpan): unit =
         tileMap.Update(_gameObjects)
