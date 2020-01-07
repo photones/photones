@@ -5,29 +5,29 @@ open amulware.Graphics
 
 [<Struct>]
 type public PlayerData = {
-    Id: byte;
-    Color: Color;
-    Target: Position2;
+    Id: byte
+    Color: Color
+    Target: Position2
 }
 
 [<Struct>]
 type public PlanetData = {
-    Position: Position2;
-    Size: Unit; // Radius of physical presence
-    Alive: bool;
-    PlayerId: byte;
+    Position: Position2
+    Size: Unit // Radius of physical presence
+    Alive: bool
+    PlayerId: byte
 }
 
 type PhotonBehavior = Swarm
 
 [<Struct>]
 type public PhotonData = {
-    Position: Position2;
-    Velocity: Velocity2;
-    Size: Unit; // Radius of physical presence
-    Alive: bool;
-    PlayerId: byte;
-    Behavior: PhotonBehavior;
+    Position: Position2
+    Velocity: Velocity2
+    Size: Unit // Radius of physical presence
+    Alive: bool
+    PlayerId: byte
+    Behavior: PhotonBehavior
 }
 
 

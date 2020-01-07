@@ -12,14 +12,14 @@ module GameStateFactory =
         GameState(gameParameters, List<Player.T>(), List<GameObject<GameState>>())
 
     let playerColors = [
-        Color.Goldenrod;
-        Color.HotPink;
-        Color.LightSeaGreen;
-        Color.OrangeRed;
-        Color.BlueViolet;
-        Color.ForestGreen;
-        Color(0xFFAB2222u); // Pale red
-        Color.CornflowerBlue;
+        Color.Goldenrod
+        Color.HotPink
+        Color.LightSeaGreen
+        Color.OrangeRed
+        Color.BlueViolet
+        Color.ForestGreen
+        Color(0xFFAB2222u) // Pale red
+        Color.CornflowerBlue
     ]
 
     let addPlayer (gameState:GameState) =
@@ -27,9 +27,9 @@ module GameStateFactory =
         let newPlayerId = byte playerCount
         let newPlayerColor = playerColors.[int newPlayerId]
         let newPlayer = Player.createPlayer({
-            Id = newPlayerId;
-            Target = Position2.Zero;
-            Color = newPlayerColor;
+            Id = newPlayerId
+            Target = Position2.Zero
+            Color = newPlayerColor
         })
         let players = gameState.Players.ToList()
         players.Add(newPlayer)
@@ -37,10 +37,10 @@ module GameStateFactory =
 
     let addPlanet (position:Position2) playerId (gameState:GameState) =
         let newPlanet = Planet.createPlanet ({
-            Position = position;
-            Size = Unit 0.05f;
-            Alive = true;
-            PlayerId = playerId;
+            Position = position
+            Size = Unit 0.05f
+            Alive = true
+            PlayerId = playerId
         })
         let gameObjects = gameState.GameObjects.ToList()
         gameObjects.Add(newPlanet)

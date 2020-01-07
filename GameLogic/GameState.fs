@@ -2,6 +2,7 @@
 
 open System.Collections.Generic
 open System.Linq
+open System
 open Bearded.Utilities.SpaceTime
 open GameLogic.Utils
 
@@ -26,10 +27,8 @@ type GameState
     member this.DeadGameObjects = readonly _deadGameObjects
     member this.Players = readonly _players
 
-    member this.SetGameParameters(gameParameters: GameParameters.T): unit =
-        _gameParameters <- gameParameters
-
-    member this.Update(elapsedS: TimeSpan): unit =
+    member this.Update(elapsedS: TimeSpan, inputActions: InputActions.T): unit =
+        this.UpdateGameParameters(inputActions)
         tileMap.Update(_gameObjects)
 
         _deadGameObjects <- List(_gameObjects |> Seq.filter (fun o -> not o.Alive))
@@ -39,18 +38,6 @@ type GameState
             p.Update this elapsedS
         for p in _players do
             p.Refresh()
-
-        for o in _gameObjects do
-            match o with
-            | Photon d ->
-                let neighbors = this.TileMap.GetObjects d.State.Position (Unit 0.00000001f)
-                //if neighbors.Count() > 1 then Tracer.Log("Two photons are very close")
-                for n in neighbors do
-                    match n with
-                    | Photon nd ->
-                        if nd.State.Position = d.State.Position && nd <> d then Tracer.Log("Two photons have the same position")
-                    | _ -> ()
-            | _ -> ()
 
         // Collection can be modified during update, so create a list for iteration
         for o in List(_gameObjects) do
@@ -62,3 +49,19 @@ type GameState
 
     member this.Spawn (obj:GameObject<GameState>) =
         _gameObjects.Add(obj)
+
+    member private this.UpdateGameParameters(input: InputActions.T): unit =
+        let current = _gameParameters
+        let modTimeDiff = input.ModGameSpeed.AnalogAmount * 0.001f
+        let modADiff = input.ModA.AnalogAmount * 0.001f
+        let modBDiff = input.ModB.AnalogAmount * 0.001f
+        let modCDiff = input.ModC.AnalogAmount * 0.001f
+        let intModDDiff = if input.IntModD.Hit then int input.IntModD.AnalogAmount else 0
+        _gameParameters <- {
+            current with
+                TimeModifier = Math.Max(0.0, current.TimeModifier + float modTimeDiff)
+                ModA = Math.Max(0.0f, current.ModA + modADiff)
+                ModB = Math.Max(0.0f, current.ModB + modBDiff)
+                ModC = Math.Max(0.0f, current.ModC + modCDiff)
+                IntModD = Math.Max(0, current.IntModD + intModDDiff)
+        }

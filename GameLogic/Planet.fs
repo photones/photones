@@ -40,12 +40,12 @@ module public Planet =
         // Spawn photons every frame
         for i = 1 to totalSpawns do
             let photon = Photon.createPhoton ({
-                    Position = state.Position;
-                    Velocity = Velocity2(0.0f, 0.0f);
-                    Size = Unit 0.01f;
-                    Alive = true;
-                    PlayerId = state.PlayerId;
-                    Behavior = behavior;
+                    Position = state.Position
+                    Velocity = Velocity2(0.0f, 0.0f)
+                    Size = Unit 0.01f
+                    Alive = true
+                    PlayerId = state.PlayerId
+                    Behavior = behavior
                 })
             gameState.Spawn photon
 
@@ -56,10 +56,10 @@ module public Planet =
         if Seq.isEmpty collidingHostiles |> not then alive <- false
 
         {
-            Position = state.Position;
-            Size = state.Size;
-            Alive = alive;
-            PlayerId = state.PlayerId;
+            Position = state.Position
+            Size = state.Size
+            Alive = alive
+            PlayerId = state.PlayerId
         }
 
     let public createPlanet (data: PlanetData) =

@@ -17,10 +17,11 @@ module public Player =
     ]
 
     let targetPeriodInSeconds = 30.0
-    let private staticTarget () =
+    let private playerTarget (gameState:GameState) =
         let now = System.DateTime.Now
         let seconds = float now.Second + (float now.Millisecond / 1000.0)
-        let radians = seconds / 60.0 * System.Math.PI * 2.0
+        let scaledSeconds = seconds * gameState.GameParameters.TimeModifier
+        let radians = scaledSeconds / 60.0 * System.Math.PI * 2.0
         let scaledRadians = radians * (60.0 / targetPeriodInSeconds)
         let x = System.Math.Cos(2.0 * scaledRadians)
         //let y = System.Math.Sin(3.0 * scaledRadians)
@@ -40,12 +41,12 @@ module public Player =
 
     let rec update (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
         let state = this.State
-        let target = staticTarget ()
+        let target = playerTarget gameState
 
         {
-            Id = state.Id;
-            Color = state.Color;
-            Target = target;
+            Id = state.Id
+            Color = state.Color
+            Target = target
         }
 
     let createPlayer (data: PlayerData) =

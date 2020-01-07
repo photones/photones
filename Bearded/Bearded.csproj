@@ -58,13 +58,14 @@
   <ItemGroup>
     <Compile Include="GameStatistics.cs" />
     <Compile Include="GameUI\Beardgame.cs" />
+    <Compile Include="GameUI\BidirectionalAction.cs" />
     <Compile Include="GameUI\ExplosionManager.cs" />
     <Compile Include="GameUI\GameObjectRenderer.cs" />
-    <Compile Include="GameUI\InputHandler.cs" />
+    <Compile Include="GameUI\InputBinder.cs" />
     <Compile Include="Performance\PerformanceMonitor.cs" />
     <Compile Include="GameUI\GameScreen.cs" />
     <Compile Include="Performance\PerformanceSummary.cs" />
-    <Compile Include="Performance\BeardedUpdateEventArgs.cs" />
+    <Compile Include="BeardedUpdateEventArgs.cs" />
     <Compile Include="Particles\Behaviors\ConstantBehavior.cs" />
     <Compile Include="Particles\Behaviors\IParticleBehavior.cs" />
     <Compile Include="Particles\Behaviors\LerpLifetime\LerpFloatBehavior.cs" />

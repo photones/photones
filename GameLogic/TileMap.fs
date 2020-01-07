@@ -70,16 +70,19 @@ type public TileMap<'GameState>
             Seq.sortBy (fun o -> (o.Position - from).LengthSquared.NumericValue)
 
     member public this.GetObjects (from:Position2) (radius:Unit) : seq<GameObject<'GameState>> =
-        let columnBound = capBetween 0 (columns - 1)
-        let rowBound = capBetween 0 (rows - 1)
-        let firstColumn = from.X - radius |> x2Column |> columnBound
-        let lastColumn = from.X + radius |> x2Column |> columnBound
-        let firstRow = from.Y - radius |> y2Row |> rowBound
-        let lastRow = from.Y + radius |> y2Row |> rowBound
-        seq {
-        for col = firstColumn to lastColumn do
-            for row = firstRow to lastRow do
-                for candidate in tiles.[row].[col].Get() do 
-                    if isPointWithinRadius from radius candidate.Position then yield candidate
-        }
+        if radius = Unit.Zero
+        then Seq.empty
+        else
+            let columnBound = capBetween 0 (columns - 1)
+            let rowBound = capBetween 0 (rows - 1)
+            let firstColumn = from.X - radius |> x2Column |> columnBound
+            let lastColumn = from.X + radius |> x2Column |> columnBound
+            let firstRow = from.Y - radius |> y2Row |> rowBound
+            let lastRow = from.Y + radius |> y2Row |> rowBound
+            seq {
+            for col = firstColumn to lastColumn do
+                for row = firstRow to lastRow do
+                    for candidate in tiles.[row].[col].Get() do 
+                        if isPointWithinRadius from radius candidate.Position then yield candidate
+            }
 

@@ -31,6 +31,8 @@ namespace Bearded.Photones.GameUI {
             _geometries.ConsolasFont.DrawString(new Vector2(0, 100), modB);
             var modC = $"Mod C: {_gameState.GameParameters.ModC:0.000}";
             _geometries.ConsolasFont.DrawString(new Vector2(0, 120), modC);
+            var modD = $"Int Mod D: {_gameState.GameParameters.IntModD:0}";
+            _geometries.ConsolasFont.DrawString(new Vector2(0, 140), modD);
         }
 
         public override void Update(BeardedUpdateEventArgs args) {

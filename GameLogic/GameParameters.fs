@@ -10,36 +10,40 @@ module GameParameters =
         /// orthogonally. However, what happens if this number is low and the interactionRadius is
         /// high, is that the average neighbor position will deviate horizontally significantly more
         /// than vertically. This means that we will move horizontally away instead of vertically.
-        MaxPhotonInteractionsPerFrame: int;
+        MaxPhotonInteractionsPerFrame: int
         /// To set the elapsed seconds per frame to a fixed number, make this setting nonzero.
-        FixedElapsedSeconds: float;
+        FixedElapsedSeconds: float
         /// To multiply the elapsed seconds per frame by some factor, make this setting nonzero.
-        TimeModifier: float;
+        TimeModifier: float
         /// To cap the elapsed seconds per frame to some threshold, make this setting nonzero.
-        MaxElapsedSeconds: float;
+        MaxElapsedSeconds: float
         /// Some modulation parameters for dev testing
-        ModA: float;
-        ModB: float;
-        ModC: float;
+        ModA: single
+        ModB: single
+        ModC: single
+        IntModD: int
     } 
 
     let defaultParameters = {
-        MaxPhotonInteractionsPerFrame = 200;
-        FixedElapsedSeconds = 0.0050;
-        TimeModifier = 1.5;
-        MaxElapsedSeconds = 0.0000;
-        ModA = 0.0;
-        ModB = 0.0;
-        ModC = 0.0;
+        MaxPhotonInteractionsPerFrame = 200
+        FixedElapsedSeconds = 0.0050
+        TimeModifier = 1.5
+        MaxElapsedSeconds = 0.0000
+        ModA = 0.0f
+        ModB = 0.0f
+        ModC = 0.0f
+        IntModD = 0
     }
 
     type public T with
         // Make specific updates easily accessible in C#
         member this.WithTimeModifier (value: float) =
             {this with TimeModifier = value}
-        member this.WithModA (value: float) =
+        member this.WithModA (value: single) =
             {this with ModA = value}
-        member this.WithModB (value: float) =
+        member this.WithModB (value: single) =
             {this with ModB = value}
-        member this.WithModC (value: float) =
+        member this.WithModC (value: single) =
             {this with ModC = value}
+        member this.WithIntModD (value: int) =
+            {this with IntModD = value}

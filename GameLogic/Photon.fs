@@ -69,12 +69,12 @@ module public Photon =
         let position = state.Position + velocity * elapsedS
 
         {
-            Position = position;
-            Velocity = velocity;
-            Size = state.Size;
-            Alive = alive;
-            PlayerId = state.PlayerId;
-            Behavior = state.Behavior;
+            Position = position
+            Velocity = velocity
+            Size = state.Size
+            Alive = alive
+            PlayerId = state.PlayerId
+            Behavior = state.Behavior
         }
 
     let createPhoton (data: PhotonData) =

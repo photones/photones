@@ -47,6 +47,7 @@ namespace Bearded.Photones {
         public const int MINOR = 0;
 
         private InputManager _inputManager;
+        private InputActions.T _inputActions;
         private RenderContext _renderContext;
         private ScreenManager _screenManager;
         private readonly PerformanceMonitor _performanceMonitor;
@@ -74,6 +75,7 @@ namespace Bearded.Photones {
             _renderContext = new RenderContext();
 
             _inputManager = new InputManager(this);
+            _inputActions = InputBinder.DefaultInputActions(_inputManager);
 
             _screenManager = new ScreenManager(_inputManager);
             _screenManager.AddScreenLayerOnTop(new GameScreen(_screenManager,
@@ -110,7 +112,7 @@ namespace Bearded.Photones {
                 _performanceMonitor.ElapsedTime.Stats,
                 _performanceMonitor.FrameTime.CurrentValue,
                 _gameStatistics.NrGameObjects);
-            var e = new BeardedUpdateEventArgs(updateArgs, performanceSummary);
+            var e = new BeardedUpdateEventArgs(updateArgs, _inputActions, performanceSummary);
 
             _performanceMonitor.StartFrame(e.UpdateEventArgs.ElapsedTimeInS);
 

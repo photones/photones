@@ -8,6 +8,8 @@ using Bearded.Photones.UI;
 using OpenTK;
 using GameLogic;
 using Bearded.Utilities.SpaceTime;
+using Bearded.Utilities.Input;
+using Bearded.Utilities.Input.Actions;
 
 namespace Bearded.Photones.GameUI {
     class GameScreen : ScreenLayer {
@@ -42,7 +44,7 @@ namespace Bearded.Photones.GameUI {
                 System.Math.Min(maxElapsedSeconds, scaledElapsedSeconds) : scaledElapsedSeconds;
 
             var elapsedTime = new TimeSpan(cappedElapsedSeconds);
-            _game.Update(elapsedTime);
+            _game.Update(elapsedTime, args);
             ParticleSystem.Get.Update(elapsedTime);
         }
 
@@ -52,7 +54,8 @@ namespace Bearded.Photones.GameUI {
         }
 
         public override bool HandleInput(UpdateEventArgs args, InputState inputState) {
-            return InputHandler.HandleInput(_gameState, _camera, inputState);
+            _camera.ChangeDistance(-inputState.InputManager.DeltaScroll * .1f);
+            return true;
         }
 
     }

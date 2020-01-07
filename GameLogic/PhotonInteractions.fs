@@ -82,6 +82,7 @@ module public PhotonInteractions =
             alignAcceleration * elapsedTime
 
 
+    // FIXME
     //let swarmPushRadius = Unit 0.03f
     //let swarmAlignRadius = Unit 0.1f
     //let swarmPullRadius = Unit 0.2f
@@ -90,15 +91,17 @@ module public PhotonInteractions =
         let swarmPushRadius = Unit (single gameState.GameParameters.ModA)
         let swarmAlignRadius = Unit (single gameState.GameParameters.ModB)
         let swarmPullRadius = Unit (single gameState.GameParameters.ModC)
-        let maxNrInteractions = gameState.GameParameters.MaxPhotonInteractionsPerFrame
+        // FIXME
+        //let maxNrInteractions = gameState.GameParameters.MaxPhotonInteractionsPerFrame
+        let maxNrInteractions = gameState.GameParameters.IntModD
         let acceleration = accelerationFriendlyInteraction
-        let pushingNeighbors = getSortedNeighbors state gameState swarmPushRadius |> takeAtMost 9
+        let pushingNeighbors = getSortedNeighbors state gameState swarmPushRadius |> takeAtMost maxNrInteractions
         if not (List.isEmpty pushingNeighbors)
         then
             // Repulse
             repulse swarmPushRadius state elapsedTime pushingNeighbors (acceleration*2.0f)
         else
-            let aligningNeighbors = getSortedNeighbors state gameState swarmAlignRadius |> takeAtMost 6
+            let aligningNeighbors = getSortedNeighbors state gameState swarmAlignRadius |> takeAtMost maxNrInteractions
             if not (List.isEmpty aligningNeighbors)
             then
                 // Align

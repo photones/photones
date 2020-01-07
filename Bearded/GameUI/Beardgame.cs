@@ -3,6 +3,7 @@ using GameLogic;
 using OpenTK;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
 using amulware.Graphics;
+using Bearded.Photones.Performance;
 
 namespace Bearded.Photones.GameUI {
 
@@ -13,8 +14,8 @@ namespace Bearded.Photones.GameUI {
             _gameState = gameState;
         }
 
-        public void Update(TimeSpan elapsedS) {
-            _gameState.Update(elapsedS);
+        public void Update(TimeSpan elapsedS, BeardedUpdateEventArgs args) {
+            _gameState.Update(elapsedS, args.InputActions);
 
             // Explosions
             foreach (var gameObject in _gameState.DeadGameObjects) {
