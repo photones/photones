@@ -22,7 +22,7 @@ module public Planet =
                 | Photon d -> yield d.State
         }
 
-    let update (this:T) (gameState:GameState) (elapsedS:TimeSpan):PlanetData = 
+    let update (this:T) (gameState:GameState) (elapsedS:TimeSpan) (inputActions:InputActions.T) = 
         let state = this.State
         let currentObjectCount = gameState.GameObjects.Count
 

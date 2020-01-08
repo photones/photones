@@ -15,15 +15,15 @@ type public UpdatableState<'ObjectState, 'GameState>
     (
         initialState: 'ObjectState,
         update: UpdatableState<'ObjectState, 'GameState> -> 'GameState
-            -> TimeSpan -> 'ObjectState
+            -> TimeSpan -> InputActions.T -> 'ObjectState
     ) =
     let mutable currentState:'ObjectState = initialState
     let mutable futureState:'ObjectState = initialState
 
     member this.State = currentState
 
-    member this.Update (world:'GameState) (elapsedS:TimeSpan) =
-        futureState <- update this world elapsedS
+    member this.Update (world:'GameState) (elapsedS:TimeSpan) (inputActions:InputActions.T) =
+        futureState <- update this world elapsedS inputActions
 
     member this.Refresh () =
         currentState <- futureState

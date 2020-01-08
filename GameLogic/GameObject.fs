@@ -27,10 +27,10 @@ type public GameObject<'GameState> =
         | Photon s -> s.State.Position
         | Planet s -> s.State.Position
 
-    member this.Update (gameState:'GameState) (elapsedS:TimeSpan) =
+    member this.Update (gameState:'GameState) (elapsedS:TimeSpan) (inputActions:InputActions.T) =
         match this with
-        | Photon s -> s.Update gameState elapsedS
-        | Planet s -> s.Update gameState elapsedS
+        | Photon s -> s.Update gameState elapsedS inputActions
+        | Planet s -> s.Update gameState elapsedS inputActions
 
     member this.Refresh () =
         match this with

@@ -9,7 +9,7 @@ open GameLogic.Utils
 
 type GameState
     (
-    gameParameters: GameParameters.T,
+    gameParameters:GameParameters.T,
     players:IEnumerable<UpdatableState<PlayerData,GameState>>,
     gameObjects:IEnumerable<GameObject<GameState>>
     ) = 
@@ -27,7 +27,7 @@ type GameState
     member this.DeadGameObjects = readonly _deadGameObjects
     member this.Players = readonly _players
 
-    member this.Update(elapsedS: TimeSpan, inputActions: InputActions.T): unit =
+    member this.Update(elapsedS:TimeSpan, inputActions:InputActions.T): unit =
         this.UpdateGameParameters(inputActions)
         tileMap.Update(_gameObjects)
 
@@ -35,13 +35,13 @@ type GameState
         _gameObjects <- List(_gameObjects |> Seq.filter (fun o -> o.Alive))
 
         for p in _players do
-            p.Update this elapsedS
+            p.Update this elapsedS inputActions
         for p in _players do
             p.Refresh()
 
         // Collection can be modified during update, so create a list for iteration
         for o in List(_gameObjects) do
-            o.Update this elapsedS
+            o.Update this elapsedS inputActions
         for o in _gameObjects do
             o.Refresh()
 
@@ -50,7 +50,7 @@ type GameState
     member this.Spawn (obj:GameObject<GameState>) =
         _gameObjects.Add(obj)
 
-    member private this.UpdateGameParameters(input: InputActions.T): unit =
+    member private this.UpdateGameParameters(input:InputActions.T): unit =
         let current = _gameParameters
         let modTimeDiff = input.ModGameSpeed.AnalogAmount * 0.001f
         let modADiff = input.ModA.AnalogAmount * 0.001f

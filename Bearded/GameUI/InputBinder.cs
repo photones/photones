@@ -10,8 +10,8 @@ namespace Bearded.Photones {
                 inputManager.Actions.Keyboard.FromKey(OpenTK.Input.Key.Down)
             );
             var moveHorizontal = new BidirectionalAction(
-                inputManager.Actions.Keyboard.FromKey(OpenTK.Input.Key.Left),
-                inputManager.Actions.Keyboard.FromKey(OpenTK.Input.Key.Right)
+                inputManager.Actions.Keyboard.FromKey(OpenTK.Input.Key.Right),
+                inputManager.Actions.Keyboard.FromKey(OpenTK.Input.Key.Left)
             );
             var modA = new BidirectionalAction(
                 inputManager.Actions.Keyboard.FromKey(OpenTK.Input.Key.W),

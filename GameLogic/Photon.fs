@@ -51,7 +51,7 @@ module public Photon =
         let frictionMultiplierPerSecond = 1.0f - frictionFraction |> float
         System.Math.Pow(frictionMultiplierPerSecond, elapsedS.NumericValue) |> single
 
-    let rec update (this:T) (gameState:GameState) (elapsedS:TimeSpan) = 
+    let update (this:T) (gameState:GameState) (elapsedS:TimeSpan) (inputActions:InputActions.T) = 
         let state = this.State
 
         // Check aliveness
