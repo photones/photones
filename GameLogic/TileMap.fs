@@ -79,10 +79,15 @@ type public TileMap<'GameState>
             let lastColumn = from.X + radius |> x2Column |> columnBound
             let firstRow = from.Y - radius |> y2Row |> rowBound
             let lastRow = from.Y + radius |> y2Row |> rowBound
+            let tileArray = Seq.toArray (seq {
+                for col = firstColumn to lastColumn do
+                    for row = firstRow to lastRow do
+                        tiles.[row].[col]
+            })
+            Utils.shuffle tileArray // In-place
             seq {
-            for col = firstColumn to lastColumn do
-                for row = firstRow to lastRow do
-                    for candidate in tiles.[row].[col].Get() do 
+                for tile in tileArray do
+                    for candidate in tile.Get() do 
                         if isPointWithinRadius from radius candidate.Position then yield candidate
             }
 

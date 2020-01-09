@@ -8,12 +8,12 @@ open Bearded.Utilities.SpaceTime
 open Bearded.Utilities.Geometry
 open LibraryExtensions
 
-module public PhotonInteractions =
+module PhotonInteractions =
 
     let private hostileInteractionRadius = Unit 0.03f
     let private accelerationHostileInteraction = Acceleration 0.15f
     let private friendlyInteractionRadius = Unit 0.1f
-    let private accelerationFriendlyInteraction = Acceleration 3.0f
+    let private accelerationFriendlyInteraction = Acceleration 6.0f
    
     let private isFriendly (state:PhotonData) (other:PhotonData) =
         other.PlayerId = state.PlayerId
