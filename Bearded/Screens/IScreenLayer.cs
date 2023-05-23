@@ -1,4 +1,4 @@
-﻿using amulware.Graphics;
+﻿using Bearded.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;

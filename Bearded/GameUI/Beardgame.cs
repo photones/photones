@@ -2,7 +2,7 @@
 using GameLogic;
 using OpenTK;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
-using amulware.Graphics;
+using Bearded.Graphics;
 
 namespace Bearded.Photones.GameUI {
 

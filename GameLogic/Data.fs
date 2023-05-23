@@ -1,7 +1,7 @@
 ﻿namespace GameLogic
 
 open Bearded.Utilities.SpaceTime
-open amulware.Graphics
+open Bearded.Graphics
 
 [<Struct>]
 type public PlayerData = {

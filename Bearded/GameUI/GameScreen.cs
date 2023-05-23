@@ -1,4 +1,4 @@
-﻿using amulware.Graphics;
+﻿using Bearded.Graphics;
 using Bearded.Photones.Particles;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
@@ -8,6 +8,7 @@ using Bearded.Photones.UI;
 using OpenTK;
 using GameLogic;
 using Bearded.Utilities.SpaceTime;
+using OpenTK.Mathematics;
 
 namespace Bearded.Photones.GameUI {
     class GameScreen : ScreenLayer {

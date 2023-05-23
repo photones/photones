@@ -2,7 +2,7 @@
 
 open System
 open Bearded.Utilities.SpaceTime
-open amulware.Graphics
+open Bearded.Graphics
 open Utils
 
 module public Player =

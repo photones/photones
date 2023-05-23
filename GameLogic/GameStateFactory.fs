@@ -1,11 +1,13 @@
 ﻿namespace GameLogic
 
+open System
+
 module GameStateFactory =
     open Bearded.Utilities
     open Bearded.Utilities.SpaceTime
     open Bearded.Utilities.Geometry
     open System.Collections.Generic
-    open amulware.Graphics
+    open Bearded.Graphics
     open System.Linq
 
     let emptyGameState gameParameters =
@@ -50,7 +52,7 @@ module GameStateFactory =
     /// Let all players start with one planet on a circle
     let defaultScenario gameParameters playerCount =
         let radius = Unit 0.8f
-        let angle = Angle.FromRadians(Mathf.Tau / single playerCount)
+        let angle = Angle.FromRadians(MathF.Tau / single playerCount)
 
         let addPlayerWithPlanet (gameState, dir) _ =
             let planetPos = Position2.Zero + Difference2.In(dir, radius)

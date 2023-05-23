@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using amulware.Graphics;
+using Bearded.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
 using Bearded.Photones.UI.Components;
 using OpenTK;
 using GameLogic;
+using OpenTK.Mathematics;
 
 namespace Bearded.Photones.Screens {
     abstract class UIScreenLayer : ScreenLayer {

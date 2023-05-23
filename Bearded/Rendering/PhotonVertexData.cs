@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using amulware.Graphics;
+using Bearded.Graphics;
 
 namespace Bearded.Photones.Rendering {
     /// <summary>

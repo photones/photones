@@ -1,179 +1,69 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7B1F882F-0F1E-4A2E-98A7-2DDBA19B4564}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>photones</RootNamespace>
-    <AssemblyName>photones</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="assets\fonts\freshman_monospaced_numbers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\fonts\Inconsolata.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\shaders\photon.gs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\shaders\photon.vs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\shaders\uvcolor.fs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="assets\shaders\uvcolor.vs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="OpenTK.dll.config" />
-    <None Include="paket.references" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="GameStatistics.cs" />
-    <Compile Include="GameUI\Beardgame.cs" />
-    <Compile Include="GameUI\ExplosionManager.cs" />
-    <Compile Include="GameUI\GameObjectRenderer.cs" />
-    <Compile Include="Performance\PerformanceMonitor.cs" />
-    <Compile Include="GameUI\GameScreen.cs" />
-    <Compile Include="Performance\PerformanceSummary.cs" />
-    <Compile Include="Performance\BeardedUpdateEventArgs.cs" />
-    <Compile Include="Particles\Behaviors\ConstantBehavior.cs" />
-    <Compile Include="Particles\Behaviors\IParticleBehavior.cs" />
-    <Compile Include="Particles\Behaviors\LerpLifetime\LerpFloatBehavior.cs" />
-    <Compile Include="Particles\Behaviors\LerpLifetime\LerpVector2Behavior.cs" />
-    <Compile Include="Particles\Particle.cs" />
-    <Compile Include="Particles\ParticleSystem.cs" />
-    <Compile Include="Performance\VariableMonitor.cs" />
-    <Compile Include="Performance\VariableStats.cs" />
-    <Compile Include="PhotonesProgram.cs" />
-    <Compile Include="Rendering\Camera\Camera2D.cs" />
-    <Compile Include="Rendering\Camera\Camera3D.cs" />
-    <Compile Include="Rendering\Camera\ICamera.cs" />
-    <Compile Include="Rendering\Photon2DGeometry.cs" />
-    <Compile Include="Rendering\FrameCompositor.cs" />
-    <Compile Include="Rendering\GeometryManager.cs" />
-    <Compile Include="Rendering\RenderContext.cs" />
-    <Compile Include="Rendering\SurfaceManager.cs" />
-    <Compile Include="Rendering\PhotonVertexData.cs" />
-    <Compile Include="Rendering\ViewportSize.cs" />
-    <Compile Include="GameUI\HudScreen.cs" />
-    <Compile Include="Screens\IScreenLayer.cs" />
-    <Compile Include="Screens\ScreenLayer.cs" />
-    <Compile Include="Screens\ScreenLayerCollection.cs" />
-    <Compile Include="Screens\ScreenLayerGroup.cs" />
-    <Compile Include="Screens\ScreenManager.cs" />
-    <Compile Include="Screens\UIScreenLayer.cs" />
-    <Compile Include="UI\Bounds.cs" />
-    <Compile Include="UI\Components\UIComponent.cs" />
-    <Compile Include="UI\IDimension.cs" />
-    <Compile Include="UI\InputState.cs" />
-    <Compile Include="UI\Screen.cs" />
-    <Compile Include="Utilities\EnumerableProxy.cs" />
-    <Compile Include="Utilities\Line.cs" />
-    <Compile Include="Utilities\LinqExtensions.cs" />
-    <Compile Include="Utilities\Tracer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="OpenTK.dll.config">
-      <Paket>True</Paket>
-    </Content>
-    <Content Include="assets\fonts\freshman.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\fonts\Inconsolata.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\gfx\sprites\particles\particle.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="assets\shaders\photon.fs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Particles\Presets\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\GameLogic\GameLogic.fsproj">
-      <Project>{44b1f2eb-d59f-4863-98e8-7ac670ffa842}</Project>
-      <Name>GameLogic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\lib\awgraphics\src\amulware.Graphics\amulware.Graphics.csproj">
-      <Project>{59beda5c-d68a-4011-89ba-c09421d22974}</Project>
-      <Name>amulware.Graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\lib\utilities\Bearded.Utilities\Bearded.Utilities.csproj">
-      <Project>{3f06fcfb-7ae5-44df-bf91-619e6d415883}</Project>
-      <Name>Bearded.Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\.paket\paket.targets" />
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.2'">
-      <ItemGroup>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <OutputPath>../../bin/Bearded.TD/Debug/</OutputPath>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+        <OutputPath>../../bin/Bearded.TD/Release/</OutputPath>
+    </PropertyGroup>
+
+    <Import Project="..\.paket\paket.targets" />
+    <ItemGroup>
         <Reference Include="FSharp.Core">
-          <HintPath>..\packages\FSharp.Core\lib\net45\FSharp.Core.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
+            <HintPath>..\packages\FSharp.Core\lib\net45\FSharp.Core.dll</HintPath>
+            <Private>True</Private>
+            <Paket>True</Paket>
         </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.2'">
-      <ItemGroup>
-        <Reference Include="OpenTK">
-          <HintPath>..\packages\OpenTK\lib\net20\OpenTK.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.6.2'">
-      <ItemGroup>
-        <Reference Include="mscorlib">
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.ValueTuple">
-          <HintPath>..\packages\System.ValueTuple\lib\net461\System.ValueTuple.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="App.config" />
+        <None Include="assets\fonts\freshman_monospaced_numbers.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="assets\fonts\Inconsolata.json">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="assets\shaders\photon.gs">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="assets\shaders\photon.vs">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="assets\shaders\uvcolor.fs">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="assets\shaders\uvcolor.vs">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="OpenTK.dll.config" />
+        <None Include="paket.references" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="OpenTK.dll.config">
+            <Paket>True</Paket>
+        </Content>
+        <Content Include="assets\fonts\freshman.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="assets\fonts\Inconsolata.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="assets\gfx\sprites\particles\particle.png">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="assets\shaders\photon.fs">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\GameLogic\GameLogic.fsproj" />
+      <ProjectReference Include="..\lib\awgraphics\Bearded.Graphics\Bearded.Graphics.csproj" />
+    </ItemGroup>
+
 </Project>

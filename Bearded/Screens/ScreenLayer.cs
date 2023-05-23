@@ -1,14 +1,16 @@
-﻿using amulware.Graphics;
+﻿using Bearded.Graphics;
 using Bearded.Photones.Performance;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.UI;
 using Bearded.Utilities;
 using OpenTK;
 using GameLogic;
+using OpenTK.Mathematics;
+using System;
 
 namespace Bearded.Photones.Screens {
     abstract class ScreenLayer : IScreenLayer {
-        private const float fovy = Mathf.PiOver2;
+        private const float fovy = MathF.PI/2;
         private const float zNear = .1f;
         private const float zFar = 1024f;
 
@@ -20,7 +22,7 @@ namespace Bearded.Photones.Screens {
 
         public virtual Matrix4 ProjectionMatrix {
             get {
-                var yMax = zNear * Mathf.Tan(.5f * fovy);
+                var yMax = zNear * MathF.Tan(.5f * fovy);
                 var yMin = -yMax;
                 var xMax = yMax * ViewportSize.AspectRatio;
                 var xMin = yMin * ViewportSize.AspectRatio;

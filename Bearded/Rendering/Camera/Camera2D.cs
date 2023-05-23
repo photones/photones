@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using OpenTK.Mathematics;
 
 namespace Bearded.Photones.Rendering.Camera {
     public class Camera2D : ICamera {

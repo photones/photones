@@ -1,6 +1,6 @@
 [submodule "lib/awgraphics"]
 	path = lib/awgraphics
-	url = https://github.com/Chiel92/awgraphics
+	url = https://github.com/photones/awgraphics
 [submodule "lib/utilities"]
 	path = lib/utilities
-	url = https://github.com/Chiel92/utilities
+	url = https://github.com/photones/utilities

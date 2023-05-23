@@ -1,10 +1,11 @@
-﻿using amulware.Graphics;
+﻿using Bearded.Graphics;
 using Bearded.Photones.Rendering;
 using Bearded.Photones.Particles.Behaviors;
 using Bearded.Utilities;
 using Bearded.Utilities.SpaceTime;
 using OpenTK;
 using TimeSpan = Bearded.Utilities.SpaceTime.TimeSpan;
+using OpenTK.Mathematics;
 
 namespace Bearded.Photones.Particles {
     class Particle {

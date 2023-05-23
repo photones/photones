@@ -1,6 +1,8 @@
 ﻿using System;
-using amulware.Graphics;
-using amulware.Graphics.ShaderManagement;
+using Bearded.Graphics;
+using Bearded.Graphics.RenderSettings;
+using Bearded.Graphics.ShaderManagement;
+using Bearded.Graphics.Text;
 using Bearded.Photones.Particles;
 using Bearded.Photones.Utilities;
 

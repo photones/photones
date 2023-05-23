@@ -1,5 +1,5 @@
 ﻿using OpenTK;
-using amulware.Graphics;
+using Bearded.Graphics;
 
 namespace Bearded.Photones.Rendering {
     /// <summary>

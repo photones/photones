@@ -3,7 +3,7 @@ using Bearded.Photones.Particles.Behaviors.LerpLifetime;
 using Bearded.Photones.Particles.Behaviors;
 using GameLogic;
 using Bearded.Utilities.SpaceTime;
-using amulware.Graphics;
+using Bearded.Graphics;
 
 namespace Bearded.Photones.GameUI {
     public static class ExplosionManager {
